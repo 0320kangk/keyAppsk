@@ -3,7 +3,8 @@ package project.keyappsk.domain.product.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.aspectj.weaver.ast.Or;
+import project.keyappsk.domain.cart.entity.Cart;
+import project.keyappsk.domain.category.entity.Category;
 import project.keyappsk.domain.orders.entity.Order;
 import project.keyappsk.domain.product.entity.enumerate.ProductStatus;
 import project.keyappsk.domain.store.entity.Store;
@@ -22,6 +23,10 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "Store_id", nullable = false)
     Store store;
+
+    @ManyToOne
+    @JoinColumn(name ="Category_id", nullable = false)
+    Category category;
 
     @OneToOne(mappedBy = "product")
     ProductImage productImage;
@@ -43,6 +48,9 @@ public class Product {
     LocalDateTime updatedDate;
 
     @OneToMany(mappedBy = "product")
-    private List<Order> products;
+    private List<Order> orders;
+
+    @OneToMany(mappedBy = "product")
+    private List<Cart> carts;
 
 }

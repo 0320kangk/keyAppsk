@@ -3,9 +3,12 @@ package project.keyappsk.domain.store.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import project.keyappsk.domain.members.entity.Member;
+import project.keyappsk.domain.cart.entity.Cart;
+import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.store.entity.enumerate.StoreStatus;
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -17,6 +20,9 @@ public class Store {
     @ManyToOne
     @JoinColumn(name = "Member_id", nullable = false) //참조 테이블명_필드명(기본키)
     private Member member;
+
+    @OneToMany(mappedBy = "store")
+    private List<Cart> carts;
 
     @Column(nullable = false)
     private String name;
@@ -33,4 +39,6 @@ public class Store {
 
     @Column(nullable = false)
     private LocalDateTime updatedDate;
+
+
 }
