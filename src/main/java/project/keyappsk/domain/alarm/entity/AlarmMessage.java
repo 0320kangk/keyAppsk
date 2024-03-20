@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import project.keyappsk.domain.alarm.entity.enumerate.ReadStatus;
-import project.keyappsk.domain.members.entity.Member;
+import project.keyappsk.domain.member.entity.Member;
 
 import java.time.LocalDateTime;
 
@@ -32,7 +32,7 @@ public class AlarmMessage {
 
     public void changeMembers(Member member){
         this.member = member;
-        member.getAlarmMessageList().add(this);
+        member.getAlarmMessages().add(this);
     }
 
 }
