@@ -1,0 +1,25 @@
+
+.sign-header {
+    position: relative;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@media (min-width: 800px) {
+    .sign-header {
+        margin-top: 152px !important;
+    }
+}
+@media (max-width: 800px) {
+    .sign-header {
+        margin-top: 97px !important;
+    }
+}
+
+/*
+bootstrap 파일 편집
+@media (min-width: 1400px)
+.container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+    max-width: 1200px;
+}*/
