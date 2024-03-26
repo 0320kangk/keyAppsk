@@ -6,9 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MemberController {
     @GetMapping("/member/add")
-    String getMemberPage(){
+    String getSignPage(){
         return "/content/sign";
     }
-
+    @GetMapping("/member/login")
+    String getLoginPage(){
+        return "/content/login";
+    }
 
 }
