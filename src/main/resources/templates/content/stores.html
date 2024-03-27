@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{/fragment/layoutFile :: layout(~{::body}, 'shops')}">
+      th:replace="~{fragment/layoutFile :: layout(~{::body}, 'shops')}">
 
 
 
 
 <body>
 <!-- Single Page Header start -->
-<header th:replace="~{/fragment/singlePageHeader :: singlePageHeader(~{::body})}"></header>
+<header th:replace="~{./fragment/singlePageHeader :: singlePageHeader(~{::body})}"></header>
 <!-- Single Page Header End -->
 
 <!-- Fruits Shop Start-->

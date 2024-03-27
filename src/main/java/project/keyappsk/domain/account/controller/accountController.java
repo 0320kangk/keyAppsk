@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class accountController {
     @GetMapping("/accountInfo")
     String getAccountInfoPage(){
-        return "/content/accountInfo";
+        return "content/accountInfo";
     }
 }

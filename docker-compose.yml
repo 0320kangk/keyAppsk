@@ -1,9 +1,11 @@
-#rds와 연결
 version: '3' #docker-compose 지원버전
 services:
-  application: #
+  application:
     container_name: container-test
-    image: kangjunho/keyappsk:aws-test
+    image: kangjunho/keyappsk:v2
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
     ports:
       - "8080:8080" # host: docker
     environment:

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{/fragment/layoutFile :: layout(~{::body}, 'cart')}">
+      th:replace="~{fragment/layoutFile :: layout(~{::body}, 'cart')}">
 
 <body>
 
 
 <!-- Single Page Header start -->
-<header th:replace="~{/fragment/singlePageHeader :: singlePageHeader(~{::body})}"></header>
+<header th:replace="~{./fragment/singlePageHeader :: singlePageHeader(~{::body})}"></header>
 <!-- Single Page Header End -->
 
 <!-- Cart Page Start -->
