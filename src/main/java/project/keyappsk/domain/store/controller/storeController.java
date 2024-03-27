@@ -10,4 +10,8 @@ public class storeController {
 
         return "/content/addStore";
     }
+    @GetMapping("/store/search")
+    String getStores(){
+        return "/content/stores";
+    }
 }
