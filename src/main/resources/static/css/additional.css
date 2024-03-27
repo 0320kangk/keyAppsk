@@ -1,5 +1,5 @@
 
-.sign-header {
+.default-header {
     position: relative;
     background-position: center center;
     background-repeat: no-repeat;
@@ -7,12 +7,12 @@
 }
 
 @media (min-width: 800px) {
-    .sign-header {
+    .default-header {
         margin-top: 152px !important;
     }
 }
 @media (max-width: 800px) {
-    .sign-header {
+    .default-header {
         margin-top: 97px !important;
     }
 }
