@@ -8,10 +8,10 @@ public class storeController {
     @GetMapping("/store/add")
     String getAddStorePage(){
 
-        return "/content/addStore";
+        return "content/addStore";
     }
     @GetMapping("/store/search")
     String getStores(){
-        return "/content/stores";
+        return "content/stores";
     }
 }

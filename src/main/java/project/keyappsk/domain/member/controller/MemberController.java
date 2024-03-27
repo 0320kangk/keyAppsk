@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MemberController {
     @GetMapping("/member/add")
     String getSignPage(){
-        return "/content/sign";
+        return "content/sign";
     }
     @GetMapping("/member/login")
     String getLoginPage(){
-        return "/content/login";
+        return "content/login";
     }
 
 }

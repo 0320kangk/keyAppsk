@@ -1,9 +1,9 @@
-# database 연동 설정
 spring:
+  application:
+    name: keyAppsk
   thymeleaf:
     cache: false
-    prefix: file:src/main/resources/templates/
-
+    prefix: classpath:/templates/
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     #local환경
@@ -13,9 +13,9 @@ spring:
     #    username: root #local, docker
     #    password: 1234 #local. docker
     # rds 환경
-    url: ${KEYAPPSK_RDS_URL}
-    username: ${KEYAPPSK_RDS_USERNAME} # rds
-    password: ${KEYAPPSK_RDS_PASSWORD} # rds
+    url: ${RDS_KEYAPPSK_URL}
+    username: ${RDS_KEYAPPSK_USERNAME} # rds
+    password: ${RDS_KEYAPPSK_PASSWORD} # rds
 
   jpa:
     hibernate:

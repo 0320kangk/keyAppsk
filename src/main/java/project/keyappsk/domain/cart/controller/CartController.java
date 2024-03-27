@@ -8,6 +8,6 @@ public class CartController {
 
     @GetMapping("/cart")
     String getCartPage(){
-        return "/content/cart";
+        return "content/cart";
     }
 }

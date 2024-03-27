@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{/fragment/layoutFile :: layout(~{::body}, 'accountInfo')}">
+      th:replace="~{fragment/layoutFile :: layout(~{::body}, 'accountInfo')}">
 <body>
 <link th:href="@{/css/sidebars.css}" rel="stylesheet">
 <script th:src="@{/js/sidebers.js}"></script>
@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-lg-4 ">
             <div class=" d-flex flex-column flex-shrink-0 p-3 rounded  text-white bg-dark mt-3 default-header" style="width: 280px; height: 600px">
-                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <a href="/static" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                     <svg class="bi me-2" width="40" height="32"><use xlink:href="#people-circle"></use></svg>
                     <span class="fs-4">MY INFO</span>
                 </a>
