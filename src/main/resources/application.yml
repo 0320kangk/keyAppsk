@@ -1,6 +1,8 @@
 spring:
   application:
     name: keyAppsk
+  profiles:
+    include: oauth
   thymeleaf:
     cache: false
     prefix: classpath:/templates/

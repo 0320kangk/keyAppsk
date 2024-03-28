@@ -16,10 +16,10 @@
 
                     <h3 class="fs-base pt-4 pb-2">회원가입</h3>
 
-                    <form class="needs-validation" action="/members/add" method="post" autocomplete="off" novalidate=""><input type="hidden" name="_csrf" value="d90bdd83-94e7-45af-974a-6ab0bc5bfddd">
-
+                    <form class="needs-validation" action="" th:action="@{/member/add}" method="post" th:object="${loginMemberDto}" autocomplete="off" novalidate="">
+<!--                        <input type="hidden" name="_csrf" value="d90bdd83-94e7-45af-974a-6ab0bc5bfddd">-->
                         <div class="input-group mb-3"><i class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
-                            <input class="form-control rounded-start" id="signLoginid" type="text" placeholder="Id를 입력하세요" required="" name="loginId" value="">
+                            <input class="form-control rounded-start" id="signLoginid" type="email" placeholder="email을 입력하세요" required="" name="email" value="">
                         </div>
 
                         <div class="input-group mb-3">
