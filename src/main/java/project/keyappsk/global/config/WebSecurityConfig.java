@@ -27,7 +27,9 @@ public class WebSecurityConfig  {
             "/fragment/**",
             "/img/**",
             "/lib/**",
-            "/scss/**"
+            "/scss/**",
+            "/css/**",
+            "/js/**"
     };
     //일반 회원 페이지
     private final String[] guestPage = new String[] {
@@ -56,7 +58,7 @@ public class WebSecurityConfig  {
                 );
 
         http.logout( logout ->{
-            logout.logoutUrl("/logout")
+            logout.logoutUrl("/member/logout")
                     .logoutSuccessHandler( ((request, response, authentication) -> {
                         log.info("로그아웃 성공");
                         response.sendRedirect("/");

@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project.keyappsk.domain.member.dto.CustomUserDetails;
 import project.keyappsk.domain.member.dto.LoginMemberDto;
 import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.member.entity.enumerate.Role;
@@ -33,13 +34,14 @@ public class CustomUserDetailService implements UserDetailsService {
             log.info("아이디 찾기 성공");
             Member members = byEmailId.get();
             List<GrantedAuthority> authorities = new ArrayList();
-            return User.builder()
-                    .username(members.getEmail())
-                    .password(members.getPassword())
-                    .roles(members.getRole().toString())
-                    .authorities(authorities)
-                    .build();
-//            return new MembersUserDetails(members);
+//            return User.builder()
+//                    .username(members.getEmail())
+//                    .password(members.getPassword())
+//                    .roles(members.getRole().toString())
+//                    .authorities(authorities)
+//                    .build();
+
+            return new CustomUserDetails(members);
         }
         return null;
     }
