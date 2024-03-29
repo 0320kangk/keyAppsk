@@ -54,7 +54,6 @@ public class WebSecurityConfig  {
                         .permitAll()
                         .requestMatchers(guestPage)
                         .hasRole(Role.GUEST.name())//앞에 ROLE_ 이 붙음
-
                 );
 
         defaultLoginSetting(http);
@@ -68,24 +67,23 @@ public class WebSecurityConfig  {
                     }));
         });
 
-
         http.exceptionHandling( httpSecurityExceptionHandlingConfigurer ->
                 httpSecurityExceptionHandlingConfigurer.accessDeniedHandler( (req,res, exception) ->{
                     log.info(req.getRequestURI());
+                    log.info("header names: {}", req.getHeaderNames().toString());
                     log.info("에러 내용: {}", exception.getMessage());
                 }));
         return http.build();
     }
 
     private void oauth2LoginSetting(HttpSecurity http) throws Exception {
-        HttpSecurity httpSecurity = http.oauth2Login(oauth -> {
+        http.oauth2Login(oauth -> {
             oauth.defaultSuccessUrl("/", true);
             oauth.userInfoEndpoint(userInfoEndpointConfig -> {
                 userInfoEndpointConfig.userService(customOauth2UserService);
             });
         });
     }
-
     private void defaultLoginSetting(HttpSecurity http) throws Exception {
         http.formLogin(formLogin -> {
             formLogin.loginPage("/member/login")
