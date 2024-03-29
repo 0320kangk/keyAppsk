@@ -57,6 +57,9 @@ public class WebSecurityConfig  {
 
                 );
 
+        defaultLoginSetting(http);
+        oauth2LoginSetting(http);
+
         http.logout( logout ->{
             logout.logoutUrl("/member/logout")
                     .logoutSuccessHandler( ((request, response, authentication) -> {
@@ -64,29 +67,37 @@ public class WebSecurityConfig  {
                         response.sendRedirect("/");
                     }));
         });
-        http.formLogin( formLogin -> {
-            formLogin.loginPage("/member/login")
-                    .usernameParameter("email")
-                    .passwordParameter("password")
-                    .successHandler(((request, response, authentication) -> {
-                        log.info("로그인 완료되었습니다.");
-                        response.sendRedirect("/");
-                    }))
-                    .failureHandler(((request, response, exception) -> {
-                        log.info("로그인 실패 로그 : {}",exception.getMessage());
-                    }));
-        });
 
-        http.oauth2Login( oauth -> {
-            oauth.userInfoEndpoint(userInfoEndpointConfig -> {
-                userInfoEndpointConfig.userService(customOauth2UserService);
-            });
-        });
+
         http.exceptionHandling( httpSecurityExceptionHandlingConfigurer ->
                 httpSecurityExceptionHandlingConfigurer.accessDeniedHandler( (req,res, exception) ->{
                     log.info(req.getRequestURI());
                     log.info("에러 내용: {}", exception.getMessage());
                 }));
         return http.build();
+    }
+
+    private void oauth2LoginSetting(HttpSecurity http) throws Exception {
+        HttpSecurity httpSecurity = http.oauth2Login(oauth -> {
+            oauth.defaultSuccessUrl("/", true);
+            oauth.userInfoEndpoint(userInfoEndpointConfig -> {
+                userInfoEndpointConfig.userService(customOauth2UserService);
+            });
+        });
+    }
+
+    private void defaultLoginSetting(HttpSecurity http) throws Exception {
+        http.formLogin(formLogin -> {
+            formLogin.loginPage("/member/login")
+                    .usernameParameter("email")
+                    .passwordParameter("password")
+                    .defaultSuccessUrl("/", true)
+                    .successHandler(((request, response, authentication) -> {
+                        log.info("로그인 완료되었습니다.");
+                    }))
+                    .failureHandler(((request, response, exception) -> {
+                        log.info("로그인 실패 로그 : {}",exception.getMessage());
+                    }));
+        });
     }
 }
