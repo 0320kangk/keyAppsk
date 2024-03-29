@@ -12,11 +12,13 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import project.keyappsk.domain.member.dto.CustomUserDetails;
 import project.keyappsk.domain.member.dto.OAuthAttributes;
 import project.keyappsk.domain.member.dto.SessionMember;
 import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.member.repository.MemberRepository;
+import project.keyappsk.global.consts.SessionConst;
 
 import java.util.Collections;
 import java.util.Map;
@@ -38,7 +40,7 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuthAttributes attributes = OAuthAttributes.
                 of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
         Member member = saveOrUpdate(attributes);
-        httpSession.setAttribute("Member", new SessionMember(member));
+        httpSession.setAttribute(SessionConst.SessionMember, new SessionMember(member));
 
        /* return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(member.getRoleKey())),
@@ -46,7 +48,8 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
                 attributes.getNameAttributeKey());*/
         return new CustomUserDetails(member, attributes.getAttributes());
     }
-    private Member saveOrUpdate(OAuthAttributes attributes) {
+    @Transactional
+    public Member saveOrUpdate(OAuthAttributes attributes) {
         Member member = memberRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getName()))
                 .orElse(attributes.toEntity());

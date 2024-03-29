@@ -17,9 +17,13 @@
                     <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
                 </div>
                 <div class="top-link pe-2">
-                    <a href="/member/logout" class="text-white"><strong class="text-white mx-2">logout</strong>/</a>
-                    <a href="/member/login" class="text-white"><strong class="text-white mx-2">Sign in</strong>/</a>
-                    <a href="/member/add" class="text-white"><strong class="text-white mx-2">Sign up</strong></a>
+                    <div th:if="${session.sessionMember != null}"
+                         th:text="${session.sessionMember.getName()}" >
+                        This content is only shown to authenticated users.
+                    </div>
+                    <a sec:authorize="isAuthenticated()" href="/member/logout" class="text-white"><strong class="text-white mx-2">logout</strong></a>
+                    <a sec:authorize="isAnonymous"  href="/member/login" class="text-white"><strong class="text-white mx-2">Sign in</strong>/</a>
+                    <a sec:authorize="isAnonymous" href="/member/add" class="text-white"><strong class="text-white mx-2">Sign up</strong></a>
                 </div>
             </div>
         </div>
