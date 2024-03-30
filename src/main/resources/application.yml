@@ -5,8 +5,8 @@ spring:
     include: oauth
   thymeleaf:
     cache: false
-#    prefix: classpath:/templates/
-    prefix: file:src/main/resources/templates/
+#    prefix: classpath:/templates/  #docker, aws 환경
+    prefix: file:src/main/resources/templates/ #window 환경
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     #local환경

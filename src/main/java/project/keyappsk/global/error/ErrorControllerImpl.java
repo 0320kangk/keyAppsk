@@ -16,7 +16,7 @@ public class ErrorControllerImpl implements ErrorController {
         Object errorMessage = request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
         if(errorCode != null) model.addAttribute("errorCode", errorCode.toString());
         if(errorMessage != null) model.addAttribute("errorMessage", errorMessage.toString());
-        return "/error";
+        return "error";
     }
 
 

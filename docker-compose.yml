@@ -2,7 +2,7 @@ version: '3' #docker-compose 지원버전
 services:
   application:
     container_name: container-test
-    image: kangjunho/keyappsk:v2
+    image: kangjunho/keyappsk:v3
 #    build:
 #      context: .
 #      dockerfile: Dockerfile
