@@ -31,7 +31,8 @@ public class WebSecurityConfig  {
             "/lib/**",
             "/scss/**",
             "/css/**",
-            "/js/**"
+            "/js/**",
+            "/error"
     };
     //일반 회원 페이지
     private final String[] guestPage = new String[] {
@@ -74,6 +75,7 @@ public class WebSecurityConfig  {
                     log.info(req.getRequestURI());
                     log.info("header names: {}", req.getHeaderNames().toString());
                     log.info("에러 내용: {}", exception.getMessage());
+                    res.sendRedirect("/error");
                 }));
         return http.build();
     }
