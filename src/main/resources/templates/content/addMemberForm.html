@@ -18,18 +18,19 @@
 
                     <form class="needs-validation" action="" th:action="@{/member/add}" method="post" th:object="${loginMemberDto}" autocomplete="off" novalidate="">
 <!--                        <input type="hidden" name="_csrf" value="d90bdd83-94e7-45af-974a-6ab0bc5bfddd">-->
-                        <div class="input-group mb-3"><i class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
-                            <input class="form-control rounded-start" id="signLoginid" type="email" placeholder="email을 입력하세요" required="" name="email" value="">
+                        <div class="mb-3"><i class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
+                            <input class="form-control rounded-start" id="id" th:field="*{email}" type="email" placeholder="email을 입력하세요" name="email" value="" required>
+                            <small th:class="field-error" th:errors="*{email}"></small>
                         </div>
 
-                        <div class="input-group mb-3">
-                            <input class="form-control rounded-start" id="signName" type="text" placeholder="이름을 입력하세요" required="" name="name" value="">
+                        <div class="mb-3">
+                            <input class="form-control rounded-start" id="name" type="text" th:field="*{name}" placeholder="이름을 입력하세요" name="name" value="" required >
+                            <small th:class="field-error" th:errors="*{name}"></small>
                         </div>
 
-                        <div class="input-group mb-3">
-
-                                <input class="form-control" type="password" id="signpassword" placeholder="비밀번호" autocomplete="off" required="" name="password" value="">
-
+                        <div class="mb-3">
+                                <input class="form-control" type="password" id="password" placeholder="비밀번호" th:field="*{password}" autocomplete="off" name="password" value="" required>
+                            <small th:class="field-error" th:errors="*{password}"></small>
                         </div>
 
                         <hr class="mt-4">

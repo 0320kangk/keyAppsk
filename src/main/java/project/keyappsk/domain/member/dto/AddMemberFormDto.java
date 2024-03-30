@@ -1,5 +1,6 @@
 package project.keyappsk.domain.member.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Getter
@@ -8,8 +9,11 @@ import lombok.*;
 @AllArgsConstructor
 public class LoginMemberDto {
 
+    @NotBlank
     String email;
+    @NotBlank
     String password;
+    @NotBlank
     String name;
 
 }
