@@ -4,15 +4,13 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.keyappsk.domain.member.dto.CustomUserDetails;
-import project.keyappsk.domain.member.dto.LoginMemberDto;
+import project.keyappsk.domain.member.dto.AddMemberFormDto;
 import project.keyappsk.domain.member.dto.SessionMember;
 import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.member.entity.enumerate.Role;
@@ -50,13 +48,14 @@ public class CustomUserDetailService implements UserDetailsService {
         }
         return null;
     }
+
     @Transactional
-    public void save(LoginMemberDto loginMemberDto){
+    public void save(AddMemberFormDto addMemberFormDto){
         Member member = Member.builder()
-                .email(loginMemberDto.getEmail())
-                .name(loginMemberDto.getName())
+                .email(addMemberFormDto.getEmail())
+                .name(addMemberFormDto.getName())
                 .role(Role.GUEST)
-                .password(loginMemberDto.getPassword())
+                .password(addMemberFormDto.getPassword())
                 .createdDate(LocalDateTime.now())
                 .updatedDate(LocalDateTime.now())
                 .build();

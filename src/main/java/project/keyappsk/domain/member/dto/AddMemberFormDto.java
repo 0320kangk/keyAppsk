@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginMemberDto {
+public class AddMemberFormDto {
 
     @NotBlank
     String email;

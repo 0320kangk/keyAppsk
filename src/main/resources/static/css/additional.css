@@ -6,6 +6,11 @@
     background-size: cover;
 }
 
+.field-error {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
 @media (min-width: 800px) {
     .default-header {
         margin-top: 152px !important;

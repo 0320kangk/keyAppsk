@@ -16,18 +16,21 @@
 
                     <hr>
 
-                    <form class="needs-validation pt-2" action="/member/login" th:action="@{/member/login}" method="post" autocomplete="off" novalidate=""><input type="hidden" name="_csrf" value="b02f6a88-bc1c-450f-8a84-dd240175f5dc">
+                    <form class="needs-validation pt-2" action="/member/login" th:action="@{/member/login}"  method="post" autocomplete="off" novalidate="">
+<!--                        <input type="hidden" name="_csrf" value="b02f6a88-bc1c-450f-8a84-dd240175f5dc">-->
                         <!--                            <input type ="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
-
-
-                        <div class="input-group mb-3">
-                            <input class="form-control rounded-start" name="email" id="name" type="email" placeholder="Id을 입력하세요" autofocus="" required="" value="">
+                        <div th:class="mb-3" th:if="${error}">
+                            <small class="field-error" th:text="${errorMessage}">글로벌 오류 메시지</small>
+                        </div>
+                        <div class=" mb-3">
+                            <input class="form-control rounded-start" name="email" id="email" type="email" placeholder="Id을 입력하세요" autofocus="" required="" value="">
+<!--                            <div th:class="field-error" th:errors="*{email}"> </div>-->
                         </div>
 
-                        <div class="input-group mb-3">
+                        <div class=" mb-3">
                             <div class="password-toggle w-100">
                                 <input class="form-control" name="password" type="password" id="password" placeholder="비밀번호" required="" value="">
-
+<!--                                <div th:class="field-error" th:errors="*{password}"> </div>-->
                             </div>
                         </div>
 

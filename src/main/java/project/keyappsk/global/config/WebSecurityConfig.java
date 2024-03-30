@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import project.keyappsk.domain.member.entity.enumerate.Role;
+import project.keyappsk.domain.member.handler.MemberAuthenticationFailureHandler;
 import project.keyappsk.domain.member.service.CustomOauth2UserService;
 @Configuration
 @EnableWebSecurity
@@ -18,6 +19,7 @@ import project.keyappsk.domain.member.service.CustomOauth2UserService;
 @Slf4j
 public class WebSecurityConfig  {
     private final CustomOauth2UserService customOauth2UserService;
+    private final MemberAuthenticationFailureHandler memberAuthenticationFailureHandler;
     //공용 페이지
     private final String[] publicPage = new String[] {
             "/", "/member/add",
@@ -87,15 +89,15 @@ public class WebSecurityConfig  {
     private void defaultLoginSetting(HttpSecurity http) throws Exception {
         http.formLogin(formLogin -> {
             formLogin.loginPage("/member/login")
+                    .loginProcessingUrl("/member/login")
                     .usernameParameter("email")
                     .passwordParameter("password")
-                    .defaultSuccessUrl("/", true)
                     .successHandler(((request, response, authentication) -> {
                         log.info("로그인 완료되었습니다.");
                     }))
-                    .failureHandler(((request, response, exception) -> {
-                        log.info("로그인 실패 로그 : {}",exception.getMessage());
-                    }));
+                    .defaultSuccessUrl("/", true)
+                    .failureHandler(memberAuthenticationFailureHandler);
+
         });
     }
 }
