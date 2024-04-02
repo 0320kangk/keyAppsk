@@ -2,7 +2,6 @@ package project.keyappsk.domain.member.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,8 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import project.keyappsk.domain.member.dto.AddMemberFormDto;
-import project.keyappsk.domain.member.dto.CustomUserDetails;
 import project.keyappsk.domain.member.service.MemberService;
+import project.keyappsk.global.consts.RedirectURL;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,7 +21,7 @@ public class MemberController {
     private final MemberService memberService;
     @GetMapping("/member/add")
     String getMemberAdd(@ModelAttribute("addMemberFormDto") AddMemberFormDto addMemberFormDto){
-        return "content/addMemberForm";
+        return "content/memberAddForm";
     }
     @PostMapping("/member/add")
     String postMemberAdd(@Validated @ModelAttribute("addMemberFormDto") AddMemberFormDto addMemberFormDto,
@@ -31,23 +30,25 @@ public class MemberController {
         if(bindingResult.hasErrors()){
             log.info("errors={}", bindingResult.getFieldError());
             log.info("errors={}", bindingResult.getAllErrors());
-            return "content/addMemberForm";
+            return "content/memberAddForm";
         }
         memberService.save(addMemberFormDto);
-        return "content/loginMemberForm";
+        return "content/memberLoginForm";
     }
     @GetMapping("/member/login")
     String getLoginPage(@RequestParam(name = "error", required = false) String error,
                         @RequestParam(name= "errorMessage", required = false) String errorMessage,
+                        @RequestParam(name= RedirectURL.RedirectURL, required = false)String redirectURL,
                         Model model){
 
         model.addAttribute ("error", error);
         model.addAttribute("errorMessage", errorMessage);
-
-        return "content/loginMemberForm";
+        model.addAttribute(RedirectURL.RedirectURL, redirectURL);
+        return "content/memberLoginForm";
     }
 
     @GetMapping("/member/info")
-    String getMemberInfoPage(){return "content/memberInfo";}
+    String getMemberInfo(){return "content/myInfo";}
+
 
 }

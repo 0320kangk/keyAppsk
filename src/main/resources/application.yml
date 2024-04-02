@@ -6,7 +6,8 @@ spring:
   thymeleaf:
     cache: false
 #    prefix: classpath:/templates/  #docker, aws 환경
-    prefix: file:src/main/resources/templates/ #window 환경
+#    prefix: file:src/main/resources/templates/ #window 환경
+    prefix: ${TEMPLATES_PATH}
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     #local환경
@@ -33,3 +34,5 @@ server:
   servlet:
     session:
       tracking-modes : cookie
+imgFile:
+  dir : C:/Users/82103/IdeaProjects/Spring/myProject/keyAppsk/storeImgFile/

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragment/layoutFile :: layout(~{::body}, 'myInfo')}">
+<body>
+<!-- Single Page Header start -->
+<header th:replace="~{fragment/singlePageHeader :: singlePageHeader('myInfo')}"></header>
+<!-- Single Page Header End -->
+
+</body>
+</html>

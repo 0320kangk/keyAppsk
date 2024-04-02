@@ -12,6 +12,7 @@ import project.keyappsk.domain.store.entity.Store;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -50,7 +51,7 @@ public class Member {
     private LocalDateTime updatedDate;
 
     @OneToMany(mappedBy = "member")
-    private List<Store> members;
+    private List<Store> stores = new ArrayList<>();;
 
     @OneToMany(mappedBy = "memberBuyer")
     private List<Order> orders;

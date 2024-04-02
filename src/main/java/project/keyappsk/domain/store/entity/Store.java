@@ -1,8 +1,7 @@
 package project.keyappsk.domain.store.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import project.keyappsk.domain.cart.entity.Cart;
 import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.store.entity.enumerate.StoreStatus;
@@ -12,6 +11,9 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +23,6 @@ public class Store {
     @JoinColumn(name = "Member_id", nullable = false) //참조 테이블명_필드명(기본키)
     private Member member;
 
-    @OneToMany(mappedBy = "store")
-    private List<Cart> carts;
-
     @Column(nullable = false)
     private String name;
 
@@ -32,7 +31,19 @@ public class Store {
     private StoreStatus storeStatus;
 
     @Column(nullable = false)
-    String address;
+    String roadAddress;
+
+    @Column(nullable = false)
+    String jibunAddress;
+
+    @Column(nullable = false)
+    String detailAddress;
+
+    @Column(nullable = false)
+    String extraAddress;
+
+    @OneToOne(mappedBy = "store")
+    StoreImage storeImage;
 
     @Column(nullable = false)
     private LocalDateTime createdDate;
@@ -40,5 +51,7 @@ public class Store {
     @Column(nullable = false)
     private LocalDateTime updatedDate;
 
+    @OneToMany(mappedBy = "store")
+    private List<Cart> carts;
 
 }

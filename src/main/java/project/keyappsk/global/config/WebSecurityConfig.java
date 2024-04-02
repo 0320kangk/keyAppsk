@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import project.keyappsk.domain.member.entity.enumerate.Role;
 import project.keyappsk.domain.member.handler.MemberAuthenticationFailureHandler;
+import project.keyappsk.domain.member.handler.MemberAuthenticationSuccessHandler;
 import project.keyappsk.domain.member.service.CustomOauth2UserService;
 @Configuration
 @EnableWebSecurity
@@ -20,11 +21,11 @@ import project.keyappsk.domain.member.service.CustomOauth2UserService;
 public class WebSecurityConfig  {
     private final CustomOauth2UserService customOauth2UserService;
     private final MemberAuthenticationFailureHandler memberAuthenticationFailureHandler;
+    private final  MemberAuthenticationSuccessHandler memberAuthenticationSuccessHandler;
     //공용 페이지
     private final String[] publicPage = new String[] {
-            "/", "/member/add",
-            "/member/login",
-            "/member/info",
+            "/", "/member/add", "/member/login", "/member/info","/member/stores",
+            "/store/search","store/myStores",
             "/content/**",
             "/fragment/**",
             "/img/**",
@@ -36,7 +37,8 @@ public class WebSecurityConfig  {
     };
     //일반 회원 페이지
     private final String[] guestPage = new String[] {
-            "/accountInfo"
+            "/accountInfo",
+            "/store/add",
     };
     //가게 주인 페이지
     @Bean
@@ -94,12 +96,8 @@ public class WebSecurityConfig  {
                     .loginProcessingUrl("/member/login")
                     .usernameParameter("email")
                     .passwordParameter("password")
-                    .successHandler(((request, response, authentication) -> {
-                        log.info("로그인 완료되었습니다.");
-                    }))
-                    .defaultSuccessUrl("/", true)
+                    .successHandler(memberAuthenticationSuccessHandler)
                     .failureHandler(memberAuthenticationFailureHandler);
-
         });
     }
 }
