@@ -11,10 +11,16 @@ import project.keyappsk.domain.store.entity.enumerate.StoreStatus;
 @Setter
 @Builder
 @AllArgsConstructor
-public class MyStoreDto {
+public class MemberStoreDto {
 
     @NotBlank
     private String name;
+
+    @NotBlank
+    private String uploadFileName;  //회원이 올린 파일 이름
+
+    @NotBlank
+    private String storeFileName;   //실제 저장 될 파일 이름
 
     @NotBlank
     private StoreStatus storeStatus;
@@ -30,5 +36,6 @@ public class MyStoreDto {
 
     @NotBlank
     private String extraAddress;
+
 
 }

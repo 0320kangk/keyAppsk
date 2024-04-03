@@ -14,6 +14,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +22,7 @@ public class Store {
     //    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "Member_id", nullable = false) //참조 테이블명_필드명(기본키)
+    @ToString.Exclude
     private Member member;
 
     @Column(nullable = false)
@@ -52,6 +54,7 @@ public class Store {
     private LocalDateTime updatedDate;
 
     @OneToMany(mappedBy = "store")
+    @ToString.Exclude
     private List<Cart> carts;
 
 }

@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.member.repository.MemberRepository;
-import project.keyappsk.domain.product.entity.Product;
-import project.keyappsk.domain.product.entity.ProductImage;
-import project.keyappsk.domain.store.dto.MyStoreDto;
+import project.keyappsk.domain.store.dto.MemberStoreDto;
 import project.keyappsk.domain.store.dto.StoreAddFormDto;
 import project.keyappsk.domain.store.entity.Store;
 import project.keyappsk.domain.store.entity.StoreImage;
@@ -39,12 +37,11 @@ public class StoreService {
 
     @Transactional
     public void storeAddFormDtoSave(StoreAddFormDto storeAddFormDto, Member member) throws IOException {
-
         Store store = addFormDtoToStore(storeAddFormDto, member);
         StoreImage storeImage = filesImgSave(storeAddFormDto.getMultipartFile());
-
+        store.setStoreImage(storeImage);
         Store saveStore = storeRepository.save(store);
-        storeImage.setStore(saveStore);
+        storeImage.storeChange(saveStore);
         storeImageRepository.save(storeImage);
 
     }
@@ -94,12 +91,30 @@ public class StoreService {
         return newStore;
     }
     @Transactional
-    public List<Store> getStores(Member member) {
-        Member updateMember = memberRepository.save(member);
+    public List<MemberStoreDto> getStores(Member member) {
+        Member updateMember = memberRepository.findById (member.getId()).get();
         List<Store> stores = updateMember.getStores();
-        List<Store> storesDto = new ArrayList<>();
+        ArrayList<MemberStoreDto> memberStoreDtos = new ArrayList<>();
+        for (Store store : stores) {
+            log.info("store: {}", store.getName());
+            StoreImage storeImage = store.getStoreImage();
+            memberStoreDtos.add(storeToMyStoreDto(store, storeImage));
+        }
 
-        return stores;
+        return memberStoreDtos;
+    }
+
+    private MemberStoreDto storeToMyStoreDto(Store store, StoreImage storeImage) {
+        return MemberStoreDto.builder()
+                .name(store.getName())
+                .storeFileName(storeImage.getStoreFileName())
+                .uploadFileName(storeImage.getUploadFileName())
+                .storeStatus(store.getStoreStatus())
+                .roadAddress(store.getRoadAddress())
+                .jibunAddress(store.getJibunAddress())
+                .detailAddress(store.getDetailAddress())
+                .extraAddress(store.getExtraAddress())
+                .build();
     }
 
 }

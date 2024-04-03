@@ -18,7 +18,7 @@ import project.keyappsk.domain.member.service.CustomOauth2UserService;
 @EnableWebSecurity
 @RequiredArgsConstructor
 @Slf4j
-public class WebSecurityConfig  {
+public class WebSecurityConfig {
     private final CustomOauth2UserService customOauth2UserService;
     private final MemberAuthenticationFailureHandler memberAuthenticationFailureHandler;
     private final  MemberAuthenticationSuccessHandler memberAuthenticationSuccessHandler;

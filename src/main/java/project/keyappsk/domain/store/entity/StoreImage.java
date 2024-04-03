@@ -1,15 +1,13 @@
 package project.keyappsk.domain.store.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class StoreImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +15,7 @@ public class StoreImage {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Store_id", nullable = false)
+    @ToString.Exclude
     private Store store;
 
     @Column(nullable = false)
@@ -28,5 +27,10 @@ public class StoreImage {
     public StoreImage(String uploadFileName, String storeFileName) {
         this.uploadFileName = uploadFileName;
         this.storeFileName = storeFileName;
+    }
+
+    public void storeChange(Store store){
+        this.store = store;
+        store.setStoreImage(this);
     }
 }

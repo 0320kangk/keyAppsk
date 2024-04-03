@@ -2,6 +2,7 @@ package project.keyappsk.domain.member.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import project.keyappsk.domain.alarm.entity.AlarmMessage;
 import project.keyappsk.domain.cart.entity.Cart;
@@ -21,6 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class Member {
 
     @Id
@@ -51,15 +53,19 @@ public class Member {
     private LocalDateTime updatedDate;
 
     @OneToMany(mappedBy = "member")
+    @ToString.Exclude
     private List<Store> stores = new ArrayList<>();;
 
     @OneToMany(mappedBy = "memberBuyer")
+    @ToString.Exclude
     private List<Order> orders;
 
     @OneToMany(mappedBy = "member")
+    @ToString.Exclude
     private List<AlarmMessage> alarmMessages;
 
     @OneToMany(mappedBy = "member")
+    @ToString.Exclude
     private List<Cart> carts;
 
 

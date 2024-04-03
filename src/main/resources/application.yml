@@ -35,4 +35,4 @@ server:
     session:
       tracking-modes : cookie
 imgFile:
-  dir : C:/Users/82103/IdeaProjects/Spring/myProject/keyAppsk/storeImgFile/
+  dir : C:/Users/82103/IdeaProjects/Spring/myProject/keyAppsk/storeImages/

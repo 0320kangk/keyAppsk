@@ -2,19 +2,21 @@ package project.keyappsk.domain.store.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import project.keyappsk.domain.member.dto.CustomUserDetails;
+import project.keyappsk.domain.store.dto.MemberStoreDto;
 import project.keyappsk.domain.store.dto.StoreAddFormDto;
-import project.keyappsk.domain.store.entity.Store;
 import project.keyappsk.domain.store.service.StoreService;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 
 @Controller
@@ -44,9 +46,18 @@ public class StoreController {
     }
 
     @GetMapping("/store/myStores")
-    String getMyStores(@AuthenticationPrincipal CustomUserDetails customUserDetails){
-        List<Store> stores = storeService.getStores(customUserDetails.getMember());
-
+    String getMyStores(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                       Model model){
+        List<MemberStoreDto> stores = storeService.getStores(customUserDetails.getMember());
+        log.info("stores size: {}", stores.size());
+        model.addAttribute ("stores", stores);
         return "content/myStores";
     }
+    @ResponseBody
+    @GetMapping("/storeImages/{filename}")
+    public Resource downloadImage(@PathVariable String filename) throws
+            MalformedURLException {
+        return new UrlResource("file:" + storeService.getFullPath(filename));
+    }
+
 }
