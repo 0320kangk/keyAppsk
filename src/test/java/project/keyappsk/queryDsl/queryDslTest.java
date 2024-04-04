@@ -1,24 +1,19 @@
 package project.keyappsk.queryDsl;
 
 import com.querydsl.core.types.Projections;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.test.context.TestConstructor;
 import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.member.entity.QMember;
-import project.keyappsk.domain.member.repository.MemberJoinRepository;
+import project.keyappsk.domain.member.repository.MemberCustomRepositoryImpl;
 import project.keyappsk.domain.member.repository.MemberRepository;
 import project.keyappsk.domain.store.dto.MemberStoreDto;
 import project.keyappsk.domain.store.entity.QStore;
@@ -47,8 +42,10 @@ public class queryDslTest {
     private JPAQueryFactory jpaQueryFactory;
 
     @Autowired
-    private MemberJoinRepository memberJoinRepository;
+    private MemberCustomRepositoryImpl memberCustomRepositoryImpl;
 
+    @Autowired
+    private MemberRepository memberRepository;
 
     @DisplayName("QeuryDsl, member와 연관된 모든 store 조회하기")
     @Transactional
@@ -86,7 +83,7 @@ public class queryDslTest {
     @Test
     void projectionsTest(){
         PageRequest pageRequest = PageRequest.of(0,1);
-        Page<MemberStoreDto> memberStoreDto = memberJoinRepository.getMemberStoreDto(pageRequest);
+        Page<MemberStoreDto> memberStoreDto = memberRepository.getMemberStoreDto(1,pageRequest);
         List<MemberStoreDto> content = memberStoreDto.getContent();
         System.out.println(content);
     }

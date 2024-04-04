@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,16 +50,20 @@ public class StoreController {
 
     @GetMapping("/store/myStores")
     String getMyStores(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                       @PageableDefault(size=5, direction = Sort.Direction.DESC) Pageable pageable,
                        Model model){
-        List<MemberStoreDto> stores = storeService.getStores(customUserDetails.getMember());
+        List<MemberStoreDto> stores = storeService.getStores(customUserDetails.getMember(), pageable);
         log.info("stores size: {}", stores.size());
         model.addAttribute ("stores", stores);
+        model.addAttribute("page", pageable.getPageNumber());
+
         return "content/myStores";
     }
     @ResponseBody
-    @GetMapping("/storeImages/{filename}")
-    public Resource downloadImage(@PathVariable String filename) throws
+    @GetMapping("/store/image/{filename}")
+    public Resource downloadImage(@PathVariable("filename") String filename) throws
             MalformedURLException {
+        log.info("get Store Image controller contact");
         return new UrlResource("file:" + storeService.getFullPath(filename));
     }
 

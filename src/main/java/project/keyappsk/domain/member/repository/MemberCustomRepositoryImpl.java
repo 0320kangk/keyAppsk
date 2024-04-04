@@ -15,11 +15,11 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class MemberJoinRepository implements  MemberCustomRepository {
+public class MemberCustomRepositoryImpl implements  MemberCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Page<MemberStoreDto> getMemberStoreDto(Pageable pageable) {
+    public Page<MemberStoreDto> getMemberStoreDto(int memberId,Pageable pageable) {
         QMember member = QMember.member;
         QStore store = QStore.store;
         List<MemberStoreDto> content = jpaQueryFactory
@@ -36,6 +36,7 @@ public class MemberJoinRepository implements  MemberCustomRepository {
                 ))
                 .from(member)
                 .join(member.stores, store)
+                .on(member.id.eq(memberId))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

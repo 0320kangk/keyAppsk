@@ -20,6 +20,7 @@
                     <th scope="col">도로명 주소</th>
                     <th scope="col">지번 주소</th>
                     <th scope="col">상세 주소</th>
+                    <th scope="col">추가 주소</th>
                     <th scope="col">가게 상태</th>
                 </tr>
                 </thead>
@@ -34,39 +35,29 @@
                     <td class="py-3 align-middle" th:text="${ chatRoom.getMemberBuyer }"></td>
                 </tr>-->
 
-                <th scope="row">
-                        <div class="d-flex align-items-center ">
-                            <img src="/img/vegetable-item-3.png" class="img-fluid me-5 rounded-circle rounded mx-auto d-block" style="width: 80px; height: 80px;">
+                <tr th:each="store :${stores}">
+                <th scope="row" >
+                        <div class="d-flex align-items-center  ">
+                            <img src="/img/vegetable-item-3.png" th:src="|/store/image/${store.getStoreFileName()}|" class="rounded-circle mx-auto d-block" style="width: 80px; height: 80px;">
                         </div>
                     </th>
                     <td >
-                        <p class="mb-0 mt-4">Big Banana</p>
+                        <p class="mb-0 mt-4 text-center" th:text="${store.getName()}">Big Banana</p>
                     </td>
                     <td>
-                        <p class="mb-0 mt-4">2.99 $</p>
+                        <p class="mb-0 mt-4 text-center" th:text="${store.getRoadAddress()}">2.99 $</p>
                     </td>
                     <td>
-                        <div class="input-group quantity mt-4" style="width: 100px;">
-                            <div class="input-group-btn">
-                                <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                            </div>
-                            <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                            <div class="input-group-btn">
-                                <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
+                        <p class="mb-0 mt-4 text-center" th:text="${store.getJibunAddress()}">2.99 $</p>
                     </td>
                     <td>
-                        <p class="mb-0 mt-4">2.99 $</p>
+                        <p class="mb-0 mt-4 text-center" th:text="${store.getDetailAddress()}">2.99 $</p>
                     </td>
                     <td>
-                        <button class="btn btn-md rounded-circle bg-light border mt-4" >
-                            <i class="fa fa-times text-danger"></i>
-                        </button>
+                        <p class="mb-0 mt-4 text-center" th:text="${store.getExtraAddress()}">2.99 $</p>
+                    </td>
+                    <td>
+                        <p class="mb-0 mt-4 text-center" th:text="${store.getStoreStatus()}">2.99 $</p>
                     </td>
 
                 </tr>

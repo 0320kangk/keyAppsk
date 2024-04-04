@@ -4,6 +4,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import project.keyappsk.domain.member.entity.Member;
@@ -91,17 +93,18 @@ public class StoreService {
         return newStore;
     }
     @Transactional
-    public List<MemberStoreDto> getStores(Member member) {
-        Member updateMember = memberRepository.findById (member.getId()).get();
+    public List<MemberStoreDto> getStores(Member member, Pageable pageable) {
+        Page<MemberStoreDto> memberStoreDto = memberRepository.getMemberStoreDto(member.getId(), pageable);
+       /* Member updateMember = memberRepository.findById (member.getId()).get();
         List<Store> stores = updateMember.getStores();
         ArrayList<MemberStoreDto> memberStoreDtos = new ArrayList<>();
         for (Store store : stores) {
             log.info("store: {}", store.getName());
             StoreImage storeImage = store.getStoreImage();
             memberStoreDtos.add(storeToMyStoreDto(store, storeImage));
-        }
+        }*/
 
-        return memberStoreDtos;
+        return memberStoreDto.getContent();
     }
 
     private MemberStoreDto storeToMyStoreDto(Store store, StoreImage storeImage) {
