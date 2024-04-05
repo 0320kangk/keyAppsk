@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragment/layoutFile :: layout(~{::body}, 'myStore')}">
+    <body>
+    <!-- Single Page Header start -->
+    <header th:replace="~{fragment/singlePageHeader :: singlePageHeader('myStores')}"></header>
+    <!-- Single Page Header End -->
+
+    <!-- Checkout Page Start -->
+        <div class="container-fluid py-5">
+            <div class="container py-5">
+                <h1 class="mb-4">카테고리 리스트</h1>
+
+                <a class="btn border border-secondary rounded-pill px-3 text-primary h4" >카테고리 추가</a>
+                <form action="#">
+                    <div class="row g-5">
+
+
+                        <div class="col-md-12 col-lg-6 col-xl-5">
+
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <a class="btn border  border-secondary rounded-pill px-3 text-primary h4" >물품 추가</a>
+
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center text-dark h4" scope="col">(카테고리) 리스트
+                                        </th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-5 text-center text-dark h4">과자</td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-12 col-lg-6 col-xl-7">
+
+                            <div class="form-item">
+                                <label class="form-label my-3">물품 이름<sup>*</sup></label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label my-3">가격<sup>*</sup></label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label my-3">수량<sup>*</sup></label>
+                                <input type="text" class="form-control" placeholder="House Number Street Name">
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label my-3">판매 상태<sup>*</sup></label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label my-3">물품 이미지<sup>*</sup></label>
+                                <input type="text" class="form-control">
+                            </div>
+
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Checkout Page End -->
+    </body>
+
+</html>

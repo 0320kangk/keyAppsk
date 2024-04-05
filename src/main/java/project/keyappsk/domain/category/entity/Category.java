@@ -16,6 +16,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    //이름 컬럼 필요 unique
     @ManyToOne
     @JoinColumn(name = "Store_id")
     private Store store;

@@ -25,7 +25,7 @@ public class WebSecurityConfig {
     //공용 페이지
     private final String[] publicPage = new String[] {
             "/", "/member/add", "/member/login", "/member/info","/member/stores",
-            "/store/search","store/myStores","store/image/**",
+            "/store/search","/store/myStores","/store/myStore","/store/image/*",
             "/content/**",
             "/fragment/**",
             "/img/**",
@@ -37,7 +37,6 @@ public class WebSecurityConfig {
     };
     //일반 회원 페이지
     private final String[] guestPage = new String[] {
-            "/accountInfo",
             "/store/add",
     };
     //가게 주인 페이지

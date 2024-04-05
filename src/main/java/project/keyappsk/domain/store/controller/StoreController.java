@@ -40,7 +40,7 @@ public class StoreController {
             return "content/storeAddForm";
         }
         storeService.storeAddFormDtoSave(StoreAddFormDto, customUserDetails.getMember());
-        return "content/myInfo";
+        return "content/myPage/myInfo";
     }
 
     @GetMapping("/store/search")
@@ -57,8 +57,16 @@ public class StoreController {
         model.addAttribute ("stores", stores);
         model.addAttribute("page", pageable.getPageNumber());
 
-        return "content/myStores";
+        return "content/myPage/myStores";
     }
+
+    @GetMapping("/store/myStore")
+    String getMyStore() {
+        return "content/myPage/myStore";
+    }
+
+
+
     @ResponseBody
     @GetMapping("/store/image/{filename}")
     public Resource downloadImage(@PathVariable("filename") String filename) throws
