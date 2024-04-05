@@ -48,7 +48,7 @@ public class MemberController {
     }
 
     @GetMapping("/member/info")
-    String getMemberInfo(){return "content/myInfo";}
+    String getMemberInfo(){return "content/myPage/myInfo";}
 
 
 }

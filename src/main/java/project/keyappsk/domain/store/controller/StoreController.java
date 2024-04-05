@@ -65,8 +65,6 @@ public class StoreController {
         return "content/myPage/myStore";
     }
 
-
-
     @ResponseBody
     @GetMapping("/store/image/{filename}")
     public Resource downloadImage(@PathVariable("filename") String filename) throws
