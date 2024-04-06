@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import project.keyappsk.domain.category.dto.CategoryAddFormDto;
 import project.keyappsk.domain.member.dto.CustomUserDetails;
 import project.keyappsk.domain.store.dto.MemberStoreDto;
 import project.keyappsk.domain.store.dto.StoreAddFormDto;
@@ -61,7 +62,9 @@ public class StoreController {
     }
 
     @GetMapping("/store/myStore")
-    String getMyStore() {
+    String getMyStore(@ModelAttribute("categoryAddFormDto") CategoryAddFormDto categoryAddFormDto,
+                      @ModelAttribute("storeName") String storeName) {
+
         return "content/myPage/myStore";
     }
 

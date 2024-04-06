@@ -25,7 +25,7 @@
 
                         <div class="mb-3">
                             <input class="form-control rounded-start" id="name" th:name="name" type="text" placeholder="가게 이름을 입력하세요" required="" name="name" value="">
-                            <div th:class="mt-1" th:if="*{name}"><small th:class="field-error" th:errors="*{name}"></small></div>
+                            <div th:class="mt-1"  th:if="${#fields.hasErrors('name')}"><small th:class="field-error" th:errors="*{name}"></small></div>
                         </div>
                         <div class="mb-3 mt-2 align-items-center">
                             <label for="multipartFile">
@@ -45,19 +45,19 @@
                         </div>
                         <div class="mb-3">
                             <input class="form-control rounded-start" type="text" th:name="roadAddress" id="sample4_roadAddress" placeholder="도로명주소" readonly>
-                            <div th:class="mt-1" th:if="*{roadAddress}"><small th:class="field-error" th:errors="*{roadAddress}"></small></div>
+                            <div th:class="mt-1"  th:if="${#fields.hasErrors('roadAddress')}"><small th:class="field-error" th:errors="*{roadAddress}"></small></div>
                         </div>
                         <div class="mb-3">
                             <input class="form-control rounded-start" type="text" th:name="jibunAddress"  id="sample4_jibunAddress" placeholder="지번주소" readonly>
-                            <div th:class="mt-1" th:if="*{jibunAddress}"><small th:class="field-error" th:errors="*{jibunAddress}"></small></div>
+                            <div th:class="mt-1" th:if="${#fields.hasErrors('jibunAddress')}"><small th:class="field-error" th:errors="*{jibunAddress}"></small></div>
                         </div>
                         <div class="mb-3">
                             <input class="form-control rounded-start" type="text" th:name="detailAddress" id="sample4_detailAddress" placeholder="상세주소" required>
-                            <div th:class="mt-1" th:if="*{detailAddress}"><small th:class="field-error" th:errors="*{detailAddress}"></small></div>
+                            <div th:class="mt-1" th:if="${#fields.hasErrors('detailAddress')}"><small th:class="field-error" th:errors="*{detailAddress}"></small></div>
                         </div>
                         <div class="mb-3">
                             <input class="form-control rounded-start" type="text" th:name="extraAddress"  id="sample4_extraAddress" placeholder="참고항목" readonly>
-                            <div th:class="mt-1" th:if="*{extraAddress}"><small th:class="field-error" th:errors="*{extraAddress}"></small></div>
+                            <div th:class="mt-1" th:if="${#fields.hasErrors('extraAddress')}"><small th:class="field-error" th:errors="*{extraAddress}"></small></div>
                         </div>
 
                         <!--                        <input type="text" id="sample4_roadAddress" placeholder="도로명주소">-->

@@ -24,6 +24,8 @@ public class QCategory extends EntityPathBase<Category> {
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
+    public final StringPath name = createString("name");
+
     public final ListPath<project.keyappsk.domain.product.entity.Product, project.keyappsk.domain.product.entity.QProduct> products = this.<project.keyappsk.domain.product.entity.Product, project.keyappsk.domain.product.entity.QProduct>createList("products", project.keyappsk.domain.product.entity.Product.class, project.keyappsk.domain.product.entity.QProduct.class, PathInits.DIRECT2);
 
     public final project.keyappsk.domain.store.entity.QStore store;

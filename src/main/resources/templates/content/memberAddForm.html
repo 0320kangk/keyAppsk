@@ -20,17 +20,17 @@
 <!--                        <input type="hidden" name="_csrf" value="d90bdd83-94e7-45af-974a-6ab0bc5bfddd">-->
                         <div class="mb-3"><i class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
                             <input class="form-control rounded-start" id="id" th:field="*{email}" type="email" placeholder="email을 입력하세요" name="email" value="" required>
-                            <div th:class="mt-1" th:if="*{email}"><small th:class="field-error" th:errors="*{email}"></small></div>
+                            <div th:class="mt-1"  th:if="${#fields.hasErrors('email')}"><small th:class="field-error" th:errors="*{email}"></small></div>
                         </div>
 
                         <div class="mb-3">
                             <input class="form-control rounded-start" id="name" type="text" th:field="*{name}" placeholder="이름을 입력하세요" name="name" value="" required >
-                            <div th:class="mt-1" th:if="*{name}"><small th:class="field-error" th:errors="*{name}"></small></div>
+                            <div th:class="mt-1"  th:if="${#fields.hasErrors('name')}"><small th:class="field-error" th:errors="*{name}"></small></div>
                         </div>
 
                         <div class="mb-3">
                                 <input class="form-control" type="password" id="password" placeholder="비밀번호" th:field="*{password}" autocomplete="off" name="password" value="" required>
-                            <div th:class="mt-1" th:if="*{password}"><small th:class="field-error" th:errors="*{password}"></small></div>
+                            <div th:class="mt-1"  th:if="${#fields.hasErrors('password')}"><small th:class="field-error" th:errors="*{password}"></small></div>
                         </div>
 
                         <hr class="mt-4">
