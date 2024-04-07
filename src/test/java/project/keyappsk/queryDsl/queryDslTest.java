@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import project.keyappsk.domain.category.dto.CategoryStoreDto;
+import project.keyappsk.domain.category.repository.CategoryRepository;
 import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.member.entity.QMember;
 import project.keyappsk.domain.member.repository.MemberCustomRepositoryImpl;
@@ -46,6 +48,9 @@ public class queryDslTest {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @DisplayName("QeuryDsl, member와 연관된 모든 store 조회하기")
     @Transactional
@@ -87,5 +92,17 @@ public class queryDslTest {
         List<MemberStoreDto> content = memberStoreDto.getContent();
         System.out.println(content);
     }
+
+    @DisplayName("Category join store on id test")
+    @Transactional
+    @Test
+    void selectCategoryJoinStore(){
+        List<CategoryStoreDto> categoryJoinStoreOnId = categoryRepository.findCategoryJoinStoreOnName("강준호");
+        for (CategoryStoreDto categoryStoreDto : categoryJoinStoreOnId) {
+            System.out.println(categoryStoreDto.getName());
+        }
+        assertThat(categoryJoinStoreOnId).hasSize(1);
+    }
+
 
 }

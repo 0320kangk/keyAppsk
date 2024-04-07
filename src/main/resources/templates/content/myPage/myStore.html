@@ -43,15 +43,14 @@
                                     </div>
 
                                 </form>
-
                             </div>
-
-
-
-
                         </div>
                     </div>
                 </div>
+                    <a th:each="category :${categorys}" type="button" class="btn border border-secondary rounded-pill px-3 text-primary h4 me-2 "  th:text="${category.name}">
+
+                    </a>
+
                 <form action="#">
                     <div class="row g-5">
 

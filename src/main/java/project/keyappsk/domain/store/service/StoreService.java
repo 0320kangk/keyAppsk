@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import project.keyappsk.domain.category.service.CategoryService;
 import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.member.repository.MemberRepository;
 import project.keyappsk.domain.store.dto.MemberStoreDto;

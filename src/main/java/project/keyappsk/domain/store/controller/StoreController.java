@@ -14,6 +14,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project.keyappsk.domain.category.dto.CategoryAddFormDto;
+import project.keyappsk.domain.category.dto.CategoryStoreDto;
+import project.keyappsk.domain.category.repository.CategoryRepository;
+import project.keyappsk.domain.category.service.CategoryService;
 import project.keyappsk.domain.member.dto.CustomUserDetails;
 import project.keyappsk.domain.store.dto.MemberStoreDto;
 import project.keyappsk.domain.store.dto.StoreAddFormDto;
@@ -28,6 +31,7 @@ import java.util.List;
 @Slf4j
 public class StoreController {
     private final StoreService storeService;
+    private final CategoryService categoryService;
     @GetMapping("/store/add")
     String getStoreAddForm(@ModelAttribute StoreAddFormDto storeAddFormDto){
         return "content/storeAddForm";
@@ -63,8 +67,10 @@ public class StoreController {
 
     @GetMapping("/store/myStore")
     String getMyStore(@ModelAttribute("categoryAddFormDto") CategoryAddFormDto categoryAddFormDto,
-                      @ModelAttribute("storeName") String storeName) {
-
+                      @ModelAttribute("storeName") String storeName,
+                      Model model) {
+        List<CategoryStoreDto> categorys = categoryService.findCategoryJoinStoreOnName(storeName);
+        model.addAttribute("categorys", categorys);
         return "content/myPage/myStore";
     }
 
