@@ -25,9 +25,9 @@ public class WebSecurityConfig {
     //공용 페이지
     private final String[] publicPage = new String[] {
             "/", "/member/add", "/member/login", "/member/info","/member/stores",
-            "/store/search","/store/myStores","/store/myStore","/store/image/*",
-            "/category/add",
-            "/product/add",
+            "/store/search","/store/myStores","/store/myStore/*","/store/image/*",
+            "/category/add/*",
+            "/product/add/*",
             "/content/**",
             "/fragment/**",
             "/img/**",

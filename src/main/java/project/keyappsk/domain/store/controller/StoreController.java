@@ -65,11 +65,13 @@ public class StoreController {
         return "content/myPage/myStores";
     }
 
-    @GetMapping("/store/myStore")
-    String getMyStore(@ModelAttribute("categoryAddFormDto") CategoryAddFormDto categoryAddFormDto,
+    @GetMapping("/store/myStore/{storeId}")
+    String getMyStore(@PathVariable("storeId") Integer storeId,
+                        @ModelAttribute("categoryAddFormDto") CategoryAddFormDto categoryAddFormDto,
                       @ModelAttribute("storeName") String storeName,
                       Model model) {
-        List<CategoryStoreDto> categorys = categoryService.findCategoryJoinStoreOnName(storeName);
+        List<CategoryStoreDto> categorys = categoryService.findCategoryJoinStoreOnStoreId(storeId);
+        model.addAttribute("storeId",storeId);
         model.addAttribute("categorys", categorys);
         return "content/myPage/myStore";
     }

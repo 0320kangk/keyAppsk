@@ -29,12 +29,12 @@
                             </div>
                             <!-- Modal body -->
                             <div class="modal-body">
-                                <form class="needs-validation" th:action="@{/category/add}"  method="post" th:object="${categoryAddFormDto}">
+                                <form class="needs-validation" th:action="@{/category/add/{storeId}(storeId=${storeId})}"  method="post" th:object="${categoryAddFormDto}">
                                     <div class="form-group">
                                         <label for="category-name" class="col-form-label">카테고리 이름: </label>
                                         <input type="text" class="form-control" id="category-name" th:field="*{name}" placeholder="카테고리 이름을 입력하세요">
                                         <div th:class="mt-1" th:if="${#fields.hasErrors('name')}"><small th:class="field-error" th:errors="*{name}"></small></div>
-                                        <input type="hidden" class="form-control" id="store-name" name="storeName" th:value="${storeName}">
+<!--                                        <input type="hidden" class="form-control" id="storeId" name="storeId" th:value="${storeId}">-->
 
                                     </div>
                                     <div class="my-3" align="right">
@@ -47,9 +47,17 @@
                         </div>
                     </div>
                 </div>
-                    <a th:each="category :${categorys}" type="button" class="btn border border-secondary rounded-pill px-3 text-primary h4 me-2 "  th:text="${category.name}">
+                <span id="category-group">
+                    <button th:each="category, categoryStat : ${categorys}"
+                            th:id="|category-tag-${categoryStat.count}|"
+                            onclick=categoryTagClick(this)
+                            type="button"
+                            class="btn border btn-outline-secondary border-secondary  rounded-pill px-3 text-primary h4 me-2"
+                            th:value="${category.id}"
+                            th:text="${category.name}">
 
-                    </a>
+                    </button>
+                </span>
 
                 <form action="#">
                     <div class="row g-5">
@@ -59,7 +67,7 @@
 
                             <div class="table-responsive">
                                 <table class="table table-hover">
-                                    <a class="btn border  border-secondary rounded-pill px-3 text-primary h4" >물품 추가</a>
+                                    <a id="productAdd" class="btn border  border-secondary rounded-pill px-3 text-primary h4" >물품 추가</a>
 
                                     <thead>
                                     <tr>
@@ -131,6 +139,21 @@
             </div>
         </div>
         <!-- Checkout Page End -->
-    </body>
+    <script>
+        let preCategoryTag = null;
+        function categoryTagClick(element){
+            console.log(element)
+            if (preCategoryTag !== null && element !== preCategoryTag)
+                $('#' + preCategoryTag.id).removeClass("active text-white").addClass("text-primary");
+            $('#' + element.id ).addClass("active text-white").removeClass("text-primary");
+            preCategoryTag = element;
+            if (element !== preCategoryTag) preCategoryTag = element
+            $('#productAdd').attr("href","/product/add/" + element.value);
+        }
+        $(document).ready(function (){
 
+
+        })
+    </script>
+    </body>
 </html>

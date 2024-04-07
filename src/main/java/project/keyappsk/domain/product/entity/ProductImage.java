@@ -1,12 +1,14 @@
 package project.keyappsk.domain.product.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductImage {
 
     @Id
@@ -21,6 +23,6 @@ public class ProductImage {
     String uploadFileName;
 
     @Column(nullable = false)
-    String saveFileName;
+    String storeFileName;
 
 }

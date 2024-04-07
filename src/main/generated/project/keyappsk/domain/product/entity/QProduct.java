@@ -26,6 +26,8 @@ public class QProduct extends EntityPathBase<Product> {
 
     public final project.keyappsk.domain.category.entity.QCategory category;
 
+    public final NumberPath<Integer> count = createNumber("count", Integer.class);
+
     public final DateTimePath<java.time.LocalDateTime> createdDate = createDateTime("createdDate", java.time.LocalDateTime.class);
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);

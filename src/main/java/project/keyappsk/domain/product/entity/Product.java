@@ -1,8 +1,7 @@
 package project.keyappsk.domain.product.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import project.keyappsk.domain.cart.entity.Cart;
 import project.keyappsk.domain.category.entity.Category;
 import project.keyappsk.domain.orders.entity.Order;
@@ -15,6 +14,9 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +38,9 @@ public class Product {
 
     @Column(nullable = false)
     int price;
+
+    @Column(nullable = false)
+    int count;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

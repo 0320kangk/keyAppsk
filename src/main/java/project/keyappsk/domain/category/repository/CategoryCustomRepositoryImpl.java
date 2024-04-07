@@ -13,13 +13,13 @@ import java.util.List;
 public class CategoryCustomRepositoryImpl implements CategoryCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
     @Override
-    public List<CategoryStoreDto> findCategoryJoinStoreOnName(String storeName) {
+    public List<CategoryStoreDto> findCategoryJoinStoreOnStoreId(Integer storeId) {
         QStore store = QStore.store;
         QCategory category = QCategory.category;
-        List<CategoryStoreDto> fetch = jpaQueryFactory.select(Projections.constructor(CategoryStoreDto.class, category.name))
+        List<CategoryStoreDto> fetch = jpaQueryFactory.select(Projections.constructor(CategoryStoreDto.class, category.id,category.name))
                 .from(category)
                 .join(store)
-                .on(store.name.eq(storeName))
+                .on(store.id.eq(storeId))
                 .fetch();
         return fetch;
     }

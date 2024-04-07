@@ -31,6 +31,7 @@ public class StoreAddFormDto {
     @NotBlank
     private String extraAddress;
 
+    @NotBlank
     private MultipartFile multipartFile; //이미지
 
 }

@@ -8,5 +8,5 @@ import project.keyappsk.domain.store.dto.MemberStoreDto;
 
 public interface MemberCustomRepository {
 
-    Page<MemberStoreDto> getMemberStoreDto(int memberId, Pageable pageable);
+    Page<MemberStoreDto> getMemberStoreDto(Integer memberId, Pageable pageable);
 }

@@ -35,7 +35,7 @@ public class StoreService {
     private final MemberRepository memberRepository;
     private final StoreImageRepository storeImageRepository;
 
-    @Value("${imgFile.dir}")
+    @Value("${storeImgFile.dir}")
     private String imgFileDir;
 
     @Transactional

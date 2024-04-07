@@ -19,12 +19,13 @@ public class MemberCustomRepositoryImpl implements  MemberCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Page<MemberStoreDto> getMemberStoreDto(int memberId,Pageable pageable) {
+    public Page<MemberStoreDto> getMemberStoreDto(Integer memberId,Pageable pageable) {
         QMember member = QMember.member;
         QStore store = QStore.store;
         List<MemberStoreDto> content = jpaQueryFactory
                 .select(Projections.constructor(
                         MemberStoreDto.class,
+                        store.id,
                         store.name,
                         store.storeImage.uploadFileName,
                         store.storeImage.storeFileName,

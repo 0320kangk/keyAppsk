@@ -11,5 +11,6 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 public class CategoryStoreDto {
+    Integer id;
     String name;
 }

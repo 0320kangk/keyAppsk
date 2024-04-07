@@ -18,16 +18,16 @@ import java.util.Optional;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final StoreRepository storeRepository;
-    public void saveCategoryAddFormDto(String storeName , CategoryAddFormDto categoryAddFormDto) {
-        Store store = storeRepository.findByName(storeName).get();
+    public void saveCategoryAddFormDto(Integer storeId , CategoryAddFormDto categoryAddFormDto) {
+        Store store = storeRepository.findById(storeId).get();
         Category category = Category.builder()
                     .name(categoryAddFormDto.getName())
                     .store(store)
                     .build();
         categoryRepository.save(category);
     }
-    public List<CategoryStoreDto> findCategoryJoinStoreOnName (String storeName){
-        List<CategoryStoreDto> categoryJoinStoreOnId = categoryRepository.findCategoryJoinStoreOnName(storeName);
+    public List<CategoryStoreDto> findCategoryJoinStoreOnStoreId (Integer storeId){
+        List<CategoryStoreDto> categoryJoinStoreOnId = categoryRepository.findCategoryJoinStoreOnStoreId(storeId);
         return categoryJoinStoreOnId;
     }
 

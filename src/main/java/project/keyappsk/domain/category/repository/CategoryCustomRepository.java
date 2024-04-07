@@ -6,5 +6,5 @@ import project.keyappsk.domain.category.entity.Category;
 import java.util.List;
 
 public interface CategoryCustomRepository {
-    public List<CategoryStoreDto> findCategoryJoinStoreOnName(String storeName);
+    public List<CategoryStoreDto> findCategoryJoinStoreOnStoreId(Integer storeName);
 }

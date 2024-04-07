@@ -14,6 +14,9 @@ import project.keyappsk.domain.store.entity.enumerate.StoreStatus;
 public class MemberStoreDto {
 
     @NotBlank
+    private Integer id;
+
+    @NotBlank
     private String name;
 
     @NotBlank
