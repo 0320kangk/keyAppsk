@@ -19,6 +19,7 @@ import project.keyappsk.domain.category.repository.CategoryRepository;
 import project.keyappsk.domain.category.service.CategoryService;
 import project.keyappsk.domain.member.dto.CustomUserDetails;
 import project.keyappsk.domain.product.dto.ProductMyStoreDto;
+import project.keyappsk.domain.product.dto.ProductUpdateFormDto;
 import project.keyappsk.domain.product.service.ProductService;
 import project.keyappsk.domain.store.dto.MemberStoreDto;
 import project.keyappsk.domain.store.dto.StoreAddFormDto;
@@ -71,6 +72,7 @@ public class StoreController {
     @GetMapping("/store/myStore/{storeId}")
     String getMyStore(@PathVariable("storeId") Integer storeId,
                         @ModelAttribute("categoryAddFormDto") CategoryAddFormDto categoryAddFormDto,
+                      @ModelAttribute("productUpdateFormDto") ProductUpdateFormDto productUpdateFormDto,
                       @ModelAttribute("storeName") String storeName,
                       Model model) {
         List<CategoryStoreDto> categorys = categoryService.getCategoryStoreDto(storeId);

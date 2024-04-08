@@ -28,7 +28,7 @@ public class CategoryController {
         if (bindingResult.hasErrors()){
             log.info("hasError");
             log.info("error: {}", bindingResult.getFieldError());
-            return "content/myPage/myStore";
+            return "redirect:/store/myStore/" + storeId;
         }
         categoryService.saveCategoryAddFormDto(storeId,categoryAddFormDto);
 //        redirectAttributes.addAttribute("storeId", storeId);

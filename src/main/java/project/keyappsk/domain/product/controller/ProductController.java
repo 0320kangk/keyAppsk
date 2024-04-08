@@ -6,10 +6,13 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.keyappsk.domain.category.service.CategoryService;
 import project.keyappsk.domain.product.dto.ProductAddFormDto;
+import project.keyappsk.domain.product.dto.ProductUpdateFormDto;
 import project.keyappsk.domain.product.service.ProductService;
 import project.keyappsk.domain.store.service.StoreService;
 
@@ -39,6 +42,20 @@ public class ProductController {
         return "redirect:/store/myStore/" + storeId;
 
     }
+    @PostMapping("/product/update/{productId}")
+    String postProductUpdateForm(@PathVariable("productId") Integer productId,
+                              @Validated @ModelAttribute("productUpdateFormDto") ProductUpdateFormDto productUpdateFormDto,
+                                 BindingResult bindingResult
+    ) throws IOException {
+        if(bindingResult.hasErrors()){
+            return "/store/myStore" ;
+        }
+//        productService.storeAddFormDtoSave(productAddFormDto, categoryId);
+//        Integer storeId = categoryService.findStoreById(categoryId);
+        return "redirect:/store/myStore";
+
+    }
+
     @ResponseBody
     @GetMapping("/product/image/{filename}")
     public Resource downloadImage(@PathVariable("filename") String filename) throws
