@@ -38,3 +38,5 @@ out/
 
 ### docker env ###
 .env
+/productImages/
+/storeImages/

@@ -10,7 +10,7 @@
             <div class="card border-0 shadow">
                 <div class="card-body">
 
-                    <h3 class="fs-base pt-4 pb-2">가게 등록</h3>
+                    <h3 class="fs-base pt-4 pb-2">물품 등록</h3>
 
                     <form class="needs-validation" th:action="@{/product/add/{categoryId}(categoryId=${categoryId})}" method="post" enctype="multipart/form-data"
                           autocomplete="off"
@@ -18,15 +18,15 @@
                         <!--                        <input type="hidden" name="_csrf" value="d90bdd83-94e7-45af-974a-6ab0bc5bfddd">-->
 
                         <div class="mb-3">
-                            <input class="form-control rounded-start" id="name" th:name="name" type="text" placeholder="가게 이름을 입력하세요" >
+                            <input class="form-control rounded-start" id="name" th:name="name" type="text" placeholder="물품 이름을 입력하세요" >
                             <div th:class="mt-1" th:if="${#fields.hasErrors('name')}"><small th:class="field-error" th:errors="*{name}"></small></div>
                         </div>
                         <div class="mb-3">
-                            <input class="form-control rounded-start" type="text" th:name="price"  id="price" placeholder="가격을 입력하세요">
+                            <input class="form-control rounded-start" type="text" th:name="price"  id="price" placeholder="물품 가격을 입력하세요(단위: 원)">
                             <div th:class="mt-1" th:if="${#fields.hasErrors('price')}"><small th:class="field-error" th:errors="*{price}"></small></div>
                         </div>
                         <div class="mb-3">
-                            <input class="form-control rounded-start" type="text" th:name="count"  id="count" placeholder="개수를 입력하세요">
+                            <input class="form-control rounded-start" type="text" th:name="count"  id="count" placeholder="물품 개수를 입력하세요">
                             <div th:class="mt-1" th:if="${#fields.hasErrors('count')}"><small th:class="field-error" th:errors="*{count}"></small></div>
                         </div>
                         <div class="mb-3 mt-2 align-items-center">
@@ -40,6 +40,14 @@
                                    required>
                             <small th:class="field-error" th:errors="*{image}"></small>
                         </div>
+                        <div class="form-group">
+                            <label class="form-label" for="exampleFormControlTextarea">물품 설명</label>
+                            <textarea class="form-control" th:field="*{description}" id="exampleFormControlTextarea" rows="3"></textarea>
+                            <div th:class="mt-1" th:if="${#fields.hasErrors('description')}"><small th:class="field-error" th:errors="*{description}"></small></div>
+                        </div>
+
+
+
                         <hr class="mt-4">
                         <div class="row text-end m-auto pt-4 w-100">
                             <button class="btn btn-primary" type="submit"><i class="ci-sign-in me-2 ms-n21"></i>물품 등록

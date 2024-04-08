@@ -38,6 +38,7 @@ public class StoreService {
     @Value("${storeImgFile.dir}")
     private String imgFileDir;
 
+
     @Transactional
     public void storeAddFormDtoSave(StoreAddFormDto storeAddFormDto, Member member) throws IOException {
         Store store = addFormDtoToStore(storeAddFormDto, member);
@@ -96,17 +97,11 @@ public class StoreService {
     @Transactional
     public List<MemberStoreDto> getStores(Member member, Pageable pageable) {
         Page<MemberStoreDto> memberStoreDto = memberRepository.getMemberStoreDto(member.getId(), pageable);
-       /* Member updateMember = memberRepository.findById (member.getId()).get();
-        List<Store> stores = updateMember.getStores();
-        ArrayList<MemberStoreDto> memberStoreDtos = new ArrayList<>();
-        for (Store store : stores) {
-            log.info("store: {}", store.getName());
-            StoreImage storeImage = store.getStoreImage();
-            memberStoreDtos.add(storeToMyStoreDto(store, storeImage));
-        }*/
 
         return memberStoreDto.getContent();
     }
+
+
 
     private MemberStoreDto storeToMyStoreDto(Store store, StoreImage storeImage) {
         return MemberStoreDto.builder()
@@ -120,5 +115,7 @@ public class StoreService {
                 .extraAddress(store.getExtraAddress())
                 .build();
     }
+
+
 
 }

@@ -2,12 +2,14 @@ package project.keyappsk.domain.product.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import project.keyappsk.domain.category.entity.Category;
 import project.keyappsk.domain.category.repository.CategoryRepository;
 import project.keyappsk.domain.product.dto.ProductAddFormDto;
+import project.keyappsk.domain.product.dto.ProductMyStoreDto;
 import project.keyappsk.domain.product.entity.Product;
 import project.keyappsk.domain.product.entity.ProductImage;
 import project.keyappsk.domain.product.entity.enumerate.ProductStatus;
@@ -19,10 +21,12 @@ import project.keyappsk.domain.store.entity.StoreImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ProductService {
 
     private final CategoryRepository categoryRepository;
@@ -33,15 +37,20 @@ public class ProductService {
     private String imgFileDir;
 
     @Transactional
+    public List<ProductMyStoreDto> getProductMyStoreDto(Integer storeId){
+        return productRepository.findByStoreId(storeId);
+    }
+
+    @Transactional
     public void storeAddFormDtoSave(ProductAddFormDto productAddFormDto, Integer categoryId ) throws IOException {
 
         Category category = categoryRepository.findById(categoryId).get();
-
         Product product = addFormDtoToProduct(productAddFormDto, category);
         ProductImage productImage = filesImgSave(productAddFormDto.getImage());
         product.setProductImage(productImage);
         Product saveProduct = productRepository.save(product);
         productImage.setProduct(saveProduct);
+        log.info("storeFilename: {} ",productImage.getStoreFileName());
         productImageRepository.save(productImage);
 
     }
@@ -50,7 +59,8 @@ public class ProductService {
                 .name(productAddFormDto.getName())
                 .price(productAddFormDto.getPrice())
                 .count(productAddFormDto.getCount())
-                .productStatus(ProductStatus.DEADLIEN)
+                .description(productAddFormDto.getDescription())
+                .productStatus(ProductStatus.DEADLINE)
                 .store(category.getStore())
                 .category(category)
                 .createdDate(LocalDateTime.now())
@@ -89,4 +99,5 @@ public class ProductService {
         int pos = originalFilename.lastIndexOf(".");
         return originalFilename.substring(pos + 1);
     }
+
 }

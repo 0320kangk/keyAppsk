@@ -23,6 +23,9 @@ public class ProductAddFormDto {
     Integer count;
 
     @NotBlank
+    String description;
+
+    @NotBlank
     private MultipartFile image; //이미지
 
 

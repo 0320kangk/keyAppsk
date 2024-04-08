@@ -26,7 +26,7 @@ public class QProductImage extends EntityPathBase<ProductImage> {
 
     public final QProduct product;
 
-    public final StringPath saveFileName = createString("saveFileName");
+    public final StringPath storeFileName = createString("storeFileName");
 
     public final StringPath uploadFileName = createString("uploadFileName");
 

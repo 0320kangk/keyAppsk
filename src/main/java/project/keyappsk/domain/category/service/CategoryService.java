@@ -1,7 +1,6 @@
 package project.keyappsk.domain.category.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import project.keyappsk.domain.category.dto.CategoryAddFormDto;
 import project.keyappsk.domain.category.dto.CategoryStoreDto;
@@ -11,7 +10,6 @@ import project.keyappsk.domain.store.entity.Store;
 import project.keyappsk.domain.store.repository.StoreRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,9 +24,12 @@ public class CategoryService {
                     .build();
         categoryRepository.save(category);
     }
-    public List<CategoryStoreDto> findCategoryJoinStoreOnStoreId (Integer storeId){
-        List<CategoryStoreDto> categoryJoinStoreOnId = categoryRepository.findCategoryJoinStoreOnStoreId(storeId);
-        return categoryJoinStoreOnId;
+    public List<CategoryStoreDto> getCategoryStoreDto (Integer storeId){
+        return categoryRepository.findCategoryStoreWhereStoreId(storeId);
+    }
+
+    public Integer findStoreById(Integer categoryId){
+        return categoryRepository.findById(categoryId).get().getStore().getId();
     }
 
 }

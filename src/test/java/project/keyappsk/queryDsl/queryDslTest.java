@@ -11,15 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import project.keyappsk.domain.category.dto.CategoryStoreDto;
 import project.keyappsk.domain.category.repository.CategoryRepository;
 import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.member.entity.QMember;
 import project.keyappsk.domain.member.repository.MemberCustomRepositoryImpl;
 import project.keyappsk.domain.member.repository.MemberRepository;
+import project.keyappsk.domain.product.dto.ProductAddFormDto;
+import project.keyappsk.domain.product.dto.ProductMyStoreDto;
+import project.keyappsk.domain.product.repository.ProductRepository;
+import project.keyappsk.domain.product.service.ProductService;
 import project.keyappsk.domain.store.dto.MemberStoreDto;
 import project.keyappsk.domain.store.entity.QStore;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -51,6 +58,12 @@ public class queryDslTest {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private ProductService productService;
 
     @DisplayName("QeuryDsl, member와 연관된 모든 store 조회하기")
     @Transactional
@@ -97,12 +110,30 @@ public class queryDslTest {
     @Transactional
     @Test
     void selectCategoryJoinStore(){
-        List<CategoryStoreDto> categoryJoinStoreOnId = categoryRepository.findCategoryJoinStoreOnName("강준호");
+        List<CategoryStoreDto> categoryJoinStoreOnId = categoryRepository.findCategoryStoreWhereStoreId(1);
         for (CategoryStoreDto categoryStoreDto : categoryJoinStoreOnId) {
             System.out.println(categoryStoreDto.getName());
         }
-        assertThat(categoryJoinStoreOnId).hasSize(1);
+        assertThat(categoryJoinStoreOnId).hasSize(4);
+    }
+    @DisplayName("save product entity")
+    @Test
+    @Transactional
+    void saveProduct() throws IOException {
+        MockMultipartFile test1 = new MockMultipartFile("test1", "test1.png", MediaType.IMAGE_PNG_VALUE, "testSaveProduct".getBytes());
+        ProductAddFormDto productTest = new ProductAddFormDto("product test", 1000, 10,"test", test1);
+        productService.storeAddFormDtoSave(productTest, 1);
     }
 
+    @DisplayName("find product by storeId")
+    @Test
+    @Transactional
+    void findProductByStoreIdProduct()  {
+        List<ProductMyStoreDto> byStoreId = productRepository.findByStoreId(1);
+        for (ProductMyStoreDto productMyStoreDto : byStoreId) {
+            log.info("productDto: {}", productMyStoreDto.getName());
+        }
+        assertThat(byStoreId).hasSize(3);
+    }
 
 }

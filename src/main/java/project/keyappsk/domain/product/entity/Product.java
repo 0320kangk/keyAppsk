@@ -43,6 +43,9 @@ public class Product {
     int count;
 
     @Column(nullable = false)
+    String description;
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     ProductStatus productStatus;
 
