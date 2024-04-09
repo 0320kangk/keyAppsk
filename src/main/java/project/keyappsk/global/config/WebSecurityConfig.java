@@ -24,10 +24,8 @@ public class WebSecurityConfig {
     private final  MemberAuthenticationSuccessHandler memberAuthenticationSuccessHandler;
     //공용 페이지
     private final String[] publicPage = new String[] {
-            "/", "/member/add", "/member/login", "/member/info","/member/stores",
-            "/store/search","/store/myStores","/store/myStore/*","/store/image/*",
-            "/category/add/*",
-            "/product/add/*","/product/update/*",
+            "/", "/member/add", "/member/login",
+            "/store/search",
             "/content/**",
             "/fragment/**",
             "/img/**",
@@ -39,7 +37,10 @@ public class WebSecurityConfig {
     };
     //일반 회원 페이지
     private final String[] guestPage = new String[] {
-            "/store/add",
+            "/member/info",
+            "/store/add","/store/myStores","/store/myStore/*","/store/image/*",
+            "/category/add/*",
+            "/product/add/*","/product/update/*",
     };
     //가게 주인 페이지
     @Bean
