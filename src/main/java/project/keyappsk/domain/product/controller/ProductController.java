@@ -14,6 +14,7 @@ import project.keyappsk.domain.category.service.CategoryService;
 import project.keyappsk.domain.product.dto.ProductAddFormDto;
 import project.keyappsk.domain.product.dto.ProductUpdateFormDto;
 import project.keyappsk.domain.product.service.ProductService;
+import project.keyappsk.domain.store.repository.StoreRepository;
 import project.keyappsk.domain.store.service.StoreService;
 
 import java.io.IOException;
@@ -47,12 +48,15 @@ public class ProductController {
                               @Validated @ModelAttribute("productUpdateFormDto") ProductUpdateFormDto productUpdateFormDto,
                                  BindingResult bindingResult
     ) throws IOException {
+        log.info("productUpdateFormDto {}", productUpdateFormDto);
+        productService.updateProduct(productUpdateFormDto, productId);
+        Integer storeId = productService.findStoreId(productId);
         if(bindingResult.hasErrors()){
-            return "/store/myStore" ;
+            return "redirect:/store/myStore/" + storeId;
         }
 //        productService.storeAddFormDtoSave(productAddFormDto, categoryId);
 //        Integer storeId = categoryService.findStoreById(categoryId);
-        return "redirect:/store/myStore";
+        return "redirect:/store/myStore/" + storeId;
 
     }
 

@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class ProductImage {
 
     @Id
@@ -17,6 +18,7 @@ public class ProductImage {
 
     @OneToOne
     @JoinColumn(name = "product_id")
+    @ToString.Exclude
     Product product;
 
     @Column(nullable = false)

@@ -19,7 +19,7 @@ public class Category {
     private int id;
 
     //이름 컬럼 필요 unique
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @ManyToOne

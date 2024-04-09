@@ -1,6 +1,7 @@
 package project.keyappsk.domain.product.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import project.keyappsk.domain.product.entity.enumerate.ProductStatus;
 
@@ -11,15 +12,15 @@ import project.keyappsk.domain.product.entity.enumerate.ProductStatus;
 @NoArgsConstructor
 public class ProductMyStoreDto {
 
-    @NotBlank
+    @NotNull
     Integer id;
     @NotBlank
     String name;
     @NotBlank
     String categoryName;
-    @NotBlank
+    @NotNull
     Integer price;
-    @NotBlank
+    @NotNull
     Integer count;
     @NotBlank
     ProductStatus status;

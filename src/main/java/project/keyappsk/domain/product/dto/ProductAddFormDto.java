@@ -1,6 +1,7 @@
 package project.keyappsk.domain.product.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,16 +17,16 @@ public class ProductAddFormDto {
     @NotBlank
     String name;
 
-    @NotBlank
+    @NotNull
     Integer price;
 
-    @NotBlank
+    @NotNull
     Integer count;
 
     @NotBlank
     String description;
 
-    @NotBlank
+    @NotNull
     private MultipartFile image; //이미지
 
 

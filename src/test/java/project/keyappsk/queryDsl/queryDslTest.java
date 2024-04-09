@@ -21,6 +21,7 @@ import project.keyappsk.domain.member.repository.MemberCustomRepositoryImpl;
 import project.keyappsk.domain.member.repository.MemberRepository;
 import project.keyappsk.domain.product.dto.ProductAddFormDto;
 import project.keyappsk.domain.product.dto.ProductMyStoreDto;
+import project.keyappsk.domain.product.dto.ProductUpdateFormDto;
 import project.keyappsk.domain.product.repository.ProductRepository;
 import project.keyappsk.domain.product.service.ProductService;
 import project.keyappsk.domain.store.dto.MemberStoreDto;
@@ -135,5 +136,23 @@ public class queryDslTest {
         }
         assertThat(byStoreId).hasSize(3);
     }
+
+    @DisplayName("product update test")
+    @Test
+    @Transactional
+    void updateProduct() throws IOException {
+        MockMultipartFile test1 = new MockMultipartFile("test1", "test1.png", MediaType.IMAGE_PNG_VALUE, "testSaveProduct".getBytes());
+        ProductUpdateFormDto build = ProductUpdateFormDto.builder()
+                .name("test1")
+                .price(10000)
+                .count(100)
+                .status(false)
+                .image(test1)
+                .description("몰라")
+                .build();
+        productService.updateProduct(build, 4);
+//        assertThat(byStoreId).hasSize(3);
+    }
+
 
 }

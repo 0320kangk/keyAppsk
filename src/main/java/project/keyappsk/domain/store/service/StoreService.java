@@ -103,19 +103,4 @@ public class StoreService {
 
 
 
-    private MemberStoreDto storeToMyStoreDto(Store store, StoreImage storeImage) {
-        return MemberStoreDto.builder()
-                .name(store.getName())
-                .storeFileName(storeImage.getStoreFileName())
-                .uploadFileName(storeImage.getUploadFileName())
-                .storeStatus(store.getStoreStatus())
-                .roadAddress(store.getRoadAddress())
-                .jibunAddress(store.getJibunAddress())
-                .detailAddress(store.getDetailAddress())
-                .extraAddress(store.getExtraAddress())
-                .build();
-    }
-
-
-
 }

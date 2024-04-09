@@ -1,27 +1,29 @@
 package project.keyappsk.domain.product.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 import project.keyappsk.domain.product.entity.enumerate.ProductStatus;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class ProductUpdateFormDto {
 
     @NotBlank
     String name;
-    @NotBlank
+    @NotNull
     Integer price;
-    @NotBlank
+    @NotNull
     Integer count;
-    @NotBlank
-    ProductStatus status;
+    @NotNull
+    Boolean status;
     @NotBlank
     String description;
+    MultipartFile image;
 
 }

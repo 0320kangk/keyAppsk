@@ -27,7 +27,7 @@ public class WebSecurityConfig {
             "/", "/member/add", "/member/login", "/member/info","/member/stores",
             "/store/search","/store/myStores","/store/myStore/*","/store/image/*",
             "/category/add/*",
-            "/product/add/*",
+            "/product/add/*","/product/update/*",
             "/content/**",
             "/fragment/**",
             "/img/**",
