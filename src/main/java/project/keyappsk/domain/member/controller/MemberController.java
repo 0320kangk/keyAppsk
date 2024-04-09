@@ -2,6 +2,8 @@ package project.keyappsk.domain.member.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.core.ApplicationContext;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,7 +28,6 @@ public class MemberController {
     @PostMapping("/member/add")
     String postMemberAdd(@Validated @ModelAttribute("addMemberFormDto") AddMemberFormDto addMemberFormDto,
                          BindingResult bindingResult){
-
         if(bindingResult.hasErrors()){
             log.info("errors={}", bindingResult.getFieldError());
             log.info("errors={}", bindingResult.getAllErrors());
@@ -36,7 +37,7 @@ public class MemberController {
         return "content/memberLoginForm";
     }
     @GetMapping("/member/login")
-    String getLoginPage(@RequestParam(name = "error", required = false) String error,
+    String getLoginForm(@RequestParam(name = "error", required = false) String error,
                         @RequestParam(name= "errorMessage", required = false) String errorMessage,
                         @RequestParam(name= RedirectURL.RedirectURL, required = false)String redirectURL,
                         Model model){

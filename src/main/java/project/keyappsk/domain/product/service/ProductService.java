@@ -16,8 +16,7 @@ import project.keyappsk.domain.product.entity.ProductImage;
 import project.keyappsk.domain.product.entity.enumerate.ProductStatus;
 import project.keyappsk.domain.product.repository.ProductImageRepository;
 import project.keyappsk.domain.product.repository.ProductRepository;
-import project.keyappsk.domain.store.entity.Store;
-import project.keyappsk.domain.store.entity.StoreImage;
+
 import project.keyappsk.domain.store.repository.StoreRepository;
 
 import java.io.File;
@@ -34,7 +33,7 @@ public class ProductService {
     private final CategoryRepository categoryRepository;
     private final ProductImageRepository productImageRepository;
     private final ProductRepository productRepository;
-    private final StoreRepository storeRepository;
+
 
     @Value("${productImgFile.dir}")
     private String imgFileDir;
