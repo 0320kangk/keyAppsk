@@ -24,6 +24,7 @@ public class ProductUpdateFormDto {
     Boolean status;
     @NotBlank
     String description;
+
     MultipartFile image;
 
 }

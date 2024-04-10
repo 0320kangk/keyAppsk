@@ -1,15 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragment/layoutFile :: layout(~{::body}, 'storeAddForm')}">
+      th:replace="~{fragment/layoutFile :: layout(~{::body}, 'storeUpdateForm')}">
 <body>
-
-<style>
-
-    .customFileInput::before {
-        text: '안녕';
-    }
-</style>
 <div class="container py-4 py-lg-5 my-4">
     <div class="row justify-content-center default-header">
         <div class="col-md-6" style="width: 400px" >
@@ -18,13 +11,12 @@
 
                     <h3 class="fs-base pt-4 pb-2">가게 등록</h3>
 
-                    <form class="needs-validation" th:action="@{/store/add}" method="post" enctype="multipart/form-data"
-                          autocomplete="off"
-                          th:object="${storeAddFormDto}" novalidate="" >
-<!--                        <input type="hidden" name="_csrf" value="d90bdd83-94e7-45af-974a-6ab0bc5bfddd">-->
+                    <form class="needs-validation" th:action="@{/store/{storeId}/update(storeId=${storeId})}" method="post" enctype="multipart/form-data"
+                          th:object="${storeUpdateFormDto}"  >
+                        <!--                        <input type="hidden" name="_csrf" value="d90bdd83-94e7-45af-974a-6ab0bc5bfddd">-->
 
                         <div class="mb-3">
-                            <input class="form-control rounded-start" id="name" th:name="name" type="text" placeholder="가게 이름을 입력하세요" required="" name="name" value="">
+                            <input class="form-control rounded-start" th:field="*{name}" type="text" placeholder="가게 이름을 입력하세요"  name="name" value="" required>
                             <div th:class="mt-1"  th:if="${#fields.hasErrors('name')}"><small th:class="field-error" th:errors="*{name}"></small></div>
                         </div>
 
@@ -33,33 +25,42 @@
                             <label for="multipartFile">
                                 <div class="btn-upload md-1">가게 로고</div>
                             </label>
-                                <input class="form-control rounded-start customFileInput"   id="multipartFile"
-                                       th:errorclass="field-error"
-                                       th:field="*{multipartFile}"
-                                       type="file"
-                                       required>
-                            <small th:class="field-error" th:errors="*{multipartFile}"></small>
+                            <input class="form-control rounded-start customFileInput"   id="multipartFile"
+                                   th:errorclass="field-error"
+                                   th:field="*{image}"
+                                   type="file"
+                                   required>
+                            <small th:class="field-error" th:errors="*{image}"></small>
+                        </div>
+
+                        <div class="form-group  my-3">
+                            <div class="form-check" >
+                                <input class="form-check-input" name="status" th:field="*{status}" type="checkbox" id="input_product_status">
+<!--                                <input type="hidden" name="_status" value="on"/> &lt;!&ndash; 히든 필드 추가, check box off 일때 false 를 줌 &ndash;&gt;-->
+                                <label class="form-check-label" for="input_product_status">
+                                    가게 오픈
+                                </label>
+                            </div>
                         </div>
 
 
-
                         <div class="mb-3">
-                            <input class="form-control rounded-start" type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
+                            <input class="form-control rounded-start" type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" required>
                         </div>
                         <div class="mb-3">
-                            <input class="form-control rounded-start" type="text" th:name="roadAddress" id="sample4_roadAddress" placeholder="도로명주소" readonly>
+                            <input class="form-control rounded-start" type="text"  th:field="*{roadAddress}" th:name="roadAddress" id="sample4_roadAddress" placeholder="도로명주소" required readonly>
                             <div th:class="mt-1"  th:if="${#fields.hasErrors('roadAddress')}"><small th:class="field-error" th:errors="*{roadAddress}"></small></div>
                         </div>
                         <div class="mb-3">
-                            <input class="form-control rounded-start" type="text" th:name="jibunAddress"  id="sample4_jibunAddress" placeholder="지번주소" readonly>
+                            <input class="form-control rounded-start" type="text"  th:field="*{jibunAddress}" th:name="jibunAddress"  id="sample4_jibunAddress" placeholder="지번주소" required readonly>
                             <div th:class="mt-1" th:if="${#fields.hasErrors('jibunAddress')}"><small th:class="field-error" th:errors="*{jibunAddress}"></small></div>
                         </div>
                         <div class="mb-3">
-                            <input class="form-control rounded-start" type="text" th:name="detailAddress" id="sample4_detailAddress" placeholder="상세주소" required>
+                            <input class="form-control rounded-start" type="text"    th:field="*{detailAddress}" th:name="detailAddress" id="sample4_detailAddress" placeholder="상세주소" required>
                             <div th:class="mt-1" th:if="${#fields.hasErrors('detailAddress')}"><small th:class="field-error" th:errors="*{detailAddress}"></small></div>
                         </div>
                         <div class="mb-3">
-                            <input class="form-control rounded-start" type="text" th:name="extraAddress"  id="sample4_extraAddress" placeholder="참고항목" readonly>
+                            <input class="form-control rounded-start" type="text"    th:field="*{extraAddress}" th:name="extraAddress"  id="sample4_extraAddress" placeholder="참고항목" readonly required>
                             <div th:class="mt-1" th:if="${#fields.hasErrors('extraAddress')}"><small th:class="field-error" th:errors="*{extraAddress}"></small></div>
                         </div>
 
@@ -79,7 +80,7 @@
     </div>
 </div>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
+<script  th:inline="javascript">
     //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
     function sample4_execDaumPostcode() {
         new daum.Postcode({

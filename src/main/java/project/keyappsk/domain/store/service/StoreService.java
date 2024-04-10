@@ -13,6 +13,7 @@ import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.member.repository.MemberRepository;
 import project.keyappsk.domain.store.dto.MemberStoreDto;
 import project.keyappsk.domain.store.dto.StoreAddFormDto;
+import project.keyappsk.domain.store.dto.StoreUpdateFormDto;
 import project.keyappsk.domain.store.entity.Store;
 import project.keyappsk.domain.store.entity.StoreImage;
 import project.keyappsk.domain.store.entity.enumerate.StoreStatus;
@@ -38,6 +39,38 @@ public class StoreService {
     @Value("${storeImgFile.dir}")
     private String imgFileDir;
 
+    @Transactional
+    public void updateStore(Integer storeId, StoreUpdateFormDto storeUpdateFormDto) throws IOException {
+        Store store = storeRepository.findById(storeId).orElseThrow(() -> new IllegalArgumentException());
+        store.setName(storeUpdateFormDto.getName());
+        store.setStoreStatus(storeUpdateFormDto.getStatus() ? StoreStatus.OPEN : StoreStatus.CLOSE);
+        store.setRoadAddress(storeUpdateFormDto.getRoadAddress());
+        store.setJibunAddress(storeUpdateFormDto.getJibunAddress());
+        store.setDetailAddress(storeUpdateFormDto.getDetailAddress());
+        store.setExtraAddress(storeUpdateFormDto.getExtraAddress());
+        store.setUpdatedDate(LocalDateTime.now());
+        if(storeUpdateFormDto.getImage() != null){
+            StoreImage storeImage = filesImgSave(storeUpdateFormDto.getImage());
+            StoreImage originImage = store.getStoreImage();
+            originImage.setStoreFileName(storeImage.getStoreFileName());
+            originImage.setUploadFileName(storeImage.getUploadFileName());
+            storeImageRepository.save(originImage);
+        }
+        storeRepository.save(store);
+    }
+
+    @Transactional
+    public StoreUpdateFormDto storeIdToStoreUpdateFormDto (Integer storeId) {
+        Store store = storeRepository.findById(storeId).orElseThrow(() -> new IllegalArgumentException());
+        return StoreUpdateFormDto.builder()
+                .name(store.getName())
+                .status(store.getStoreStatus() == StoreStatus.OPEN)
+                .roadAddress(store.getRoadAddress())
+                .jibunAddress(store.getJibunAddress())
+                .detailAddress(store.getDetailAddress())
+                .extraAddress(store.getExtraAddress())
+                .build();
+    }
 
     @Transactional
     public void storeAddFormDtoSave(StoreAddFormDto storeAddFormDto, Member member) throws IOException {

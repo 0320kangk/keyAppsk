@@ -2,20 +2,15 @@ package project.keyappsk.domain.store.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StoreAddFormDto {
+public class StoreUpdateFormDto {
 
     @NotBlank
     private String name;
@@ -29,10 +24,12 @@ public class StoreAddFormDto {
     @NotBlank
     private String detailAddress;
 
+    @NotNull
+    Boolean status;
+
     @NotBlank
     private String extraAddress;
 
-    @NotNull
-    private MultipartFile multipartFile; //이미지
+    private MultipartFile image; //이미지
 
 }

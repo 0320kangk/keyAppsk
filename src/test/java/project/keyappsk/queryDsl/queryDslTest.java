@@ -22,6 +22,8 @@ import project.keyappsk.domain.member.repository.MemberRepository;
 import project.keyappsk.domain.product.dto.ProductAddFormDto;
 import project.keyappsk.domain.product.dto.ProductMyStoreDto;
 import project.keyappsk.domain.product.dto.ProductUpdateFormDto;
+import project.keyappsk.domain.product.entity.Product;
+import project.keyappsk.domain.product.entity.QProduct;
 import project.keyappsk.domain.product.repository.ProductRepository;
 import project.keyappsk.domain.product.service.ProductService;
 import project.keyappsk.domain.store.dto.MemberStoreDto;
@@ -153,6 +155,18 @@ public class queryDslTest {
         productService.updateProduct(build, 4);
 //        assertThat(byStoreId).hasSize(3);
     }
+    @DisplayName("find product id 1")
+    @Test
+    @Transactional
+    void findProductById(){
+        QProduct product = QProduct.product;
+        List<Product> products = jpaQueryFactory.selectFrom(product)
+                .where(product.id.eq(4))
+                .fetch();
+        for (Product product1 : products) {
+            System.out.println(product1);
+        }
 
+    }
 
 }

@@ -23,6 +23,7 @@ import project.keyappsk.domain.product.dto.ProductUpdateFormDto;
 import project.keyappsk.domain.product.service.ProductService;
 import project.keyappsk.domain.store.dto.MemberStoreDto;
 import project.keyappsk.domain.store.dto.StoreAddFormDto;
+import project.keyappsk.domain.store.dto.StoreUpdateFormDto;
 import project.keyappsk.domain.store.service.StoreService;
 
 import java.io.IOException;
@@ -56,7 +57,6 @@ public class StoreController {
     String getStores(){
         return "content/stores";
     }
-
     @GetMapping("/store/myStores")
     String getMyStores(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                        @PageableDefault(size=5, direction = Sort.Direction.DESC) Pageable pageable,
@@ -68,7 +68,6 @@ public class StoreController {
 
         return "content/myPage/myStores";
     }
-
     @GetMapping("/store/myStore/{storeId}")
     String getMyStore(@PathVariable("storeId") Integer storeId,
                         @ModelAttribute("categoryAddFormDto") CategoryAddFormDto categoryAddFormDto,
@@ -80,6 +79,25 @@ public class StoreController {
         model.addAttribute("storeId",storeId);
         model.addAttribute("categorys", categorys);
         model.addAttribute("productMyStoreDtos", productMyStoreDto);
+        return "content/myPage/myStore";
+    }
+    @GetMapping("/store/myStore/{storeId}/update")
+    public String getStoreUpdateForm(@PathVariable("storeId") Integer storeId ,
+                                     Model model){
+        StoreUpdateFormDto storeUpdateFormDto = storeService.storeIdToStoreUpdateFormDto(storeId);
+        model.addAttribute("storeId", storeId);
+        model.addAttribute("storeUpdateFormDto",storeUpdateFormDto);
+        return "content/storeUpdateForm";
+    }
+
+    @PostMapping("/store/{storeId}/update")
+    public String postStoreUpdateForm(@PathVariable("storeId") Integer storeId,
+                                      @Validated @ModelAttribute("storeUpdateFormDto") StoreUpdateFormDto storeUpdateFormDto,
+                                      BindingResult bindingResult) throws IOException {
+        if(bindingResult.hasErrors()){
+            return "redirect:/store/myStore/" +  storeId + "/update";
+        }
+        storeService.updateStore(storeId, storeUpdateFormDto);
         return "content/myPage/myStore";
     }
     @ResponseBody

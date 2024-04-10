@@ -38,7 +38,8 @@ public class WebSecurityConfig {
     //일반 회원 페이지
     private final String[] guestPage = new String[] {
             "/member/info",
-            "/store/add","/store/myStores","/store/myStore/*","/store/image/*",
+            "/store/add","/store/myStores","/store/myStore/*","/store/image/*","/store/myStore/*/update",
+            "/store/*/update",
             "/category/add/*",
             "/product/add/*","/product/update/*",
     };
