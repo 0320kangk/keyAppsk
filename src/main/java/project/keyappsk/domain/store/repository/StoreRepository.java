@@ -5,7 +5,7 @@ import project.keyappsk.domain.store.entity.Store;
 
 import java.util.Optional;
 
-public interface StoreRepository extends JpaRepository<Store,  Integer> {
-
+public interface StoreRepository extends JpaRepository<Store,  Integer>, StoreCustomRepository {
     Optional<Store> findByName(String name);
+
 }

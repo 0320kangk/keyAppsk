@@ -52,7 +52,7 @@ public class ProductService {
         originProduct.setPrice(productUpdateFormDto.getPrice());
         originProduct.setDescription(productUpdateFormDto.getDescription());
         originProduct.setProductStatus(productUpdateFormDto.getStatus() ? ProductStatus.SALE : ProductStatus.DEADLINE);
-        if(productUpdateFormDto.getImage() != null){
+        if(!productUpdateFormDto.getImage().isEmpty()){
             ProductImage productImage = filesImgSave(productUpdateFormDto.getImage());
             ProductImage originProductImage = originProduct.getProductImage();
             originProductImage.setUploadFileName(productImage.getUploadFileName());

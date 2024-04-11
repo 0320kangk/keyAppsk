@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -23,6 +24,7 @@ import project.keyappsk.domain.product.dto.ProductUpdateFormDto;
 import project.keyappsk.domain.product.service.ProductService;
 import project.keyappsk.domain.store.dto.MemberStoreDto;
 import project.keyappsk.domain.store.dto.StoreAddFormDto;
+import project.keyappsk.domain.store.dto.StoreSearchDto;
 import project.keyappsk.domain.store.dto.StoreUpdateFormDto;
 import project.keyappsk.domain.store.service.StoreService;
 
@@ -53,19 +55,16 @@ public class StoreController {
         return "content/myPage/myInfo";
     }
 
-    @GetMapping("/store/search")
-    String getStores(){
-        return "content/stores";
-    }
+
     @GetMapping("/store/myStores")
     String getMyStores(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                        @PageableDefault(size=5, direction = Sort.Direction.DESC) Pageable pageable,
                        Model model){
-        List<MemberStoreDto> stores = storeService.getStores(customUserDetails.getMember(), pageable);
+        Page<MemberStoreDto> storesPage = storeService.getStores(customUserDetails.getMember(), pageable);
+        List<MemberStoreDto> stores = storesPage.getContent();
         log.info("stores size: {}", stores.size());
         model.addAttribute ("stores", stores);
-        model.addAttribute("page", pageable.getPageNumber());
-
+        model.addAttribute("page", storesPage.getNumber()); //현재 페이지
         return "content/myPage/myStores";
     }
     @GetMapping("/store/myStore/{storeId}")
@@ -94,12 +93,25 @@ public class StoreController {
     public String postStoreUpdateForm(@PathVariable("storeId") Integer storeId,
                                       @Validated @ModelAttribute("storeUpdateFormDto") StoreUpdateFormDto storeUpdateFormDto,
                                       BindingResult bindingResult) throws IOException {
-        if(bindingResult.hasErrors()){
+      /*  if(bindingResult.hasErrors()){
             return "redirect:/store/myStore/" +  storeId + "/update";
-        }
+        }*/
         storeService.updateStore(storeId, storeUpdateFormDto);
-        return "content/myPage/myStore";
+        return "redirect:/store/myStores";
     }
+    @GetMapping("/store/search")
+    public String getStoreSearch(@RequestParam("query")  String query,
+                                 @PageableDefault(size=9, direction = Sort.Direction.DESC) Pageable pageable
+                                 , Model model) {
+        Page<StoreSearchDto> storeSearchPageDtos = storeService.searchStorePagination(query, pageable);
+        List<StoreSearchDto> storeSearchDtos = storeSearchPageDtos.getContent();
+        log.info("storeSearchDtos: size {}", storeSearchDtos.size());
+        model.addAttribute("totalPages", storeSearchPageDtos.getTotalPages());
+        model.addAttribute("presentPage", storeSearchPageDtos.getNumber());
+        model.addAttribute("storeSearchDtos",storeSearchDtos);
+        return "content/storeSearchForm";
+    }
+
     @ResponseBody
     @GetMapping("/store/image/{filename}")
     public Resource downloadImage(@PathVariable("filename") String filename) throws

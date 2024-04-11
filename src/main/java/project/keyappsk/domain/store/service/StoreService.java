@@ -13,6 +13,7 @@ import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.member.repository.MemberRepository;
 import project.keyappsk.domain.store.dto.MemberStoreDto;
 import project.keyappsk.domain.store.dto.StoreAddFormDto;
+import project.keyappsk.domain.store.dto.StoreSearchDto;
 import project.keyappsk.domain.store.dto.StoreUpdateFormDto;
 import project.keyappsk.domain.store.entity.Store;
 import project.keyappsk.domain.store.entity.StoreImage;
@@ -40,6 +41,11 @@ public class StoreService {
     private String imgFileDir;
 
     @Transactional
+    public Page<StoreSearchDto> searchStorePagination (String query, Pageable pageable){
+        return storeRepository.findByRoadAddressContainingOrJibunAddressContaining(query, pageable);
+    }
+
+    @Transactional
     public void updateStore(Integer storeId, StoreUpdateFormDto storeUpdateFormDto) throws IOException {
         Store store = storeRepository.findById(storeId).orElseThrow(() -> new IllegalArgumentException());
         store.setName(storeUpdateFormDto.getName());
@@ -49,7 +55,8 @@ public class StoreService {
         store.setDetailAddress(storeUpdateFormDto.getDetailAddress());
         store.setExtraAddress(storeUpdateFormDto.getExtraAddress());
         store.setUpdatedDate(LocalDateTime.now());
-        if(storeUpdateFormDto.getImage() != null){
+        log.info("storeUpdateFormDto.getImage() {}", storeUpdateFormDto.getImage().toString());
+        if(!storeUpdateFormDto.getImage().isEmpty() ){
             StoreImage storeImage = filesImgSave(storeUpdateFormDto.getImage());
             StoreImage originImage = store.getStoreImage();
             originImage.setStoreFileName(storeImage.getStoreFileName());
@@ -88,8 +95,12 @@ public class StoreService {
         }
         String originalFilename = multipartFile.getOriginalFilename();
         String storeFileName = createSaveImgName(originalFilename);
-        multipartFile.transferTo(new File(getFullPath(storeFileName)));
 
+        multipartFile.transferTo(new File(getFullPath(storeFileName)));
+       /* File file = new File(getFullPath(storeFileName));
+        Thumbnails.of(file)
+                .size(500, 350)
+                .toFile(file);*/
         StoreImage storeImage = StoreImage.builder()
                 .uploadFileName(originalFilename)
                 .storeFileName(storeFileName)
@@ -128,10 +139,9 @@ public class StoreService {
         return newStore;
     }
     @Transactional
-    public List<MemberStoreDto> getStores(Member member, Pageable pageable) {
-        Page<MemberStoreDto> memberStoreDto = memberRepository.getMemberStoreDto(member.getId(), pageable);
+    public Page<MemberStoreDto> getStores(Member member, Pageable pageable) {
 
-        return memberStoreDto.getContent();
+        return  memberRepository.getMemberStoreDto(member.getId(), pageable) ;
     }
 
 

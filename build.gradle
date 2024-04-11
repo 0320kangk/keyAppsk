@@ -30,6 +30,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation' //유효성 검사
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6' // 타임리프 + ouath2 지원기능
 
+	implementation  'net.coobird:thumbnailator:0.4.14'
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'//query dsl
 	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta" //query dsl
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api" //query dsl
