@@ -99,6 +99,16 @@ public class StoreController {
         storeService.updateStore(storeId, storeUpdateFormDto);
         return "redirect:/store/myStores";
     }
+    @GetMapping("/store/{storeId}")
+    String getStore(@PathVariable("storeId") Integer storeId,
+                      Model model) {
+        List<CategoryStoreDto> categorys = categoryService.getCategoryStoreDto(storeId);
+        List<ProductMyStoreDto> productMyStoreDtos = productService.getProductMyStoreDto(storeId);
+        model.addAttribute("storeId",storeId);
+        model.addAttribute("categorys", categorys);
+        model.addAttribute("productMyStoreDtos", productMyStoreDtos);
+        return "content/store";
+    }
     @GetMapping("/store/search")
     public String getStoreSearch(@RequestParam("query")  String query,
                                  @PageableDefault(size=9, direction = Sort.Direction.DESC) Pageable pageable

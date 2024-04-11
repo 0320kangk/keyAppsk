@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragment/layoutFile :: layout(~{::body}, 'store')}">
+<body>
+<!-- Single Page Header start -->
+<header th:replace="~{fragment/singlePageHeader :: singlePageHeader('store')}"></header>
+<!-- Single Page Header End -->
+
+<!-- Checkout Page Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <h1 class="mb-4">가게 물품</h1>
+        <hr>
+
+        <!-- Button to Open the Modal -->
+        <span id="category-group">
+             <button id="category-tag-all"
+                     onclick=categoryTagClick(this)
+                     type="button"
+                     class="btn border btn-outline-secondary border-secondary  rounded-pill px-3 text-primary h4 me-2"
+                   >모든 물품 </button>
+                    <button th:each="category, categoryStat : ${categorys}"
+                            th:id="|category-tag-${categoryStat.count}|"
+                            onclick=categoryTagClick(this)
+                            type="button"
+                            class="btn border btn-outline-secondary border-secondary  rounded-pill px-3 text-primary h4 me-2"
+                            th:value="${category.id}"
+                            th:name="${category.name}"
+                            th:text="${category.name}">
+                    </button>
+        </span>
+
+        <div class="tab-content mt-5">
+            <div id="tab-1" class="tab-pane fade show p-0 active">
+                <div class="row g-4">
+                    <div class="col-lg-12">
+                        <div class="row g-4">
+                            <div class="col-md-6 col-lg-4 col-xl-3" th:id="|product_${productMyStoreDto.categoryName}|" th:each="productMyStoreDto, stat : ${productMyStoreDtos}">
+                                <div class="border border border-secondary rounded position-relative fruite-item">
+                                    <div class="fruite-img">
+                                        <img th:src="|/product/image/${productMyStoreDto.storeFileName}|" class="img-fluid rounded-top w-100" style="; height: 214px;">
+                                    </div>
+                                    <!--                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits </div>-->
+                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                        <h4 th:text="${productMyStoreDto.name}">Grapes</h4>
+                                        <p th:text="${productMyStoreDto.description}">Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
+                                        <div class="d-flex justify-content-between flex-lg-wrap">
+                                            <!--                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>-->
+                                            <a th:href="|/store/${productMyStoreDto.id}|" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<!-- Checkout Page End -->
+<script>
+    let preCategoryTag = null;
+    function categoryTagClick(element){
+        // console.log(element.name)
+        if (preCategoryTag !== null && element !== preCategoryTag)
+            $('#' + preCategoryTag.id).removeClass("active text-white").addClass("text-primary");
+        $('#' + element.id ).addClass("active text-white").removeClass("text-primary");
+        preCategoryTag = element;
+        $('#productAdd').attr("href","/product/add/" + element.value);
+        $("[id^='product_']").addClass("visually-hidden-focusable");
+        if(element.name !== 'category-tag-all')
+            $("[id^='product_" + element.name + "']").removeClass("visually-hidden-focusable");
+        else
+            $("[id^='product_']").removeClass("visually-hidden-focusable");
+    }
+
+
+</script>
+</body>
+</html>
