@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import project.keyappsk.domain.category.entity.Category;
 import project.keyappsk.domain.category.repository.CategoryRepository;
 import project.keyappsk.domain.product.dto.ProductAddFormDto;
+import project.keyappsk.domain.product.dto.ProductDetailFormDto;
 import project.keyappsk.domain.product.dto.ProductMyStoreDto;
 import project.keyappsk.domain.product.dto.ProductUpdateFormDto;
 import project.keyappsk.domain.product.entity.Product;
@@ -37,6 +38,11 @@ public class ProductService {
 
     @Value("${productImgFile.dir}")
     private String imgFileDir;
+
+    @Transactional
+    public ProductDetailFormDto findByIdProductDetailFormDto(Integer productId) {
+        return productRepository.findByIdProductDetailFormDto(productId).orElseThrow(() -> new IllegalArgumentException());
+    }
 
     @Transactional
     public Integer findStoreId(Integer productId){

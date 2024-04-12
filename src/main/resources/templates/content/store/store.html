@@ -41,13 +41,18 @@
                                     <div class="fruite-img">
                                         <img th:src="|/product/image/${productMyStoreDto.storeFileName}|" class="img-fluid rounded-top w-100" style="; height: 214px;">
                                     </div>
-                                    <!--                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits </div>-->
+                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"th:text="${productMyStoreDto.categoryName}" style="top: 10px; left: 10px;">카테고리 이름 </div>
                                     <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                        <h4 th:text="${productMyStoreDto.name}">Grapes</h4>
-                                        <p th:text="${productMyStoreDto.description}">Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                        <div class="d-flex justify-content-between flex-lg-wrap">
+                                        <h4 th:text="${productMyStoreDto.name}">이름</h4>
+                                        <div class="my-1 text-primary">
+                                            <span th:text="|${productMyStoreDto.price}원|">가격</span>
+                                        </div>
+                                        <div  class="my-1 text-primary">
+                                             <span th:text="|남은 수량: ${productMyStoreDto.count}개|">수량</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between flex-lg-wrap mt-2">
                                             <!--                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>-->
-                                            <a th:href="|/store/${productMyStoreDto.id}|" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                            <a th:href="|/product/detail/${productMyStoreDto.id}|" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i>상세 페이지</a>
                                         </div>
                                     </div>
                                 </div>

@@ -9,13 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.keyappsk.domain.category.service.CategoryService;
 import project.keyappsk.domain.product.dto.ProductAddFormDto;
+import project.keyappsk.domain.product.dto.ProductDetailFormDto;
 import project.keyappsk.domain.product.dto.ProductUpdateFormDto;
 import project.keyappsk.domain.product.service.ProductService;
-import project.keyappsk.domain.store.repository.StoreRepository;
-import project.keyappsk.domain.store.service.StoreService;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -32,7 +30,7 @@ public class ProductController {
                              Model model) {
         model.addAttribute("categoryId", categoryId);
 
-        return "content/productAddForm";
+        return "content/product/productAddForm";
     }
     @PostMapping("/product/add/{categoryId}")
     String postProductAddForm(@PathVariable("categoryId") Integer categoryId,
@@ -58,6 +56,13 @@ public class ProductController {
 //        Integer storeId = categoryService.findStoreById(categoryId);
         return "redirect:/store/myStore/" + storeId;
 
+    }
+    @GetMapping("/product/detail/{productId}")
+    public String getProductDetail(@PathVariable("productId") Integer productId,
+                                   Model model){
+        ProductDetailFormDto byIdProductDetailFormDto = productService.findByIdProductDetailFormDto(productId);
+        model.addAttribute("productDetailFormDto", byIdProductDetailFormDto);
+        return "content/product/productDetail";
     }
 
     @ResponseBody

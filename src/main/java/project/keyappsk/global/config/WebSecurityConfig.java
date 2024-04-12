@@ -26,7 +26,7 @@ public class WebSecurityConfig {
     private final String[] publicPage = new String[] {
             "/", "/member/add", "/member/login",
             "/store/search","/store/image/*","/store/*",
-            "/product/image/*",
+            "/product/image/*","product/detail/*",
             "/content/**",
             "/fragment/**",
             "/img/**",

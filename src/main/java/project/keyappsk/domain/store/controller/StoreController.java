@@ -16,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project.keyappsk.domain.category.dto.CategoryAddFormDto;
 import project.keyappsk.domain.category.dto.CategoryStoreDto;
-import project.keyappsk.domain.category.repository.CategoryRepository;
 import project.keyappsk.domain.category.service.CategoryService;
 import project.keyappsk.domain.member.dto.CustomUserDetails;
 import project.keyappsk.domain.product.dto.ProductMyStoreDto;
@@ -49,13 +48,11 @@ public class StoreController {
                         BindingResult bindingResult) throws IOException {
 
         if(bindingResult.hasErrors()){
-            return "content/storeAddForm";
+            return "content/store/storeAddForm";
         }
         storeService.storeAddFormDtoSave(StoreAddFormDto, customUserDetails.getMember());
         return "content/myPage/myInfo";
     }
-
-
     @GetMapping("/store/myStores")
     String getMyStores(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                        @PageableDefault(size=5, direction = Sort.Direction.DESC) Pageable pageable,
@@ -86,9 +83,8 @@ public class StoreController {
         StoreUpdateFormDto storeUpdateFormDto = storeService.storeIdToStoreUpdateFormDto(storeId);
         model.addAttribute("storeId", storeId);
         model.addAttribute("storeUpdateFormDto",storeUpdateFormDto);
-        return "content/storeUpdateForm";
+        return "content/store/storeUpdateForm";
     }
-
     @PostMapping("/store/{storeId}/update")
     public String postStoreUpdateForm(@PathVariable("storeId") Integer storeId,
                                       @Validated @ModelAttribute("storeUpdateFormDto") StoreUpdateFormDto storeUpdateFormDto,
@@ -107,7 +103,7 @@ public class StoreController {
         model.addAttribute("storeId",storeId);
         model.addAttribute("categorys", categorys);
         model.addAttribute("productMyStoreDtos", productMyStoreDtos);
-        return "content/store";
+        return "content/store/store";
     }
     @GetMapping("/store/search")
     public String getStoreSearch(@RequestParam("query")  String query,
@@ -119,7 +115,7 @@ public class StoreController {
         model.addAttribute("totalPages", storeSearchPageDtos.getTotalPages());
         model.addAttribute("presentPage", storeSearchPageDtos.getNumber());
         model.addAttribute("storeSearchDtos",storeSearchDtos);
-        return "content/storeSearchForm";
+        return "content/store/storeSearchForm";
     }
 
     @ResponseBody
