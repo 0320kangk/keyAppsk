@@ -16,9 +16,10 @@ public class CartService {
     private final ProductRepository productRepository;
 
     @Transactional
-    public void addCart(Integer productId, Member member){
+    public void addCart(Integer productId,Integer count ,Member member){
         Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException());
         Cart cart = Cart.builder()
+                .productCount(count)
                 .product(product)
                 .store(product.getStore())
                 .member(member)

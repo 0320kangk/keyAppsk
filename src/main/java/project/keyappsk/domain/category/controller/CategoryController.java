@@ -23,7 +23,7 @@ public class CategoryController {
                                       BindingResult bindingResult,
                                       @PathVariable("storeId") Integer storeId
                                      ){
-        log.info("contact:post category add");
+        log.info("contact: post category add");
         log.info("storeId : {}", storeId);
         if (bindingResult.hasErrors()){
             log.info("hasError");

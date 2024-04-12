@@ -28,6 +28,8 @@ public class QCart extends EntityPathBase<Cart> {
 
     public final project.keyappsk.domain.product.entity.QProduct product;
 
+    public final NumberPath<Integer> productCount = createNumber("productCount", Integer.class);
+
     public final project.keyappsk.domain.store.entity.QStore store;
 
     public QCart(String variable) {

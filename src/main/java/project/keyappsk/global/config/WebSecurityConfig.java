@@ -25,7 +25,7 @@ public class WebSecurityConfig {
     //공용 페이지
     private final String[] publicPage = new String[] {
             "/", "/member/add", "/member/login",
-            "/store/search","/store/image/*","/store/*",
+            "/store/search","/store/image/*","/store/{storeId}",
             "/product/image/*","product/detail/*",
             "/content/**",
             "/fragment/**",
@@ -60,15 +60,15 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests( request -> request.requestMatchers(publicPage)
-                        .permitAll()
-                        .requestMatchers(guestPage)
+                .authorizeHttpRequests( request ->  request.requestMatchers(guestPage)
                         .hasRole(Role.GUEST.name())//앞에 ROLE_ 이 붙음
+                         .requestMatchers(publicPage)
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated()
                 );
-
         defaultLoginSetting(http);
         oauth2LoginSetting(http);
-
         http.logout( logout ->{
             logout.logoutUrl("/member/logout")
                     .logoutSuccessHandler( ((request, response, authentication) -> {
@@ -76,7 +76,6 @@ public class WebSecurityConfig {
                         response.sendRedirect("/");
                     }));
         });
-
         http.exceptionHandling( httpSecurityExceptionHandlingConfigurer ->
                 httpSecurityExceptionHandlingConfigurer.accessDeniedHandler( (req,res, exception) ->{
                     log.info(req.getRequestURI());

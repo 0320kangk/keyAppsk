@@ -5,7 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import project.keyappsk.domain.cart.dto.CartAddDto;
 import project.keyappsk.domain.cart.service.CartService;
 import project.keyappsk.domain.member.dto.CustomUserDetails;
 
@@ -21,9 +24,8 @@ public class CartController {
     }
     @PostMapping("/cart/add")
     public String postCartAdd(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                              @PathParam("productId") Integer productId){
-
-        cartService.addCart(productId, customUserDetails.getMember());
+                              @ModelAttribute CartAddDto cartAddDto){
+        cartService.addCart(cartAddDto.getProductId(), cartAddDto.getProductCount(), customUserDetails.getMember());
 
         return "content/cart";
     }

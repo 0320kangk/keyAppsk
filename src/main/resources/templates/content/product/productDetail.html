@@ -38,16 +38,16 @@
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <input id="inputCount" type="text" class="form-control form-control-sm text-center border-0" value="1">
+                            <input id="inputCount" type="text" class="form-control form-control-sm text-center border-0" value="0">
                             <div class="input-group-btn">
                                 <button id="btnPlus" class="btn btn-sm btn-plus rounded-circle bg-light border">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
-                        <form id="cartForm" th:action="|/cart/add|" method="post">
+                        <form id="cartForm" th:action="@{/cart/add}" method="post">
                             <input name="productId" th:value="*{id}" type="hidden">
-                            <input name="productCount" id="productCount" type="hidden">
+                            <input name="productCount" th:value="0" id="productCount" type="hidden">
                             <button type="submit"  class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</button>
                         </form>
                     </div>
@@ -91,7 +91,7 @@
             var productCount = parseInt($('#productCount').val());
             if (productCount < 1 && productCount <= count ) {
                 event.preventDefault(); // 제출 이벤트 막기
-                alert('Please add at least 1 product to the cart.'); // 사용자에게 메시지 표시
+                alert('1개 이상의 물품을 카트에 넣어주세요.'); // 사용자에게 메시지 표시
             }
         });
     });
