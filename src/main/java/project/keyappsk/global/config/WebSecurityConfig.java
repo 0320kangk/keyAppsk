@@ -43,6 +43,7 @@ public class WebSecurityConfig {
             "/store/*/update",
             "/category/add/*",
             "/product/add/*","/product/update/*",
+            "/cart","/cart/add"
     };
     //가게 주인 페이지
     @Bean

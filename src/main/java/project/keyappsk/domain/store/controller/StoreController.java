@@ -40,7 +40,7 @@ public class StoreController {
     private final ProductService productService;
     @GetMapping("/store/add")
     String getStoreAddForm(@ModelAttribute StoreAddFormDto storeAddFormDto){
-        return "content/storeAddForm";
+        return "content/store/storeAddForm";
     }
     @PostMapping("/store/add")
     String postStoreAdd(@AuthenticationPrincipal CustomUserDetails customUserDetails,

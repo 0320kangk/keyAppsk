@@ -19,37 +19,39 @@
                     </div>
                     <div class="col-lg-6" >
                         <h4 class="fw-bold mb-3" th:text="*{name}">Brocoli</h4>
-                        <p class="mb-3" th:text="*{categoryName}" >Category: Vegetables</p>
+                        <p class="fw-bold mb-3" th:text="|카테고리: *{categoryName}|" >Category: Vegetables</p>
+                        <h5 class="fw-bold mb-3"  th:text="|남은 수량: *{count}개|">3,35 $</h5>
                         <h5 class="fw-bold mb-3"  th:text="|*{price}원|">3,35 $</h5>
-                    <!--    <div class="d-flex mb-4">
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star"></i>
-                        </div>-->
+
+                        <!--    <div class="d-flex mb-4">
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star"></i>
+                            </div>-->
                         <p class="mb-4" th:text="*{description}">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc.</p>
 <!--                        <p class="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p>-->
                         <div class="input-group quantity mb-5" style="width: 100px;">
                             <div class="input-group-btn">
-                                <button class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                <button id="btnMinus"  class="btn btn-sm btn-minus rounded-circle bg-light border">
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <input type="text" class="form-control form-control-sm text-center border-0" value="1">
+                            <input id="inputCount" type="text" class="form-control form-control-sm text-center border-0" value="1">
                             <div class="input-group-btn">
-                                <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                <button id="btnPlus" class="btn btn-sm btn-plus rounded-circle bg-light border">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
-                        <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                        <form id="cartForm" th:action="|/cart/add|" method="post">
+                            <input name="productId" th:value="*{id}" type="hidden">
+                            <input name="productCount" id="productCount" type="hidden">
+                            <button type="submit"  class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</button>
+                        </form>
                     </div>
 
-                    <form action="#">
-
-
-                    </form>
                 </div>
             </div>
             <div class="col-lg-4 col-xl-3">
@@ -67,7 +69,35 @@
         </div>
     </div>
 </div>
+<script th:inline="javascript">
+    const count = [[${productDetailFormDto.count}]]
+    $(document).ready(function(){
+        $('#btnPlus').on('click', function(){
+      /*      var currentCount = parseInt($('#inputCount').val());
+            var newCount = currentCount;*/
+            var currentCount = parseInt($('#inputCount').val())
+            if(currentCount > count) {
+                $('#inputCount').val(currentCount - 1)
+            } else {
+                $('#productCount').val($('#inputCount').val());
+            }
+        });
+        $('#btnMinus').on('click', function(){
+       /*     var currentCount = parseInt($('#inputCount').val());
+            var newCount = currentCount;*/
+            $('#productCount').val($('#inputCount').val());
+        });
+        $('#cartForm').submit(function(event) {
+            var productCount = parseInt($('#productCount').val());
+            if (productCount < 1 && productCount <= count ) {
+                event.preventDefault(); // 제출 이벤트 막기
+                alert('Please add at least 1 product to the cart.'); // 사용자에게 메시지 표시
+            }
+        });
+    });
 
+
+</script>
     </body>
 
 </html>
