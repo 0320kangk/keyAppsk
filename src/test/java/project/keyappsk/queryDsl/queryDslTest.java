@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import project.keyappsk.domain.cart.dto.CartStoreDto;
+import project.keyappsk.domain.cart.dto.CartStoreProductDto;
 import project.keyappsk.domain.category.dto.CategoryStoreDto;
 import project.keyappsk.domain.category.repository.CategoryRepository;
 import project.keyappsk.domain.member.entity.Member;
@@ -168,5 +170,21 @@ public class queryDslTest {
         }
 
     }
-
+    @DisplayName("find memeber.carts.store")
+    @Test
+    @Transactional
+    void findMemberCartsStore(){
+        List<CartStoreDto> cartStoreDto = memberRepository.getCartStoreDto(1);
+        List<CartStoreDto> cartStoreDtoDistinct = cartStoreDto.stream().distinct().toList();
+        cartStoreDtoDistinct.toString();
+        assertThat(cartStoreDtoDistinct).hasSize(2);
+    }
+    @DisplayName("find memberStoreProductDto")
+    @Test
+    @Transactional
+    void findMemberStoreProduct(){
+        List<CartStoreProductDto> cartStoreProductDto = memberRepository.getCartStoreProductDto(1);
+        cartStoreProductDto.toString();
+        assertThat(cartStoreProductDto).hasSize(1);
+    }
 }

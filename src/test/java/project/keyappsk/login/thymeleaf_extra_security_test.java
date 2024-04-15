@@ -24,7 +24,6 @@ public class thymeleaf_extra_security_test {
     @Autowired
     private MockMvc mockMvc;
 
-
     @Test
     @WithMockUser(username = "junho",  roles = "GUEST")
     void 포스트작성() throws Exception {

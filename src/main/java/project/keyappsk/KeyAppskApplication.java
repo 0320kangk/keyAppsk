@@ -5,9 +5,5 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class KeyAppskApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(KeyAppskApplication.class, args);
-	}
-
+	public static void main(String[] args) {SpringApplication.run(KeyAppskApplication.class, args);}
 }

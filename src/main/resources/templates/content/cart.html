@@ -13,51 +13,75 @@
 <!-- Cart Page Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">
+              <span id="category-group">
+                    <button th:each="cartStoreDto, cartStoreStat : ${cartStoreDtos}"
+                            th:id="|category-tag-${ cartStoreStat.count}|"
+                            onclick=storeTagClick(this)
+                            type="button"
+                            class="btn border btn-outline-secondary border-secondary  rounded-pill px-3 text-primary h4 me-2"
+                            th:value="${cartStoreDto.id}"
+                            th:name="${cartStoreDto.name}"
+                            th:text="${cartStoreDto.name}">
+                    </button>
+                </span>
         <div class="table-responsive">
             <table class="table">
                 <thead>
                 <tr class="text-center">
-                    <th scope="col">Products</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Total</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">물품 사진</th>
+                    <th scope="col">물품 이름</th>
+                    <th scope="col">가격 </th>
+                    <th scope="col">개수 </th>
+                    <th scope="col">남은 수량</th>
+                    <th scope="col">삭제</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr >
+                <tr th:id="|tr_product_${stat.count}|" th:classappend="|tr-product-${cartStoreProductDto.storeId}|"    th:each="cartStoreProductDto, stat : ${cartStoreProductDtos}">
                     <th scope="row" >
                         <div class="d-flex align-items-center">
-                            <img src="/img/vegetable-item-3.png" class="img-fluid mx-auto rounded-circle" style="width: 80px; height: 80px;">
+                            <img th:src="|/product/image/${cartStoreProductDto.storeFileName}|" class="img-fluid mx-auto rounded-circle" style="width: 80px; height: 80px;">
                         </div>
                     </th>
                     <td>
-                        <p class="mb-0 mt-4 text-center">Big Banana</p>
+                        <p class="mb-0 mt-4 text-center" th:text="${cartStoreProductDto.productName}">Big Banana</p>
                     </td>
                     <td>
-                        <p class="mb-0 mt-4 text-center">2.99 $</p>
+                        <p class="mb-0 mt-4 text-center" th:id="|product_price${stat.count}|" th:text="|${cartStoreProductDto.productPrice}원|">2.99 $</p>
                     </td>
                     <td class="text-center">
-                        <div class="input-group quantity mt-4 mx-auto" style="width: 100px;">
+                        <div class="input-group mt-4 mx-auto" style="width: 100px;">
                             <div class="input-group-btn">
-                                <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
+                                <button onclick="minusBtn(this)"
+                                        th:id="|btnMinus${stat.count}|"
+                                        th:data-id="${stat.count}"
+                                        class="btn btn-sm btn-minus rounded-circle bg-light border" >
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <input type="text" class="form-control form-control-sm text-center border-0 " value="1">
-                            <div class="input-group-btn">
-                                <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                            <input onchange="changeInputCount(this)"
+                                   th:id="|inputCount${stat.count}|"
+                                   type="text" class="form-control form-control-sm text-center border-0"
+                                   th:data-id="${stat.count}"
+                                   th:value="${cartStoreProductDto.cartCount}"  >
+                            <div class="input-group-btn" >
+                                <button onclick="plusBtn(this)"
+                                        th:id="|btnPlus${stat.count}|"
+                                        th:data-id="${stat.count}"
+                                        class="btn btn-sm btn-plus rounded-circle bg-light border">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
                     </td>
                     <td  class="text-center">
-                        <p class="mb-0 mt-4">2.99 $</p>
+                        <p class="mb-0 mt-4" th:id="|productCount${stat.count}|" th:text="${cartStoreProductDto.productCount}"
+                        >2.99$ </p>
                     </td>
                     <td  class="text-center">
-                        <button class="btn btn-md rounded-circle bg-light border mt-4" >
+                        <button onclick="deleteButtonClick(this)"
+                                th:data-id="${stat.count}"
+                                class="btn btn-md rounded-circle bg-light border mt-4" >
                             <i class="fa fa-times text-danger"></i>
                         </button>
                     </td>
@@ -65,28 +89,27 @@
                 </tbody>
             </table>
         </div>
-
         <div class="row g-4 justify-content-end">
             <div class="col-8"></div>
             <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
                 <div class="bg-light rounded">
                     <div class="p-4">
-                        <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
+                        <h1 class="display-6 mb-4">카트 <span class="fw-normal">결제 정보</span></h1>
                         <div class="d-flex justify-content-between mb-4">
-                            <h5 class="mb-0 me-4">Subtotal:</h5>
-                            <p class="mb-0">$96.00</p>
+                            <h5  class="mb-0 me-4">상품수:</h5>
+                            <p th:id="product_total_count" class="mb-0">0개</p>
                         </div>
-                        <div class="d-flex justify-content-between">
+                    <!--    <div class="d-flex justify-content-between">
                             <h5 class="mb-0 me-4">Shipping</h5>
                             <div class="">
                                 <p class="mb-0">Flat rate: $3.00</p>
                             </div>
-                        </div>
-                        <p class="mb-0 text-end">Shipping to Ukraine.</p>
+                        </div>-->
+<!--                        <p class="mb-0 text-end">Shipping to Ukraine.</p>-->
                     </div>
                     <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between ">
                         <h5 class="mb-0 ps-4 me-4">Total</h5>
-                        <p class="mb-0 pe-4">$99.00</p>
+                        <p th:id="total_price" class="mb-0 pe-4">0원</p>
                     </div>
                     <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
                 </div>
@@ -95,6 +118,99 @@
     </div>
 </div>
 <!-- Cart Page End -->
+<script>
+    let preStoreTag = null;
+    function storeTagClick(element){
+        // console.log(element.name)
+        if (preStoreTag !== null && element !== preStoreTag)
+            $('#' + preStoreTag.id).removeClass("active text-white").addClass("text-primary");
+        $('#' + element.id ).addClass("active text-white").removeClass("text-primary");
+        preStoreTag = element;
+        if (element !== preStoreTag) preStoreTag = element
+        // $('#productAdd').attr("href","/product/add/" + element.value);
+        $("[class^='tr-product-']").addClass("visually-hidden-focusable");
+        const productCount = $("[class^='tr-product-" + element.value + "']").removeClass("visually-hidden-focusable").length;
+        $("#product_total_count").text(productCount + "개");
+        var totalPrice = 0;
+        $("[class^='tr-product-" + element.value + "']").each(function (){
+            const price = parseInt($(this).find("[id^='product_price']:first").text().split('원')[0]);
+            const count =  parseInt($(this).find("[id^='inputCount']:first").val());
+            totalPrice += price * count ;
+        })
+        $("#total_price").text(totalPrice + '원');
+    }
+    function plusTotalPrice(price){
+        const totalPrice = parseInt( $("#total_price").text().split('원')[0]);
+        $("#total_price").text(totalPrice + price + '원');
+    }
+    function minusTotalPrice(price){
+        const totalPrice = parseInt( $("#total_price").text().split('원')[0]);
+        $("#total_price").text(totalPrice - price + '원');
+    }
+
+
+    function plusBtn(e) {
+        const idNum = $(e).data("id");
+        const inputCount = '#inputCount' + idNum;
+        const productCount = '#productCount' + idNum;
+        const inputVal = parseInt($(inputCount).val());
+        const productVal = parseInt($(productCount).text());
+        console.log(productVal);
+
+        if (productVal > inputVal)  {
+            const productPrice = '#product_price' + idNum;
+            const price = parseInt($(productPrice).text().split('원')[0]);
+            plusTotalPrice(price);
+            $(inputCount).val(inputVal + 1);
+        }
+    }
+    function minusBtn(e) {
+        const idNum = $(e).data("id");
+        const inputCount = '#inputCount' + idNum;
+        const inputVal = parseInt($(inputCount).val());
+
+        if (inputVal > 1) {
+            const productPrice = '#product_price' + idNum;
+            const price = parseInt($(productPrice).text().split('원')[0]);
+            minusTotalPrice(price);
+            $(inputCount).val(inputVal - 1);
+        }
+    }
+    function changeInputCount(e) {
+        const idNum = $(e).data("id");
+        console.log($(e).data("id"));
+        const inputCount = '#inputCount' + idNum;
+        const productCount = '#productCount' + idNum;
+        const inputVal = parseInt($(inputCount).val());
+        const productVal = parseInt($(productCount).text());
+        if ( inputVal > productVal )  {
+            alert("남은 수량을 초과한 값을 입력할 수 없습니다.")
+            $(inputCount).val(1);
+        }
+    }
+    function deleteButtonClick(e){
+        const idNum = $(e).data("id");
+        $("#tr_product_" + idNum).remove();
+    }
+/*
+    function productClick(e){
+        $("[id^='td_product_']").removeClass("bg-secondary text-white").addClass("text-dark");
+        $(e).addClass("bg-secondary text-white").removeClass("text-dark");
+        $("#multipartFile").val('');
+        $("#input_product_name").val($(e).data("name")).removeAttr("readOnly");
+        $("#input_product_price").val($(e).data("price")).removeAttr("readOnly");
+        $("#input_product_count").val($(e).data("count")).removeAttr("readOnly");
+        $("#input_product_description").val($(e).data("description")).removeAttr("readOnly");
+        $("#productUpdateForm").attr("action","/product/update/" + $(e).data("id"));
+        if($(e).data("status") === 'DEADLINE'){
+            $('#input_product_status').prop('checked',false);
+        } else{
+            $('#input_product_status').prop('checked',true);
+        }
+    }
+*/
+
+</script>
 
 </body>
 
