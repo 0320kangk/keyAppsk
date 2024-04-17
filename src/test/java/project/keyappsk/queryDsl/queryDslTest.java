@@ -1,5 +1,6 @@
 package project.keyappsk.queryDsl;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.transaction.Transactional;
@@ -15,12 +16,16 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import project.keyappsk.domain.cart.dto.CartStoreDto;
 import project.keyappsk.domain.cart.dto.CartStoreProductDto;
+import project.keyappsk.domain.cart.repository.CartRepository;
 import project.keyappsk.domain.category.dto.CategoryStoreDto;
 import project.keyappsk.domain.category.repository.CategoryRepository;
 import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.member.entity.QMember;
 import project.keyappsk.domain.member.repository.MemberCustomRepositoryImpl;
 import project.keyappsk.domain.member.repository.MemberRepository;
+import project.keyappsk.domain.orders.dto.ProductCartCountDto;
+import project.keyappsk.domain.orders.repository.OrderRepository;
+import project.keyappsk.domain.orders.service.OrderService;
 import project.keyappsk.domain.product.dto.ProductAddFormDto;
 import project.keyappsk.domain.product.dto.ProductMyStoreDto;
 import project.keyappsk.domain.product.dto.ProductUpdateFormDto;
@@ -36,21 +41,11 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-
 @SpringBootTest
 @RequiredArgsConstructor
 @Slf4j
 //@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class queryDslTest {
-
-    /*
-    Fetch
-    애플리케이션이 DB로부터 데이터를 가지고 오는 것
-    DB와 통신하여 데이터를 읽는 것에는 큰 비용이 소모되기 때문에 이를 해결하는 전략
-     */
-    /*
-    김영한 :JPAQueryFactory는 select 절 부터 적을 수 있게 도와줍니다^^ 반면에 JPAQuery는 그렇지 못하지요.
-     */
 
     @Autowired
     private JPAQueryFactory jpaQueryFactory;
@@ -69,6 +64,15 @@ public class queryDslTest {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private CartRepository cartRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
+
+    @Autowired
+    private OrderService orderService;
 
     @DisplayName("QeuryDsl, member와 연관된 모든 store 조회하기")
     @Transactional
@@ -187,4 +191,25 @@ public class queryDslTest {
         cartStoreProductDto.toString();
         assertThat(cartStoreProductDto).hasSize(1);
     }
+    //
+    @DisplayName("find product in cart")
+    @Test
+    @Transactional
+    void findProductInCart(){
+        List<ProductCartCountDto> productInCart = cartRepository.findProductInCart(1, 1);
+        System.out.println(productInCart.toString());
+        assertThat(productInCart).hasSize(3);
+    }
+
+    @DisplayName("find product in cart")
+    @Test
+    @Transactional
+    void createOrderTest(){
+//        List<ProductCartCountDto> productInCart = cartRepository.findProductInCart(1, 1);
+        Member member = memberRepository.findById(1).get();
+        orderService.createOrder(member, 1);
+/*        System.out.println(productInCart.toString());
+        assertThat(productInCart).hasSize(3);*/
+    }
+
 }

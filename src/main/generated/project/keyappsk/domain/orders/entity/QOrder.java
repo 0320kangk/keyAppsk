@@ -28,9 +28,9 @@ public class QOrder extends EntityPathBase<Order> {
 
     public final project.keyappsk.domain.member.entity.QMember memberBuyer;
 
-    public final EnumPath<project.keyappsk.domain.orders.entity.enumerate.OrdersStatus> ordersStatus = createEnum("ordersStatus", project.keyappsk.domain.orders.entity.enumerate.OrdersStatus.class);
+    public final ListPath<project.keyappsk.domain.ordersProduct.entity.OrdersProduct, project.keyappsk.domain.ordersProduct.entity.QOrdersProduct> orderProducts = this.<project.keyappsk.domain.ordersProduct.entity.OrdersProduct, project.keyappsk.domain.ordersProduct.entity.QOrdersProduct>createList("orderProducts", project.keyappsk.domain.ordersProduct.entity.OrdersProduct.class, project.keyappsk.domain.ordersProduct.entity.QOrdersProduct.class, PathInits.DIRECT2);
 
-    public final project.keyappsk.domain.product.entity.QProduct product;
+    public final EnumPath<project.keyappsk.domain.orders.entity.enumerate.OrdersStatus> ordersStatus = createEnum("ordersStatus", project.keyappsk.domain.orders.entity.enumerate.OrdersStatus.class);
 
     public final DateTimePath<java.time.LocalDateTime> updatedDate = createDateTime("updatedDate", java.time.LocalDateTime.class);
 
@@ -53,7 +53,6 @@ public class QOrder extends EntityPathBase<Order> {
     public QOrder(Class<? extends Order> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.memberBuyer = inits.isInitialized("memberBuyer") ? new project.keyappsk.domain.member.entity.QMember(forProperty("memberBuyer")) : null;
-        this.product = inits.isInitialized("product") ? new project.keyappsk.domain.product.entity.QProduct(forProperty("product"), inits.get("product")) : null;
     }
 
 }

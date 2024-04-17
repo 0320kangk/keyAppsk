@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import project.keyappsk.domain.cart.entity.Cart;
 import project.keyappsk.domain.member.entity.Member;
-import project.keyappsk.domain.orders.entity.Order;
 import project.keyappsk.domain.product.entity.Product;
 import project.keyappsk.domain.store.entity.enumerate.StoreStatus;
 import java.time.LocalDateTime;

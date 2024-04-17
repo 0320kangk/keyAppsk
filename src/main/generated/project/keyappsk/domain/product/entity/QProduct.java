@@ -36,7 +36,7 @@ public class QProduct extends EntityPathBase<Product> {
 
     public final StringPath name = createString("name");
 
-    public final ListPath<project.keyappsk.domain.orders.entity.Order, project.keyappsk.domain.orders.entity.QOrder> orders = this.<project.keyappsk.domain.orders.entity.Order, project.keyappsk.domain.orders.entity.QOrder>createList("orders", project.keyappsk.domain.orders.entity.Order.class, project.keyappsk.domain.orders.entity.QOrder.class, PathInits.DIRECT2);
+    public final ListPath<project.keyappsk.domain.ordersProduct.entity.OrdersProduct, project.keyappsk.domain.ordersProduct.entity.QOrdersProduct> orderProducts = this.<project.keyappsk.domain.ordersProduct.entity.OrdersProduct, project.keyappsk.domain.ordersProduct.entity.QOrdersProduct>createList("orderProducts", project.keyappsk.domain.ordersProduct.entity.OrdersProduct.class, project.keyappsk.domain.ordersProduct.entity.QOrdersProduct.class, PathInits.DIRECT2);
 
     public final NumberPath<Integer> price = createNumber("price", Integer.class);
 

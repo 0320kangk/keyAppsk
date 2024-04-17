@@ -1,17 +1,23 @@
 package project.keyappsk.domain.orders.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.orders.entity.enumerate.OrdersStatus;
+import project.keyappsk.domain.ordersProduct.entity.OrdersProduct;
 import project.keyappsk.domain.product.entity.Product;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "Orders")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Order {
 
     @Id
@@ -22,9 +28,8 @@ public class Order {
     @JoinColumn(name = "Member_id", nullable = false)
     Member memberBuyer;
 
-    @ManyToOne
-    @JoinColumn(name = "Product_id", nullable = false)
-    Product product;
+    @OneToMany(mappedBy = "order")
+    private List<OrdersProduct> orderProducts = new ArrayList<>();
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

@@ -36,6 +36,7 @@ public class MemberCustomRepositoryImpl implements  MemberCustomRepository {
                         product.price,
                         product.count,
                         product.productStatus,
+                        cart.id,
                         cart.productCount,
                         product.productImage.storeFileName,
                         product.productImage.uploadFileName

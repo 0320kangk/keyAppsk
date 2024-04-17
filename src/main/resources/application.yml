@@ -20,7 +20,6 @@ spring:
     url: ${RDS_KEYAPPSK_URL}
     username: ${RDS_KEYAPPSK_USERNAME} # rds
     password: ${RDS_KEYAPPSK_PASSWORD} # rds
-
   jpa:
     hibernate:
       ddl-auto: update

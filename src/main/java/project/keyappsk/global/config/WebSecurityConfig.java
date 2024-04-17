@@ -26,7 +26,7 @@ public class WebSecurityConfig {
     private final String[] publicPage = new String[] {
             "/", "/member/add", "/member/login",
             "/store/search","/store/image/*","/store/{storeId}",
-            "/product/image/*","product/detail/*",
+            "/product/image/*","/product/detail/*",
             "/content/**",
             "/fragment/**",
             "/img/**",
@@ -43,7 +43,8 @@ public class WebSecurityConfig {
             "/store/*/update",
             "/category/add/*",
             "/product/add/*","/product/update/*",
-            "/cart","/cart/add"
+            "/cart","/cart/add",
+            "/order"
     };
     //가게 주인 페이지
     @Bean

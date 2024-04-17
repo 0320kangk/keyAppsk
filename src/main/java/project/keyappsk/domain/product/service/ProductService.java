@@ -18,8 +18,6 @@ import project.keyappsk.domain.product.entity.enumerate.ProductStatus;
 import project.keyappsk.domain.product.repository.ProductImageRepository;
 import project.keyappsk.domain.product.repository.ProductRepository;
 
-import project.keyappsk.domain.store.repository.StoreRepository;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;

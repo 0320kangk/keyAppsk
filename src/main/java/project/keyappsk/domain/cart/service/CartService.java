@@ -21,6 +21,14 @@ public class CartService {
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
 
+
+    @Transactional
+    public void updateCartCount(Integer cartId, Integer count) {
+        Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new IllegalArgumentException());
+        cart.setProductCount(count);
+        cartRepository.save(cart);
+    }
+
     @Transactional
     public void addCart(Integer productId,Integer count ,Member member){
         Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException());

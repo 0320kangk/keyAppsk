@@ -25,6 +25,8 @@ public class CartStoreProductDto {
     @NotNull
     ProductStatus productStatus;
     @NotNull
+    Integer cartId;
+    @NotNull
     Integer cartCount;
     @NotNull
     String storeFileName;
