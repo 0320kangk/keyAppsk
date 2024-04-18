@@ -38,6 +38,8 @@ public class QStore extends EntityPathBase<Store> {
 
     public final StringPath name = createString("name");
 
+    public final ListPath<project.keyappsk.domain.orders.entity.Order, project.keyappsk.domain.orders.entity.QOrder> orders = this.<project.keyappsk.domain.orders.entity.Order, project.keyappsk.domain.orders.entity.QOrder>createList("orders", project.keyappsk.domain.orders.entity.Order.class, project.keyappsk.domain.orders.entity.QOrder.class, PathInits.DIRECT2);
+
     public final ListPath<project.keyappsk.domain.product.entity.Product, project.keyappsk.domain.product.entity.QProduct> products = this.<project.keyappsk.domain.product.entity.Product, project.keyappsk.domain.product.entity.QProduct>createList("products", project.keyappsk.domain.product.entity.Product.class, project.keyappsk.domain.product.entity.QProduct.class, PathInits.DIRECT2);
 
     public final StringPath roadAddress = createString("roadAddress");

@@ -16,11 +16,20 @@ import project.keyappsk.domain.orders.service.OrderService;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
+
+    @GetMapping("/order")
+    public String getOrder(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        //meber의 모든 orders 안의 store,store id 갖기
+        //orders 안의 모든 product, store id를 갖는다.
+
+        return "index";
+    }
     @PostMapping("/order")
     public String postOrder(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                             @RequestParam("storeId") Integer storeId) {
         log.info("storeId: {}",storeId);
         orderService.createOrder(customUserDetails.getMember(), storeId);
+
         return "index";
     }
 }

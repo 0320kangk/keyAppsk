@@ -23,6 +23,7 @@ import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.member.entity.QMember;
 import project.keyappsk.domain.member.repository.MemberCustomRepositoryImpl;
 import project.keyappsk.domain.member.repository.MemberRepository;
+import project.keyappsk.domain.orders.dto.OrderStoreProductDto;
 import project.keyappsk.domain.orders.dto.ProductCartCountDto;
 import project.keyappsk.domain.orders.repository.OrderRepository;
 import project.keyappsk.domain.orders.service.OrderService;
@@ -211,5 +212,19 @@ public class queryDslTest {
 /*        System.out.println(productInCart.toString());
         assertThat(productInCart).hasSize(3);*/
     }
+    @DisplayName("find orderDto")
+    @Test
+    @Transactional
+    void findOrderDto() {
+        PageRequest pageRequest = PageRequest.of(0,3);
+        Page<OrderStoreProductDto> orderStoreProductDto = orderRepository.findOrderStoreProductDto(2, pageRequest);
+        List<OrderStoreProductDto> content = orderStoreProductDto.getContent();
+        log.info("orderStoreProductDto  {}", content);
+
+        assertThat(content).hasSize(2);
+
+    }
+
+
 
 }

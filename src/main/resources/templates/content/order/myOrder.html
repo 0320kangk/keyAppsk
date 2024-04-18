@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragment/layoutFile :: layout(~{::body}, 'myOrder')}">
+<body>
+<!-- Single Page Header start -->
+<header th:replace="~{fragment/singlePageHeader :: singlePageHeader('myOrder')}"></header>
+<!-- Single Page Header End -->
+
+<!-- Checkout Page Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <h1 class="mb-4">가게 물품</h1>
+        <hr>
+
+        <!-- Button to Open the Modal -->
+        <span id="category-group">
+             <button id="category-tag-all"
+                     onclick=categoryTagClick(this)
+                     type="button"
+                     class="btn border btn-outline-secondary border-secondary  rounded-pill px-3 text-primary h4 me-2"
+             >모든 물품 </button>
+                    <button th:each="category, categoryStat : ${categorys}"
+                            th:id="|category-tag-${categoryStat.count}|"
+                            onclick=categoryTagClick(this)
+                            type="button"
+                            class="btn border btn-outline-secondary border-secondary  rounded-pill px-3 text-primary h4 me-2"
+                            th:value="${category.id}"
+                            th:name="${category.name}"
+                            th:text="${category.name}">
+                    </button>
+        </span>
+
+        <div class="tab-content mt-5">
+            <div id="tab-1" class="tab-pane fade show p-0 active">
+                <div class="row g-4">
+                    <div class="col-lg-12">
+                        <div class="row g-4">
+                            <div class="col-md-6 col-lg-4 col-xl-3" th:id="|product_${productMyStoreDto.categoryName}|" th:each="productMyStoreDto, stat : ${productMyStoreDtos}">
+                                <div class="border border border-secondary rounded position-relative fruite-item">
+                                    <div class="fruite-img">
+                                        <img th:src="|/product/image/${productMyStoreDto.storeFileName}|" class="img-fluid rounded-top w-100" style="; height: 214px;">
+                                    </div>
+                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"th:text="${productMyStoreDto.categoryName}" style="top: 10px; left: 10px;">카테고리 이름 </div>
+                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                        <h4 th:text="${productMyStoreDto.name}">이름</h4>
+                                        <div class="my-1 text-primary">
+                                            <span th:text="|${productMyStoreDto.price}원|">가격</span>
+                                        </div>
+                                        <div  class="my-1 text-primary">
+                                            <span th:text="|남은 수량: ${productMyStoreDto.count}개|">수량</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between flex-lg-wrap mt-2">
+                                            <!--                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>-->
+                                            <a th:href="|/product/detail/${productMyStoreDto.id}|" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i>상세 페이지</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<!-- Checkout Page End -->
+<script>
+    let preCategoryTag = null;
+    function categoryTagClick(element){
+        // console.log(element.name)
+        if (preCategoryTag !== null && element !== preCategoryTag)
+            $('#' + preCategoryTag.id).removeClass("active text-white").addClass("text-primary");
+        $('#' + element.id ).addClass("active text-white").removeClass("text-primary");
+        preCategoryTag = element;
+        $('#productAdd').attr("href","/product/add/" + element.value);
+        $("[id^='product_']").addClass("visually-hidden-focusable");
+        if(element.name !== 'category-tag-all')
+            $("[id^='product_" + element.name + "']").removeClass("visually-hidden-focusable");
+        else
+            $("[id^='product_']").removeClass("visually-hidden-focusable");
+    }
+</script>
+</body>
+</html>

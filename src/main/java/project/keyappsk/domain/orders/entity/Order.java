@@ -6,6 +6,7 @@ import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.orders.entity.enumerate.OrdersStatus;
 import project.keyappsk.domain.ordersProduct.entity.OrdersProduct;
 import project.keyappsk.domain.product.entity.Product;
+import project.keyappsk.domain.store.entity.Store;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,6 +24,10 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
+
+    @ManyToOne
+    @JoinColumn(name="Store_id", nullable = false)
+    Store store;
 
     @ManyToOne
     @JoinColumn(name = "Member_id", nullable = false)

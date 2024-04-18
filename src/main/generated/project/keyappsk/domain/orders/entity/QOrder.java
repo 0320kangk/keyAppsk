@@ -32,6 +32,8 @@ public class QOrder extends EntityPathBase<Order> {
 
     public final EnumPath<project.keyappsk.domain.orders.entity.enumerate.OrdersStatus> ordersStatus = createEnum("ordersStatus", project.keyappsk.domain.orders.entity.enumerate.OrdersStatus.class);
 
+    public final project.keyappsk.domain.store.entity.QStore store;
+
     public final DateTimePath<java.time.LocalDateTime> updatedDate = createDateTime("updatedDate", java.time.LocalDateTime.class);
 
     public QOrder(String variable) {
@@ -53,6 +55,7 @@ public class QOrder extends EntityPathBase<Order> {
     public QOrder(Class<? extends Order> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.memberBuyer = inits.isInitialized("memberBuyer") ? new project.keyappsk.domain.member.entity.QMember(forProperty("memberBuyer")) : null;
+        this.store = inits.isInitialized("store") ? new project.keyappsk.domain.store.entity.QStore(forProperty("store"), inits.get("store")) : null;
     }
 
 }

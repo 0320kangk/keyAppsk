@@ -11,6 +11,7 @@ import project.keyappsk.domain.member.repository.MemberRepository;
 import project.keyappsk.domain.orders.dto.ProductCartCountDto;
 import project.keyappsk.domain.orders.entity.Order;
 import project.keyappsk.domain.orders.entity.enumerate.OrdersStatus;
+import project.keyappsk.domain.orders.except.InsufficientStockException;
 import project.keyappsk.domain.orders.repository.OrderRepository;
 import project.keyappsk.domain.ordersProduct.entity.OrdersProduct;
 import project.keyappsk.domain.ordersProduct.repository.OrdersProductRepository;
@@ -33,12 +34,6 @@ public class OrderService {
     @Transactional
     public void createOrder(Member member, Integer storeId) {
         List<ProductCartCountDto> productCartCountDtos = cartRepository.findProductInCart(member.getId(), storeId);
-        ArrayList<Product> products = new ArrayList<>();
-        productCartCountDtos.forEach(productCartCountDto -> {
-            log.info("product : {}", productCartCountDto.getProduct());
-            products.add(productCartCountDto.getProduct());
-        });
-
         Order order = Order.builder()
                 .memberBuyer(member)
                 .createdDate(LocalDateTime.now())
@@ -46,10 +41,15 @@ public class OrderService {
                 .ordersStatus(OrdersStatus.WAITING)
                 .build();
         for (ProductCartCountDto productCartCountDto : productCartCountDtos) {
-            products.add(productCartCountDto.getProduct());
+            Product product = productCartCountDto.getProduct();
+            if (productCartCountDto.getCount() > product.getCount()){
+                throw new InsufficientStockException("Insufficient stock for product: " + product.getName());
+            } else {
+                product.setCount(product.getCount() - productCartCountDto.getCount());
+            }
             OrdersProduct ordersProduct = OrdersProduct.builder()
                     .order(order)
-                        .product(productCartCountDto.getProduct())
+                        .product(product)
                         .count(productCartCountDto.getCount())
                         .build();
                 ordersProductRepository.save(ordersProduct);
