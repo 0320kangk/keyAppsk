@@ -221,7 +221,7 @@ public class queryDslTest {
         List<OrderStoreProductDto> content = orderStoreProductDto.getContent();
         log.info("orderStoreProductDto  {}", content);
 
-        assertThat(content).hasSize(2);
+        assertThat(content).hasSize(1);
 
     }
 

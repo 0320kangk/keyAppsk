@@ -1,5 +1,6 @@
 package project.keyappsk.domain.orders.dto;
 
+import com.querydsl.core.annotations.QueryProjection;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -8,6 +9,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @ToString
 public class OrderProductDto {
 
@@ -19,6 +21,8 @@ public class OrderProductDto {
 
     @NotNull
     Integer price;
+
+
 
 
 }

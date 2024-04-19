@@ -3,11 +3,15 @@ package project.keyappsk.domain.orders.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import project.keyappsk.domain.cart.entity.Cart;
 import project.keyappsk.domain.cart.repository.CartRepository;
 import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.member.repository.MemberRepository;
+import project.keyappsk.domain.orders.dto.OrderStoreDto;
+import project.keyappsk.domain.orders.dto.OrderStoreProductDto;
 import project.keyappsk.domain.orders.dto.ProductCartCountDto;
 import project.keyappsk.domain.orders.entity.Order;
 import project.keyappsk.domain.orders.entity.enumerate.OrdersStatus;
@@ -21,7 +25,9 @@ import project.keyappsk.domain.store.repository.StoreRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -55,6 +61,21 @@ public class OrderService {
                 ordersProductRepository.save(ordersProduct);
         }
         orderRepository.save(order);
-        //carts
     }
+    @Transactional
+    public Page<OrderStoreProductDto> getOrderStoreProductDto(Integer memberId, Pageable pageable){
+        return orderRepository.findOrderStoreProductDto(memberId, pageable);
+    }
+
+    public Set<OrderStoreDto> getOrderStoreDto(List<OrderStoreProductDto> orderStoreProductDtos){
+        Set<OrderStoreDto> orderStoreDtos = new HashSet<>();
+        orderStoreProductDtos.forEach( (orderStoreProductDto -> {
+            orderStoreDtos.add(OrderStoreDto.builder()
+                            .storeId(orderStoreProductDto.getOrderId())
+                            .name(orderStoreProductDto.getStoreName())
+                    .build());
+        }) );
+        return orderStoreDtos;
+    }
+
 }
