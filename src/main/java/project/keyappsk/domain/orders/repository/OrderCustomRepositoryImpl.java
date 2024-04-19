@@ -25,9 +25,8 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-
     @Override
-    public Page<OrderStoreProductDto> findOrderStoreProductDto(Integer memberId, Pageable pageable) {
+    public Page<OrderStoreProductDto> findMyOrderStoreProductDto(Integer memberId, Pageable pageable) {
         QOrder order = QOrder.order;
         QProduct product = QProduct.product;
         QOrdersProduct ordersProduct = QOrdersProduct.ordersProduct;
@@ -44,7 +43,26 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
                                 ,list(product)
                                 )
                 ));
+        return new PageImpl<>(fetch, pageable,fetch.size() );
+    }
+    @Override
+    public Page<OrderStoreProductDto> findMyOrderedStoreProductDto(Integer memberId, Pageable pageable) {
+        QOrder order = QOrder.order;
+        QProduct product = QProduct.product;
+        QOrdersProduct ordersProduct = QOrdersProduct.ordersProduct;
 
+        List<OrderStoreProductDto> fetch = jpaQueryFactory
+                .selectFrom(order)
+                .where(order.store.member.id.eq(memberId))
+                .join(order.orderProducts, ordersProduct)
+                .join(ordersProduct.product, product)
+                .transform(GroupBy.groupBy(order.id).list(
+                        Projections.constructor(OrderStoreProductDto.class
+                                ,order
+                                ,order.store
+                                ,list(product)
+                        )
+                ));
         return new PageImpl<>(fetch, pageable,fetch.size() );
     }
 }

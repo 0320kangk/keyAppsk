@@ -1,6 +1,5 @@
 package project.keyappsk.queryDsl;
 
-import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.transaction.Transactional;
@@ -212,12 +211,25 @@ public class queryDslTest {
 /*        System.out.println(productInCart.toString());
         assertThat(productInCart).hasSize(3);*/
     }
-    @DisplayName("find orderDto")
+    @DisplayName("find my OrderStoreProductDto")
     @Test
     @Transactional
-    void findOrderDto() {
+    void finOrderStoreProductDto() {
         PageRequest pageRequest = PageRequest.of(0,3);
-        Page<OrderStoreProductDto> orderStoreProductDto = orderRepository.findOrderStoreProductDto(2, pageRequest);
+        Page<OrderStoreProductDto> orderStoreProductDto = orderRepository.findMyOrderStoreProductDto(2, pageRequest);
+        List<OrderStoreProductDto> content = orderStoreProductDto.getContent();
+        log.info("orderStoreProductDto  {}", content);
+
+        assertThat(content).hasSize(1);
+
+    }
+
+    @DisplayName("find OrderedStoreProductDto")
+    @Test
+    @Transactional
+    void findOrderedStoreProductDto() {
+        PageRequest pageRequest = PageRequest.of(0,3);
+        Page<OrderStoreProductDto> orderStoreProductDto = orderRepository.findMyOrderedStoreProductDto(1, pageRequest);
         List<OrderStoreProductDto> content = orderStoreProductDto.getContent();
         log.info("orderStoreProductDto  {}", content);
 

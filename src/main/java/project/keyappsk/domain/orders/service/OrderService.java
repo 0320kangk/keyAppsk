@@ -6,10 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import project.keyappsk.domain.cart.entity.Cart;
 import project.keyappsk.domain.cart.repository.CartRepository;
 import project.keyappsk.domain.member.entity.Member;
-import project.keyappsk.domain.member.repository.MemberRepository;
 import project.keyappsk.domain.orders.dto.OrderStoreDto;
 import project.keyappsk.domain.orders.dto.OrderStoreProductDto;
 import project.keyappsk.domain.orders.dto.ProductCartCountDto;
@@ -20,11 +18,8 @@ import project.keyappsk.domain.orders.repository.OrderRepository;
 import project.keyappsk.domain.ordersProduct.entity.OrdersProduct;
 import project.keyappsk.domain.ordersProduct.repository.OrdersProductRepository;
 import project.keyappsk.domain.product.entity.Product;
-import project.keyappsk.domain.store.entity.Store;
-import project.keyappsk.domain.store.repository.StoreRepository;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -63,10 +58,13 @@ public class OrderService {
         orderRepository.save(order);
     }
     @Transactional
-    public Page<OrderStoreProductDto> getOrderStoreProductDto(Integer memberId, Pageable pageable){
-        return orderRepository.findOrderStoreProductDto(memberId, pageable);
+    public Page<OrderStoreProductDto> getMyOrderStoreProductDto(Integer memberId, Pageable pageable){
+        return orderRepository.findMyOrderStoreProductDto(memberId, pageable);
     }
-
+    @Transactional
+    public Page<OrderStoreProductDto> getMyOrderedStoreProductDto(Integer memberId, Pageable pageable){
+        return orderRepository.findMyOrderedStoreProductDto(memberId, pageable);
+    }
     public Set<OrderStoreDto> getOrderStoreDto(List<OrderStoreProductDto> orderStoreProductDtos){
         Set<OrderStoreDto> orderStoreDtos = new HashSet<>();
         orderStoreProductDtos.forEach( (orderStoreProductDto -> {

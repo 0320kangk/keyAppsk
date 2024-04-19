@@ -45,7 +45,7 @@
                                 <a href="/store/myStores" class="dropdown-item"
                                    th:classappend="${paramActive == 'myStores'} ? active">내 가게</a>
                                 <a th:href="@{/order}" class="dropdown-item">내 주문</a>
-                                <a href="../error.html" class="dropdown-item">404 Page</a>
+                                <a th:href="@{/order/store}" class="dropdown-item">내 가게 주문</a>
                             </div>
                         </div>
                         <a href="../contact.html" class="nav-item nav-link">Contact</a>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragment/layoutFile :: layout(~{::body}, 'myOrder')}">
+      th:replace="~{fragment/layoutFile :: layout(~{::body}, 'myOrderStore')}">
 <body>
 <!-- Single Page Header start -->
-<header th:replace="~{fragment/singlePageHeader :: singlePageHeader('myOrder')}"></header>
+<header th:replace="~{fragment/singlePageHeader :: singlePageHeader('myOrderStore')}"></header>
 <!-- Single Page Header End -->
 
 <!-- Checkout Page Start -->
@@ -45,7 +45,7 @@
                 <tbody>
                 <tr th:id="|tr_product_${stat.count}|" th:classappend="|tr-product-${orderStoreProductDto.storeId}|" th:each="orderStoreProductDto, stat : ${orderStoreProductDtos}">
                     <td  >
-                            <p  class="text-center mb-0 mt-3" th:text="${orderStoreProductDto.orderId}"></p>
+                        <p  class="text-center mb-0 mt-3" th:text="${orderStoreProductDto.orderId}"></p>
                     </td>
                     <td>
                         <p class="mb-0 mt-3 text-center" th:text="${orderStoreProductDto.storeName}">Big Banana</p>
@@ -87,10 +87,10 @@
                                         <div class="py-2"> 가게 지번 주소:&nbsp&nbsp<span th:text="${orderStoreProductDto.jibunAddress}"></span> </div>
                                         <div class="py-2"> 가게 추가 주소:&nbsp&nbsp<span th:text="${orderStoreProductDto.extraAddress}"></span> </div>
                                         <div class="py-2"> 가게 자세한 주소:&nbsp&nbsp<span th:text="${orderStoreProductDto.detailAddress}"></span></div>
-                                                        <!--                        ${#temporals.format( purchaseOrder.productDateTime , 'yyyy-MM-dd HH:mm:ss')}-->
+                                        <!--                        ${#temporals.format( purchaseOrder.productDateTime , 'yyyy-MM-dd HH:mm:ss')}-->
 
 
-                                                        <hr class="my-1 border border-2 rounded border-primary bg-primary">
+                                        <hr class="my-1 border border-2 rounded border-primary bg-primary">
                                         <table class="table">
                                             <thead>
                                             <tr>
@@ -112,17 +112,17 @@
 
                                             </tbody>
                                         </table>
-                                            </div>
-                                            <hr class="border rounded border-2 border-primary bg-primary">
+                                    </div>
+                                    <hr class="border rounded border-2 border-primary bg-primary">
 
-                                            <!-- Modal footer -->
-                                            <div class="modal-footer border border-0">
-                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">닫기</button>
-                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
-                                            </div>
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer border border-0">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">닫기</button>
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
 
 

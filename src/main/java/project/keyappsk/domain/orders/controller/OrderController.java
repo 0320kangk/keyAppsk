@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import project.keyappsk.domain.member.dto.CustomUserDetails;
 import project.keyappsk.domain.orders.dto.OrderStoreDto;
@@ -32,7 +31,7 @@ public class OrderController {
                            Model model) {
         //meber의 모든 orders 안의 store,store id 갖기
         //orders 안의 모든 product, store id를 갖는다.
-        Page<OrderStoreProductDto> orderStoreProductDtos = orderService.getOrderStoreProductDto(customUserDetails.getMember().getId(), pageable);
+        Page<OrderStoreProductDto> orderStoreProductDtos = orderService.getMyOrderStoreProductDto(customUserDetails.getMember().getId(), pageable);
         Set<OrderStoreDto> orderStoreDtos = orderService.getOrderStoreDto(orderStoreProductDtos.getContent());
 
         log.info("orderStoreProductDto {}", orderStoreProductDtos.getContent());
@@ -42,6 +41,21 @@ public class OrderController {
 
         return "content/order/myOrder";
     }
+    @GetMapping("/order/store")
+    public String getOrderStore(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                @PageableDefault(size=9, direction = Sort.Direction.DESC) Pageable pageable,
+                                Model model){
+        Page<OrderStoreProductDto> orderStoreProductDtos = orderService.getMyOrderedStoreProductDto(customUserDetails.getMember().getId(), pageable);
+        Set<OrderStoreDto> orderStoreDtos = orderService.getOrderStoreDto(orderStoreProductDtos.getContent());
+
+        log.info("orderStoreProductDto {}", orderStoreProductDtos.getContent());
+        log.info("orderStoreDto {}", orderStoreDtos);
+        model.addAttribute("orderStoreProductDtos" , orderStoreProductDtos);
+        model.addAttribute("orderStoreDtos", orderStoreDtos);
+
+        return "content/order/myOrdered";
+    }
+
     @PostMapping("/order")
     public String postOrder(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                             @RequestParam("storeId") Integer storeId) {
