@@ -33,6 +33,28 @@ public class OrderService {
     private final OrdersProductRepository ordersProductRepository;
 
     @Transactional
+    public void completeOrder(Integer orderId){
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException());
+        order.setOrdersStatus(OrdersStatus.COMPLETE);
+        orderRepository.save(order);
+    }
+
+    @Transactional
+    public void prepareOrder(Integer orderId){
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException());
+        order.setOrdersStatus(OrdersStatus.PREPARATION);
+        orderRepository.save(order);
+    }
+
+
+
+    @Transactional
+    public void cancelOrder(Integer orderId){
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException());
+        order.setOrdersStatus(OrdersStatus.CANCEL);
+        orderRepository.save(order);
+    }
+    @Transactional
     public void createOrder(Member member, Integer storeId) {
         List<ProductCartCountDto> productCartCountDtos = cartRepository.findProductInCart(member.getId(), storeId);
         Order order = Order.builder()

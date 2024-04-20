@@ -39,15 +39,11 @@ public class MemberController {
                         @RequestParam(name= "errorMessage", required = false) String errorMessage,
                         @RequestParam(name= RedirectURL.RedirectURL, required = false)String redirectURL,
                         Model model){
-
         model.addAttribute ("error", error);
         model.addAttribute("errorMessage", errorMessage);
         model.addAttribute(RedirectURL.RedirectURL, redirectURL);
         return "content/member/memberLoginForm";
     }
-
     @GetMapping("/member/info")
     String getMemberInfo(){return "content/myPage/myInfo";}
-
-
 }

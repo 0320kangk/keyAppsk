@@ -117,15 +117,23 @@
 
                                     <!-- Modal footer -->
                                     <div class="modal-footer border border-0">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">닫기</button>
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+                                    <!--    <form th:action="@{/order/cancel${orderStoreProductDto.orderId}}" method="post">
+                                            <button type="submit" class="btn btn-danger ">주문 취소</button>
+                                        </form>-->
+                                        <form th:if="${orderStoreProductDto.ordersStatus.name()} == 'PREPARATION'" th:action="@{/order/complete/{storeId}(storeId=${orderStoreProductDto.orderId})}" method="post">
+                                            <button type="submit" class="btn btn-primary ">주문 완료</button>
+                                        </form>
+                                        <form th:if="${orderStoreProductDto.ordersStatus.name()} == 'WAITING'" th:action="@{/order/preparation/{storeId}(storeId=${orderStoreProductDto.orderId})}" method="post">
+                                            <button type="submit" class="btn btn-primary ">주문 받기</button>
+                                        </form>
+                                        <form th:action="@{/order/cancel/{storeId}(storeId=${orderStoreProductDto.orderId})}" method="post">
+                                            <button type="submit" class="btn btn-danger ">주문 취소</button>
+                                        </form>
+                                        <button class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
-
                     </td>
                 </tr>
                 </tbody>

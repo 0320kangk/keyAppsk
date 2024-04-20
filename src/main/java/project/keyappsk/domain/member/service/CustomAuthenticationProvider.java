@@ -18,8 +18,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     private final CustomUserDetailsService userDetailsService;
     private final BCryptPasswordEncoder passwordEncoder;
 
-
-
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
@@ -27,7 +25,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         UserDetails user = userDetailsService.loadUserByUsername(username);
         if (!this.passwordEncoder.matches(password, user.getPassword())) {
-            log.info("비밀번호가 불 일치");
+            log.info("비밀번호가 다릅니다.");
             throw new BadCredentialsException("password is not matched");
         }
         return new UsernamePasswordAuthenticationToken(user, password, user.getAuthorities());

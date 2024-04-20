@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import project.keyappsk.domain.member.dto.CustomUserDetails;
@@ -54,6 +55,22 @@ public class OrderController {
         return "content/order/myOrdered";
     }
 
+    @PostMapping("/order/cancel/{orderId}")
+    public String postOrderCancel(@PathVariable("orderId") Integer orderId){
+        orderService.cancelOrder(orderId);
+        return "content/order/myOrder";
+    }
+    @PostMapping("/order/preparation/{orderId}")
+    public String postOrderPreparation(@PathVariable("orderId") Integer orderId){
+        orderService.prepareOrder(orderId);
+        return "content/order/myOrdered";
+    }
+
+    @PostMapping("/order/complete/{orderId}")
+    public String postOrderComplete(@PathVariable("orderId") Integer orderId){
+        orderService.completeOrder(orderId);
+        return "content/order/myOrdered";
+    }
     @PostMapping("/order")
     public String postOrder(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                             @RequestParam("storeId") Integer storeId) {
