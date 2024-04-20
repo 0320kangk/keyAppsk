@@ -38,7 +38,6 @@ public class OrderController {
         log.info("orderStoreDto {}", orderStoreDtos);
         model.addAttribute("orderStoreProductDtos" , orderStoreProductDtos);
         model.addAttribute("orderStoreDtos", orderStoreDtos);
-
         return "content/order/myOrder";
     }
     @GetMapping("/order/store")
@@ -52,7 +51,6 @@ public class OrderController {
         log.info("orderStoreDto {}", orderStoreDtos);
         model.addAttribute("orderStoreProductDtos" , orderStoreProductDtos);
         model.addAttribute("orderStoreDtos", orderStoreDtos);
-
         return "content/order/myOrdered";
     }
 

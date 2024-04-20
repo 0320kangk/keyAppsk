@@ -45,8 +45,9 @@ public class CustomUserDetailsService implements UserDetailsService {
             httpSession.setAttribute(SessionConst.SessionMember, new SessionMember(member));
 
             return new CustomUserDetails(member);
+        } else{
+            throw new UsernameNotFoundException(email);
         }
-        return null;
     }
 
     @Transactional
