@@ -24,6 +24,8 @@ public class QStore extends EntityPathBase<Store> {
 
     public final ListPath<project.keyappsk.domain.cart.entity.Cart, project.keyappsk.domain.cart.entity.QCart> carts = this.<project.keyappsk.domain.cart.entity.Cart, project.keyappsk.domain.cart.entity.QCart>createList("carts", project.keyappsk.domain.cart.entity.Cart.class, project.keyappsk.domain.cart.entity.QCart.class, PathInits.DIRECT2);
 
+    public final ListPath<project.keyappsk.domain.category.entity.Category, project.keyappsk.domain.category.entity.QCategory> categories = this.<project.keyappsk.domain.category.entity.Category, project.keyappsk.domain.category.entity.QCategory>createList("categories", project.keyappsk.domain.category.entity.Category.class, project.keyappsk.domain.category.entity.QCategory.class, PathInits.DIRECT2);
+
     public final DateTimePath<java.time.LocalDateTime> createdDate = createDateTime("createdDate", java.time.LocalDateTime.class);
 
     public final StringPath detailAddress = createString("detailAddress");

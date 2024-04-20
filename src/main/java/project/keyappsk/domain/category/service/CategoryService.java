@@ -22,7 +22,10 @@ public class CategoryService {
                     .name(categoryAddFormDto.getName())
                     .store(store)
                     .build();
-        categoryRepository.save(category);
+
+        if(categoryRepository.checkStoreCategoryDuplicates(storeId, category.getName())){
+            categoryRepository.save(category);
+        }
     }
     public List<CategoryStoreDto> getCategoryStoreDto (Integer storeId){
         return categoryRepository.findCategoryStoreWhereStoreId(storeId);

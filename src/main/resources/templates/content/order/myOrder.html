@@ -79,7 +79,7 @@
                                     <!-- Modal body -->
                                     <div class="modal-body" style="margin-top: -20px; /* 상단 간격 조정 */">
                                         <div class="py-2"> 주문 번호:&nbsp&nbsp<span th:text="${orderStoreProductDto.orderId}"></span></div>
-                                        <div class="py-2"> 주문 상태:&nbsp&nbsp<span th:text="${orderStoreProductDto.ordersStatus}"></span></div>
+                                        <div class="py-2"> 주문 상태:&nbsp&nbsp<span th:text="${orderStoreProductDto.ordersStatus.getTitle()}"></span></div>
                                         <div class="py-2"> 주문 날짜:&nbsp&nbsp<span th:text="${orderStoreProductDto.orderCreateDateTime}"></span></div>
                                         <div class="py-2"> 주문 업데이트 날짜:&nbsp&nbsp<span th:text="${orderStoreProductDto.orderUpdateDateTime}"></span></div>
                                         <div class="py-2"> 가게 이름:&nbsp&nbsp<span th:text="${orderStoreProductDto.storeName}"></span> </div>
@@ -117,8 +117,12 @@
 
                                             <!-- Modal footer -->
                                             <div class="modal-footer border border-0">
-                                                <form th:action="@{/order/cancel${orderStoreProductDto.orderId}}" method="post">
-                                                    <button type="submit" class="btn btn-danger ">주문 취소</button>
+                                                <form
+                                                        th:if="${orderStoreProductDto.ordersStatus} != ${orderStatus[2]} "
+                                                        th:action="@{/order/cancel/{storeId}(storeId=${orderStoreProductDto.orderId})}"
+                                                        method="post">
+                                                    <input type="hidden" name="role" value="buyer">
+                                                    <button type="submit" class="btn btn-danger" >주문 취소</button>
                                                 </form>
                                                 <button class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                                             </div>

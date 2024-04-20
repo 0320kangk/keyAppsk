@@ -1,5 +1,6 @@
 package project.keyappsk.domain.orders.controller;
 
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import project.keyappsk.domain.member.dto.CustomUserDetails;
 import project.keyappsk.domain.orders.dto.OrderStoreDto;
 import project.keyappsk.domain.orders.dto.OrderStoreProductDto;
+import project.keyappsk.domain.orders.entity.enumerate.OrdersStatus;
 import project.keyappsk.domain.orders.service.OrderService;
 
 import java.util.Set;
@@ -39,6 +41,8 @@ public class OrderController {
         log.info("orderStoreDto {}", orderStoreDtos);
         model.addAttribute("orderStoreProductDtos" , orderStoreProductDtos);
         model.addAttribute("orderStoreDtos", orderStoreDtos);
+
+        model.addAttribute("orderStatus", OrdersStatus.values());
         return "content/order/myOrder";
     }
     @GetMapping("/order/store")
@@ -52,24 +56,32 @@ public class OrderController {
         log.info("orderStoreDto {}", orderStoreDtos);
         model.addAttribute("orderStoreProductDtos" , orderStoreProductDtos);
         model.addAttribute("orderStoreDtos", orderStoreDtos);
+
+        model.addAttribute("orderStatus", OrdersStatus.values());
         return "content/order/myOrdered";
     }
 
     @PostMapping("/order/cancel/{orderId}")
-    public String postOrderCancel(@PathVariable("orderId") Integer orderId){
-        orderService.cancelOrder(orderId);
-        return "content/order/myOrder";
+    public String postOrderCancel(@PathVariable("orderId") Integer orderId,
+                                  @RequestParam("role") String role){
+        log.info("role: {}", role);
+//        orderService.cancelOrder(orderId);
+        if(role.equals("buyer")){
+            return "redirect:/order";
+        }else {
+            return "redirect:/order/store";
+        }
     }
     @PostMapping("/order/preparation/{orderId}")
     public String postOrderPreparation(@PathVariable("orderId") Integer orderId){
         orderService.prepareOrder(orderId);
-        return "content/order/myOrdered";
+        return "redirect:/order/store";
     }
 
     @PostMapping("/order/complete/{orderId}")
     public String postOrderComplete(@PathVariable("orderId") Integer orderId){
         orderService.completeOrder(orderId);
-        return "content/order/myOrdered";
+        return "redirect:/order/store";
     }
     @PostMapping("/order")
     public String postOrder(@AuthenticationPrincipal CustomUserDetails customUserDetails,

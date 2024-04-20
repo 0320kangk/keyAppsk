@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CategoryCustomRepository {
     public List<CategoryStoreDto> findCategoryStoreWhereStoreId(Integer storeName);
+    public boolean checkStoreCategoryDuplicates (Integer storeId, String categoryName);
 }

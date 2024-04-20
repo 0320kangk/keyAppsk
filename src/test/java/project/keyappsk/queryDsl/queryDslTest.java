@@ -236,6 +236,14 @@ public class queryDslTest {
         assertThat(content).hasSize(1);
 
     }
+    @DisplayName("가게 내에 카테고리 추가 할때 중복되는지 확인 ")
+    @Test
+    @Transactional
+    void 가게안의_카테고리_중복_확인(){
+        boolean b = categoryRepository.checkStoreCategoryDuplicates(1, "치");
+
+        assertThat(b).isTrue();
+    }
 
 
 

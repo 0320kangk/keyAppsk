@@ -3,6 +3,7 @@ package project.keyappsk.domain.store.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import project.keyappsk.domain.cart.entity.Cart;
+import project.keyappsk.domain.category.entity.Category;
 import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.orders.entity.Order;
 import project.keyappsk.domain.product.entity.Product;
@@ -27,7 +28,7 @@ public class Store {
     @ToString.Exclude
     private Member member;
 
-    @Column(nullable = false)
+    @Column(unique = true ,nullable = false)
     private String name;
 
     @Column(nullable = false)
@@ -64,5 +65,8 @@ public class Store {
 
     @OneToMany(mappedBy = "store")
     private List<Order> orders;
+
+    @OneToMany(mappedBy = "store")
+    private List<Category> categories;
 
 }

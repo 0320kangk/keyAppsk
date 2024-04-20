@@ -21,8 +21,4 @@ public class OrderProductDto {
 
     @NotNull
     Integer price;
-
-
-
-
 }

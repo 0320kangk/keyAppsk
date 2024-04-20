@@ -106,14 +106,16 @@ public class StoreController {
         return "content/store/store";
     }
     @GetMapping("/store/search")
-    public String getStoreSearch(@RequestParam("query")  String query,
+    public String getStoreSearch(@ModelAttribute("query")  String query,
                                  @PageableDefault(size=9, direction = Sort.Direction.DESC) Pageable pageable
                                  , Model model) {
         Page<StoreSearchDto> storeSearchPageDtos = storeService.searchStorePagination(query, pageable);
         List<StoreSearchDto> storeSearchDtos = storeSearchPageDtos.getContent();
         log.info("storeSearchDtos: size {}", storeSearchDtos.size());
+        log.info("presentPage {}", storeSearchPageDtos.getNumber());
+        log.info("totalPages {}", storeSearchPageDtos.getTotalPages());
         model.addAttribute("totalPages", storeSearchPageDtos.getTotalPages());
-        model.addAttribute("presentPage", storeSearchPageDtos.getNumber());
+        model.addAttribute("presentPage", storeSearchPageDtos.getNumber() + 1);
         model.addAttribute("storeSearchDtos",storeSearchDtos);
         return "content/store/storeSearchForm";
     }

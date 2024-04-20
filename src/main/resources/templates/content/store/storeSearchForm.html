@@ -74,6 +74,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="pagination d-flex justify-content-center mt-5">
+
+                                    <a href="#" class="rounded">«</a>
+                                    <th:block th:each="pageNumber : ${#numbers.sequence(1, totalPages)}">
+                                        <a href="#" class="rounded"
+                                           th:href="@{/store/search(query = ${query}, page = ${pageNumber} - 1)}"
+                                           th:text="${pageNumber}"
+                                           th:classappend="${pageNumber == presentPage} ? 'active' : null"
+                                        >1</a>
+                                    </th:block>
+                                    <a href="#" class="rounded">»</a>
+
+
+                                </div>
                              <!--   <div class="owl-item cloned mt-5 col-md-6 col-lg-4 col-xl-3" style="; height: 370px; margin-right: 10px;"  th:each="storeSearchDto, stat : ${storeSearchDtos}">
                                     <div class="border border-primary rounded position-relative vesitable-item">
                                         <div class="vesitable-img">
