@@ -1,6 +1,5 @@
 package project.keyappsk.domain.orders.controller;
 
-import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -19,6 +18,8 @@ import project.keyappsk.domain.orders.dto.OrderStoreDto;
 import project.keyappsk.domain.orders.dto.OrderStoreProductDto;
 import project.keyappsk.domain.orders.entity.enumerate.OrdersStatus;
 import project.keyappsk.domain.orders.service.OrderService;
+import project.keyappsk.domain.page.dto.PageDto;
+import project.keyappsk.domain.page.service.PageService;
 
 import java.util.Set;
 
@@ -27,6 +28,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
+    private final PageService pageService;
 
     @GetMapping("/order")
     public String getOrder(@AuthenticationPrincipal CustomUserDetails customUserDetails,
@@ -39,9 +41,11 @@ public class OrderController {
 
         log.info("orderStoreProductDto {}", orderStoreProductDtos.getContent());
         log.info("orderStoreDto {}", orderStoreDtos);
+
+        PageDto pageDto = pageService.get10unitPageInit(orderStoreProductDtos.getNumber(), orderStoreProductDtos.getTotalPages());
+        model.addAttribute("pageDto", pageDto);
         model.addAttribute("orderStoreProductDtos" , orderStoreProductDtos);
         model.addAttribute("orderStoreDtos", orderStoreDtos);
-
         model.addAttribute("orderStatus", OrdersStatus.values());
         return "content/order/myOrder";
     }
@@ -54,9 +58,11 @@ public class OrderController {
 
         log.info("orderStoreProductDto {}", orderStoreProductDtos.getContent());
         log.info("orderStoreDto {}", orderStoreDtos);
+
+        PageDto pageDto = pageService.get10unitPageInit(orderStoreProductDtos.getNumber(), orderStoreProductDtos.getTotalPages());
+        model.addAttribute("pageDto", pageDto);
         model.addAttribute("orderStoreProductDtos" , orderStoreProductDtos);
         model.addAttribute("orderStoreDtos", orderStoreDtos);
-
         model.addAttribute("orderStatus", OrdersStatus.values());
         return "content/order/myOrdered";
     }

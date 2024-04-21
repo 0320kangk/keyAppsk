@@ -58,13 +58,18 @@ public class StoreController {
     }
     @GetMapping("/store/myStores")
     String getMyStores(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                       @PageableDefault(size=5, direction = Sort.Direction.DESC) Pageable pageable,
+                       @PageableDefault(size=9, direction = Sort.Direction.DESC) Pageable pageable,
                        Model model){
         Page<MemberStoreDto> storesPage = storeService.getStores(customUserDetails.getMember(), pageable);
         List<MemberStoreDto> stores = storesPage.getContent();
         log.info("stores size: {}", stores.size());
+        log.info("presentPage {}", storesPage.getNumber());
+        log.info("totalPages {}", storesPage.getTotalPages());
+
+
+        PageDto pageDto = pageService.get10unitPageInit(storesPage.getNumber(), storesPage.getTotalPages());
+        model.addAttribute("pageDto", pageDto);
         model.addAttribute ("stores", stores);
-        model.addAttribute("page", storesPage.getNumber()); //현재 페이지
         return "content/myPage/myStores";
     }
     @GetMapping("/store/myStore/{storeId}")
@@ -75,6 +80,7 @@ public class StoreController {
                       Model model) {
         List<CategoryStoreDto> categorys = categoryService.getCategoryStoreDto(storeId);
         List<ProductMyStoreDto> productMyStoreDto = productService.getProductMyStoreDto(storeId);
+
         model.addAttribute("storeId",storeId);
         model.addAttribute("categorys", categorys);
         model.addAttribute("productMyStoreDtos", productMyStoreDto);
@@ -120,10 +126,8 @@ public class StoreController {
         /*
 
          */
-        PageDto unitPage = pageService.get10unitPage(storeSearchPageDtos.getNumber(), storeSearchPageDtos.getTotalPages());
-        model.addAttribute("endPage", unitPage.getEndPage());
-        model.addAttribute("startPage", unitPage.getStartPage());
-        model.addAttribute("presentPage", storeSearchPageDtos.getNumber() + 1);
+        PageDto pageDto = pageService.get10unitPageInit(storeSearchPageDtos.getNumber(), storeSearchPageDtos.getTotalPages());
+        model.addAttribute("pageDto",pageDto);
         model.addAttribute("storeSearchDtos",storeSearchDtos);
         return "content/store/storeSearchForm";
     }

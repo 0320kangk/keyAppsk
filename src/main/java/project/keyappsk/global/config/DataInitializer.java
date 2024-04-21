@@ -139,7 +139,6 @@ public class DataInitializer  {
             productImage.setProduct(product);
         productRepository.save(product);
         productImageRepository.save(productImage);
-
     }
     private ProductImage createProductImage(String filePath) throws IOException {
         File file = new File(filePath);

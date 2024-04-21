@@ -42,7 +42,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 //                    .roles(member.getRole().toString())
 //                    .authorities(authorities)
 //                    .build();
-            httpSession.setAttribute(SessionConst.SessionMember, new SessionMember(member));
 
             return new CustomUserDetails(member);
         } else{

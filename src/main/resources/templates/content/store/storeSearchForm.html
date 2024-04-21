@@ -75,15 +75,15 @@
                                     </div>
                                 </div>
                                 <div class="pagination d-flex justify-content-center mt-5">
-                                    <a href="#" th:if="${startPage} != 1" th:href="@{/store/search(query = ${query}, page = ${startPage} - 2)}" class="rounded">«</a>
-                                    <th:block th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}">
+                                    <a href="#" th:if="${pageDto.startPage} != 1" th:href="@{/store/search(query = ${query}, page = ${pageDto.startPage} - 2)}" class="rounded">«</a>
+                                    <th:block th:each="pageNumber : ${#numbers.sequence(pageDto.startPage, pageDto.endPage)}">
                                         <a href="#" class="rounded"
                                            th:href="@{/store/search(query = ${query}, page = ${pageNumber} - 1)}"
                                            th:text="${pageNumber}"
-                                           th:classappend="${pageNumber == presentPage} ? 'active' : null"
+                                           th:classappend="${pageNumber == pageDto.presentPage} ? 'active' : null"
                                         >1</a>
                                     </th:block>
-                                    <a href="#" th:href="@{/store/search(query = ${query}, page = ${endPage})}" class="rounded">»</a>
+                                    <a href="#" th:if="${pageDto.endPage} != ${pageDto.totalPage}" th:href="@{/store/search(query = ${query}, page = ${pageDto.endPage})}" class="rounded">»</a>
                                 </div>
                              <!--   <div class="owl-item cloned mt-5 col-md-6 col-lg-4 col-xl-3" style="; height: 370px; margin-right: 10px;"  th:each="storeSearchDto, stat : ${storeSearchDtos}">
                                     <div class="border border-primary rounded position-relative vesitable-item">

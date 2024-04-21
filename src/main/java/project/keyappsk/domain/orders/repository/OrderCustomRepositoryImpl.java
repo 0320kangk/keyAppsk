@@ -36,6 +36,8 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
                 .where(order.memberBuyer.id.eq(memberId))
                 .join(order.orderProducts, ordersProduct)
                 .join(ordersProduct.product, product)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .transform(GroupBy.groupBy(order.id).list(
                         Projections.constructor(OrderStoreProductDto.class
                                 ,order
@@ -43,7 +45,16 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
                                 ,list(product)
                                 )
                 ));
-        return new PageImpl<>(fetch, pageable,fetch.size() );
+
+        Long totalCount = jpaQueryFactory
+                .select(order.count())
+                .from(order)
+                .where(order.memberBuyer.id.eq(memberId))
+                .join(order.orderProducts, ordersProduct)
+                .join(ordersProduct.product, product)
+                .fetchOne();
+
+        return new PageImpl<>(fetch, pageable, totalCount);
     }
     @Override
     public Page<OrderStoreProductDto> findMyOrderedStoreProductDto(Integer memberId, Pageable pageable) {
@@ -56,6 +67,8 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
                 .where(order.store.member.id.eq(memberId))
                 .join(order.orderProducts, ordersProduct)
                 .join(ordersProduct.product, product)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .transform(GroupBy.groupBy(order.id).list(
                         Projections.constructor(OrderStoreProductDto.class
                                 ,order
@@ -63,6 +76,13 @@ public class OrderCustomRepositoryImpl implements OrderCustomRepository {
                                 ,list(product)
                         )
                 ));
-        return new PageImpl<>(fetch, pageable,fetch.size() );
+        Long totalCount = jpaQueryFactory
+                .select(order.count())
+                .from(order)
+                .where(order.store.member.id.eq(memberId))
+                .join(order.orderProducts, ordersProduct)
+                .join(ordersProduct.product, product)
+                .fetchOne();
+        return new PageImpl<>(fetch, pageable, totalCount);
     }
 }

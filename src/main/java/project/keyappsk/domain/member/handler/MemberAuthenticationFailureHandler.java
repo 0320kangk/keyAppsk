@@ -3,6 +3,7 @@ package project.keyappsk.domain.member.handler;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -17,10 +18,10 @@ import java.net.URLEncoder;
 @Component
 @Slf4j
 public class MemberAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
-
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         String errorMessage;
+
         if (exception instanceof BadCredentialsException){
             errorMessage = "아이디 또는 비밀번호가 맞지 않습니다. 다시 확인해 주세요.";
         } else if (exception instanceof InternalAuthenticationServiceException){

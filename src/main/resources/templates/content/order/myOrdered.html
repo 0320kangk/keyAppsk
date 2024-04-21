@@ -142,7 +142,17 @@
                 </tr>
                 </tbody>
             </table>
-
+            <div class="pagination d-flex justify-content-center mt-5">
+               <!-- <a href="#" th:if="${pageDto.startPage} != 1" th:href="@{/order/store(page = ${pageDto.startPage} - 2)}" class="rounded">«</a>
+                <th:block th:each="pageNumber : ${#numbers.sequence(pageDto.startPage, pageDto.endPage)}">
+                    <a href="#" class="rounded"
+                       th:href="@{/order/store(query = ${query}, page = ${pageNumber} - 1)}"
+                       th:text="${pageNumber}"
+                       th:classappend="${pageNumber == pageDto.presentPage} ? 'active' : null"
+                    >1</a>
+                </th:block>
+                <a href="#" th:if="${pageDto.endPage} != ${pageDto.totalPage}" th:href="@{/order/store( page = ${pageDto.endPage})}" class="rounded">»</a>-->
+            </div>
         </div>
 
 

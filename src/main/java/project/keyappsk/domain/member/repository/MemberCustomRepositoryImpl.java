@@ -71,7 +71,15 @@ public class MemberCustomRepositoryImpl implements  MemberCustomRepository {
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
-        return new PageImpl<>(content, pageable, content.size());
+
+        Long totalCount = jpaQueryFactory
+                .select(member.count())
+                .from(member)
+                .join(member.stores, store)
+                .on(member.id.eq(memberId))
+                .fetchOne();
+
+        return new PageImpl<>(content, pageable, totalCount);
 
     }
 
