@@ -8,5 +8,4 @@ import java.util.Optional;
 public interface StoreRepository extends JpaRepository<Store,  Integer>, StoreCustomRepository {
     Optional<Store> findByName(String name);
 
-
 }

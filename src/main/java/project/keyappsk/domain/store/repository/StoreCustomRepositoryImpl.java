@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import project.keyappsk.domain.product.dto.ProductMyStoreDto;
 import project.keyappsk.domain.store.dto.StoreSearchDto;
 import project.keyappsk.domain.store.entity.QStore;
+import project.keyappsk.domain.store.entity.Store;
 
 import java.util.List;
 
@@ -42,7 +43,18 @@ public class StoreCustomRepositoryImpl implements  StoreCustomRepository {
 
         log.info("fetch size{}", fetch.size());
         log.info("pageable offset", pageable.getOffset());
+
         return new PageImpl<>(fetch, pageable, totalCount);
+    }
+    @Override
+    public List<Store> findStoreByMemberId(Integer memberId){
+        QStore store = QStore.store;
+
+        return jpaQueryFactory
+                .selectFrom(store)
+                .join(store.member).fetchJoin()
+                .where(store.member.id.eq(memberId))
+                .fetch();
     }
 
 }

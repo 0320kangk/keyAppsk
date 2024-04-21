@@ -24,7 +24,7 @@ public class dataInitTest {
     public void memberInit(){
         dataInitializer.memberInit();
     }
-    @DisplayName("product init Test")
+    @DisplayName("data init test")
     @Test
     @Transactional
     public void storeInit() throws IOException {

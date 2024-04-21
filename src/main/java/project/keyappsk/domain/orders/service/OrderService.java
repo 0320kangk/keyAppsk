@@ -18,6 +18,8 @@ import project.keyappsk.domain.orders.repository.OrderRepository;
 import project.keyappsk.domain.ordersProduct.entity.OrdersProduct;
 import project.keyappsk.domain.ordersProduct.repository.OrdersProductRepository;
 import project.keyappsk.domain.product.entity.Product;
+import project.keyappsk.domain.store.entity.Store;
+import project.keyappsk.domain.store.repository.StoreRepository;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -31,6 +33,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final CartRepository cartRepository;
     private final OrdersProductRepository ordersProductRepository;
+    private final StoreRepository storeRepository;
 
     @Transactional
     public void completeOrder(Integer orderId){
@@ -57,8 +60,10 @@ public class OrderService {
     @Transactional
     public void createOrder(Member member, Integer storeId) {
         List<ProductCartCountDto> productCartCountDtos = cartRepository.findProductInCart(member.getId(), storeId);
+        Store store = storeRepository.findById(storeId).orElseThrow(() -> new IllegalArgumentException());
         Order order = Order.builder()
                 .memberBuyer(member)
+                .store(store)
                 .createdDate(LocalDateTime.now())
                 .updatedDate(LocalDateTime.now())
                 .ordersStatus(OrdersStatus.WAITING)

@@ -6,6 +6,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import project.keyappsk.domain.product.dto.ProductDetailFormDto;
 import project.keyappsk.domain.product.dto.ProductMyStoreDto;
+import project.keyappsk.domain.product.entity.Product;
 import project.keyappsk.domain.product.entity.QProduct;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.Optional;
 public class ProductCustomRepositoryImpl implements ProductCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
     @Override
-    public List<ProductMyStoreDto> findByStoreId(Integer storeId) {
+    public List<ProductMyStoreDto> getProductMyStoreDto(Integer storeId) {
         QProduct product = QProduct.product;
         List<ProductMyStoreDto> productMyStoreDtos = jpaQueryFactory.select(Projections.constructor(ProductMyStoreDto.class,
                         product.id, product.name,product.category.name, product.price, product.count, product.productStatus, product.description,
@@ -39,5 +40,14 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
         return Optional.of(fetch.get(0));
 
     }
+    @Override
+    public List<Product> findByStoreId(Integer storeId){
+        QProduct product = QProduct.product;
+        return jpaQueryFactory.select(product)
+                .from(product)
+                .where(product.id.eq(storeId))
+                .fetch();
+    }
+
 }
 

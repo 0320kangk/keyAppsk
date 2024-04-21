@@ -94,7 +94,6 @@ public class OrderController {
                             @RequestParam("storeId") Integer storeId) {
         log.info("storeId: {}",storeId);
         orderService.createOrder(customUserDetails.getMember(), storeId);
-
         return "index";
     }
 }

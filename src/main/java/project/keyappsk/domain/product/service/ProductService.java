@@ -69,7 +69,7 @@ public class ProductService {
 
     @Transactional
     public List<ProductMyStoreDto> getProductMyStoreDto(Integer storeId){
-        return productRepository.findByStoreId(storeId);
+        return productRepository.getProductMyStoreDto(storeId);
     }
 
     @Transactional

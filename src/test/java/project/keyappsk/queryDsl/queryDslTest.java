@@ -138,7 +138,7 @@ public class queryDslTest {
     @Test
     @Transactional
     void findProductByStoreIdProduct()  {
-        List<ProductMyStoreDto> byStoreId = productRepository.findByStoreId(1);
+        List<ProductMyStoreDto> byStoreId = productRepository.getProductMyStoreDto(1);
         for (ProductMyStoreDto productMyStoreDto : byStoreId) {
             log.info("productDto: {}", productMyStoreDto.getName());
         }
