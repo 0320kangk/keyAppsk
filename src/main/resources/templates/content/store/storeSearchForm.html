@@ -14,7 +14,7 @@
 <!-- Fruits Shop Start-->
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
-        <div class="tab-class text-center">
+        <div class="tab-class ">
             <div class="row g-4">
                 <div class="col-lg-12 text-start">
                     <h1>가게 검색 결과</h1>
@@ -56,7 +56,7 @@
                     <div class="row g-4">
                         <div class="col-lg-12">
                             <div class="row g-4">
-                                <div class="col-md-6 col-lg-4 col-xl-3" th:each="storeSearchDto, stat : ${storeSearchDtos}">
+                                <div class="col-md-6 col-lg-4 col-xl-4" th:each="storeSearchDto, stat : ${storeSearchDtos}">
                                     <div class="rounded position-relative fruite-item">
                                         <div class="fruite-img border  border-secondary border-bottom-0 ">
                                             <img th:src="|/store/image/${storeSearchDto.storeFileName}|" class="img-fluid rounded-top w-100" style="; height: 214px;">
@@ -69,14 +69,13 @@
 <!--                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>-->
                                                 <a th:href="|/store/${storeSearchDto.getId()}|" class="btn border border-secondary rounded-pill px-3 text-primary">
                                                     <i class="fa fa-shopping-bag me-2 text-primary">
-                                                    </i> Add to cart</a>
+                                                    </i>go to Store</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="pagination d-flex justify-content-center mt-5">
-
-                                    <a href="#" class="rounded">«</a>
+                                    <a href="#" th:if="${startPage} != 1" th:href="@{/store/search(query = ${query}, page = ${startPage} - 2)}" class="rounded">«</a>
                                     <th:block th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}">
                                         <a href="#" class="rounded"
                                            th:href="@{/store/search(query = ${query}, page = ${pageNumber} - 1)}"
@@ -84,9 +83,7 @@
                                            th:classappend="${pageNumber == presentPage} ? 'active' : null"
                                         >1</a>
                                     </th:block>
-                                    <a href="#" class="rounded">»</a>
-
-
+                                    <a href="#" th:href="@{/store/search(query = ${query}, page = ${endPage})}" class="rounded">»</a>
                                 </div>
                              <!--   <div class="owl-item cloned mt-5 col-md-6 col-lg-4 col-xl-3" style="; height: 370px; margin-right: 10px;"  th:each="storeSearchDto, stat : ${storeSearchDtos}">
                                     <div class="border border-primary rounded position-relative vesitable-item">

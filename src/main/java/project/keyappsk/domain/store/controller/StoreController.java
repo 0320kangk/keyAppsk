@@ -118,10 +118,7 @@ public class StoreController {
         log.info("presentPage {}", storeSearchPageDtos.getNumber());
         log.info("totalPages {}", storeSearchPageDtos.getTotalPages());
         /*
-        1. start 페이지와 end 페이지를 알아야 한다.
-        1-1 start는 항상 1, 11, 21.. 과같이 1 +10n 페이지가 된다. 1+10n = start, 10+10n = end
-        2. 기본적으로 10페이지 단위로 보여준다.
-        3.
+
          */
         PageDto unitPage = pageService.get10unitPage(storeSearchPageDtos.getNumber(), storeSearchPageDtos.getTotalPages());
         model.addAttribute("endPage", unitPage.getEndPage());
@@ -135,7 +132,7 @@ public class StoreController {
     @GetMapping("/store/image/{filename}")
     public Resource downloadImage(@PathVariable("filename") String filename) throws
             MalformedURLException {
-        log.info("get Store Image controller contact");
+//        log.info("get Store Image controller contact");
         return new UrlResource("file:" + storeService.getFullPath(filename));
     }
 
