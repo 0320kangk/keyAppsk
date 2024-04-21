@@ -18,6 +18,8 @@ import project.keyappsk.domain.category.dto.CategoryAddFormDto;
 import project.keyappsk.domain.category.dto.CategoryStoreDto;
 import project.keyappsk.domain.category.service.CategoryService;
 import project.keyappsk.domain.member.dto.CustomUserDetails;
+import project.keyappsk.domain.page.dto.PageDto;
+import project.keyappsk.domain.page.service.PageService;
 import project.keyappsk.domain.product.dto.ProductMyStoreDto;
 import project.keyappsk.domain.product.dto.ProductUpdateFormDto;
 import project.keyappsk.domain.product.service.ProductService;
@@ -38,6 +40,7 @@ public class StoreController {
     private final StoreService storeService;
     private final CategoryService categoryService;
     private final ProductService productService;
+    private final PageService pageService;
     @GetMapping("/store/add")
     String getStoreAddForm(@ModelAttribute StoreAddFormDto storeAddFormDto){
         return "content/store/storeAddForm";
@@ -114,7 +117,15 @@ public class StoreController {
         log.info("storeSearchDtos: size {}", storeSearchDtos.size());
         log.info("presentPage {}", storeSearchPageDtos.getNumber());
         log.info("totalPages {}", storeSearchPageDtos.getTotalPages());
-        model.addAttribute("totalPages", storeSearchPageDtos.getTotalPages());
+        /*
+        1. start 페이지와 end 페이지를 알아야 한다.
+        1-1 start는 항상 1, 11, 21.. 과같이 1 +10n 페이지가 된다. 1+10n = start, 10+10n = end
+        2. 기본적으로 10페이지 단위로 보여준다.
+        3.
+         */
+        PageDto unitPage = pageService.get10unitPage(storeSearchPageDtos.getNumber(), storeSearchPageDtos.getTotalPages());
+        model.addAttribute("endPage", unitPage.getEndPage());
+        model.addAttribute("startPage", unitPage.getStartPage());
         model.addAttribute("presentPage", storeSearchPageDtos.getNumber() + 1);
         model.addAttribute("storeSearchDtos",storeSearchDtos);
         return "content/store/storeSearchForm";
