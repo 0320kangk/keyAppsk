@@ -13,6 +13,7 @@ import project.keyappsk.domain.orders.dto.OrderStoreProductDto;
 import project.keyappsk.domain.orders.dto.ProductCartCountDto;
 import project.keyappsk.domain.orders.entity.Order;
 import project.keyappsk.domain.orders.entity.enumerate.OrdersStatus;
+import project.keyappsk.domain.orders.except.BuyerSellerEqualException;
 import project.keyappsk.domain.orders.except.InsufficientStockException;
 import project.keyappsk.domain.orders.repository.OrderRepository;
 import project.keyappsk.domain.ordersProduct.entity.OrdersProduct;
@@ -61,6 +62,9 @@ public class OrderService {
     public void createOrder(Member member, Integer storeId) {
         List<ProductCartCountDto> productCartCountDtos = cartRepository.findProductInCart(member.getId(), storeId);
         Store store = storeRepository.findById(storeId).orElseThrow(() -> new IllegalArgumentException());
+        if(member.getId() == store.getMember().getId()) {
+            throw new BuyerSellerEqualException("Buyer and Seller equal");
+        }
         Order order = Order.builder()
                 .memberBuyer(member)
                 .store(store)
