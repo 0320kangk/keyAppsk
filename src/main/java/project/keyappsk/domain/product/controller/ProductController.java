@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import project.keyappsk.domain.category.service.CategoryService;
 import project.keyappsk.domain.product.dto.ProductAddFormDto;
 import project.keyappsk.domain.product.dto.ProductDetailFormDto;
+import project.keyappsk.domain.product.dto.ProductDetailsStoreDto;
 import project.keyappsk.domain.product.dto.ProductUpdateFormDto;
 import project.keyappsk.domain.product.service.ProductService;
 
@@ -55,13 +56,15 @@ public class ProductController {
 //        productService.storeAddFormDtoSave(productAddFormDto, categoryId);
 //        Integer storeId = categoryService.findStoreById(categoryId);
         return "redirect:/store/myStore/" + storeId;
-
     }
     @GetMapping("/product/detail/{productId}")
     public String getProductDetail(@PathVariable("productId") Integer productId,
                                    Model model){
         ProductDetailFormDto byIdProductDetailFormDto = productService.findByIdProductDetailFormDto(productId);
+        ProductDetailsStoreDto productDetailsStoreDto = productService.getProductDetailsStoreDto(productId);
+
         model.addAttribute("productDetailFormDto", byIdProductDetailFormDto);
+        model.addAttribute("storeDto",productDetailsStoreDto);
         return "content/product/productDetail";
     }
 

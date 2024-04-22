@@ -4,19 +4,19 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import project.keyappsk.domain.category.entity.Category;
 import project.keyappsk.domain.category.repository.CategoryRepository;
-import project.keyappsk.domain.product.dto.ProductAddFormDto;
-import project.keyappsk.domain.product.dto.ProductDetailFormDto;
-import project.keyappsk.domain.product.dto.ProductMyStoreDto;
-import project.keyappsk.domain.product.dto.ProductUpdateFormDto;
+import project.keyappsk.domain.product.dto.*;
 import project.keyappsk.domain.product.entity.Product;
 import project.keyappsk.domain.product.entity.ProductImage;
 import project.keyappsk.domain.product.entity.enumerate.ProductStatus;
 import project.keyappsk.domain.product.repository.ProductImageRepository;
 import project.keyappsk.domain.product.repository.ProductRepository;
+import project.keyappsk.domain.store.dto.StoreProductDto;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,6 +36,11 @@ public class ProductService {
 
     @Value("${productImgFile.dir}")
     private String imgFileDir;
+
+    @Transactional
+    public ProductDetailsStoreDto getProductDetailsStoreDto(Integer storeId ) {
+        return productRepository.getProductDetailsStoreDto(storeId).orElseThrow(() -> new IllegalArgumentException());
+    }
 
     @Transactional
     public ProductDetailFormDto findByIdProductDetailFormDto(Integer productId) {
@@ -70,6 +75,11 @@ public class ProductService {
     @Transactional
     public List<ProductMyStoreDto> getProductMyStoreDto(Integer storeId){
         return productRepository.getProductMyStoreDto(storeId);
+    }
+
+    @Transactional
+    public Page<StoreProductDto> getStoreProductDto(Integer storeId, Pageable pageable){
+        return productRepository.getStoreProductDto(storeId, pageable);
     }
 
     @Transactional

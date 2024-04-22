@@ -12,6 +12,7 @@ import project.keyappsk.domain.product.dto.ProductMyStoreDto;
 import project.keyappsk.domain.store.dto.StoreSearchDto;
 import project.keyappsk.domain.store.entity.QStore;
 import project.keyappsk.domain.store.entity.Store;
+import project.keyappsk.domain.store.entity.enumerate.StoreStatus;
 
 import java.util.List;
 
@@ -24,10 +25,8 @@ public class StoreCustomRepositoryImpl implements  StoreCustomRepository {
     public Page<StoreSearchDto> findByRoadAddressContainingOrJibunAddressContaining(String query, Pageable pageable) {
         QStore store = QStore.store;
 
-
         BooleanExpression whereClause = store.jibunAddress.like("%" + query + "%")
-                .or(store.roadAddress.like("%" + query + "%"));
-
+                .or(store.roadAddress.like("%" + query + "%")).and(store.storeStatus.eq(StoreStatus.OPEN));
         List<StoreSearchDto> fetch = jpaQueryFactory.select(Projections.constructor(
                         StoreSearchDto.class, store.id, store.name,store.storeStatus,
                         store.roadAddress, store.jibunAddress, store.storeImage.storeFileName))

@@ -36,27 +36,38 @@
                 <div class="row g-4">
                     <div class="col-lg-12">
                         <div class="row g-4">
-                            <div class="col-md-6 col-lg-4 col-xl-3" th:id="|product_${productMyStoreDto.categoryName}|" th:each="productMyStoreDto, stat : ${productMyStoreDtos}">
+                            <div class="col-md-6 col-lg-4 col-xl-3" th:id="|product_${storeProductDto.categoryName}|" th:each="storeProductDto, stat : ${storeProductDtos}">
                                 <div class="border border border-secondary rounded position-relative fruite-item">
                                     <div class="fruite-img">
-                                        <img th:src="|/product/image/${productMyStoreDto.storeFileName}|" class="img-fluid rounded-top w-100" style="; height: 214px;">
+                                        <img th:src="|/product/image/${storeProductDto.storeFileName}|" class="img-fluid rounded-top w-100" style="; height: 214px;">
                                     </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"th:text="${productMyStoreDto.categoryName}" style="top: 10px; left: 10px;">카테고리 이름 </div>
+                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" th:text="${storeProductDto.categoryName}" style="top: 10px; left: 10px;">카테고리 이름 </div>
                                     <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                        <h4 th:text="${productMyStoreDto.name}">이름</h4>
+                                        <h4 th:text="${storeProductDto.name}">이름</h4>
                                         <div class="my-1 text-primary">
-                                            <span th:text="|${productMyStoreDto.price}원|">가격</span>
+                                            <span th:text="|${storeProductDto.price}원|">가격</span>
                                         </div>
                                         <div  class="my-1 text-primary">
-                                             <span th:text="|남은 수량: ${productMyStoreDto.count}개|">수량</span>
+                                             <span th:text="|남은 수량: ${storeProductDto.count}개|">수량</span>
                                         </div>
                                         <div class="d-flex justify-content-between flex-lg-wrap mt-2">
                                             <!--                                                <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>-->
-                                            <a th:href="|/product/detail/${productMyStoreDto.id}|" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i>상세 페이지</a>
+                                            <a th:href="|/product/detail/${storeProductDto.id}|" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i>상세 페이지</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="pagination d-flex justify-content-center mt-5">
+                            <a href="#" th:if="${pageDto.startPage} != 1" th:href="@{/store/(storeId)(storeId = ${storeId} ,page = ${pageDto.startPage} - 2)}" class="rounded">«</a>
+                            <th:block th:if="${pageDto.endPage > 0}" th:each="pageNumber : ${#numbers.sequence(pageDto.startPage, pageDto.endPage)}">
+                                <a href="#" class="rounded"
+                                   th:href="@{/store/(storeId)(storeId = ${storeId}, page = ${pageNumber} - 1)}"
+                                   th:text="${pageNumber}"
+                                   th:classappend="${pageNumber == pageDto.presentPage} ? 'active' : null"
+                                >1</a>
+                            </th:block>
+                            <a href="#" th:if="${pageDto.endPage} != ${pageDto.totalPage}" th:href="@{/store/(storeId)(storeId = ${storeId}, page = ${pageDto.endPage})}" class="rounded">»</a>
                         </div>
                     </div>
                 </div>

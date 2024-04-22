@@ -23,10 +23,7 @@ import project.keyappsk.domain.page.service.PageService;
 import project.keyappsk.domain.product.dto.ProductMyStoreDto;
 import project.keyappsk.domain.product.dto.ProductUpdateFormDto;
 import project.keyappsk.domain.product.service.ProductService;
-import project.keyappsk.domain.store.dto.MemberStoreDto;
-import project.keyappsk.domain.store.dto.StoreAddFormDto;
-import project.keyappsk.domain.store.dto.StoreSearchDto;
-import project.keyappsk.domain.store.dto.StoreUpdateFormDto;
+import project.keyappsk.domain.store.dto.*;
 import project.keyappsk.domain.store.service.StoreService;
 
 import java.io.IOException;
@@ -54,7 +51,7 @@ public class StoreController {
             return "content/store/storeAddForm";
         }
         storeService.storeAddFormDtoSave(StoreAddFormDto, customUserDetails.getMember());
-        return "content/myPage/myInfo";
+        return "redirect:/store/myStores";
     }
     @GetMapping("/store/myStores")
     String getMyStores(@AuthenticationPrincipal CustomUserDetails customUserDetails,
@@ -106,12 +103,15 @@ public class StoreController {
     }
     @GetMapping("/store/{storeId}")
     String getStore(@PathVariable("storeId") Integer storeId,
+                      @PageableDefault(size = 9) Pageable pageable,
                       Model model) {
         List<CategoryStoreDto> categorys = categoryService.getCategoryStoreDto(storeId);
-        List<ProductMyStoreDto> productMyStoreDtos = productService.getProductMyStoreDto(storeId);
+        Page<StoreProductDto> storeProductDtos = productService.getStoreProductDto(storeId, pageable);
+        PageDto pageDto = pageService.get10unitPageInit(storeProductDtos.getNumber(), storeProductDtos.getTotalPages());
+        model.addAttribute("pageDto",pageDto);
         model.addAttribute("storeId",storeId);
         model.addAttribute("categorys", categorys);
-        model.addAttribute("productMyStoreDtos", productMyStoreDtos);
+        model.addAttribute("storeProductDtos", storeProductDtos);
         return "content/store/store";
     }
     @GetMapping("/store/search")

@@ -8,7 +8,7 @@
 <div class="container-fluid py-5 mt-5">
     <div class="container py-5">
         <div class="row g-4 mb-5">
-            <div class="col-lg-8 col-xl-9">
+            <div class="col-lg-7 col-xl-8">
                 <div class="row g-4" th:object="${productDetailFormDto}">
                     <div class="col-lg-6">
                         <div class="border rounded">
@@ -54,21 +54,25 @@
 
                 </div>
             </div>
-            <div class="col-lg-4 col-xl-3">
-                <div class="row g-4 fruite">
-
-
-
+            <div class="col-lg-5 col-xl-4">
+                <div class="row g-4">
+                    <h4 class="fw-bold">가게 위치</h4>
+                    <div id="staticMap" style="width:600px;height:350px;"></div>
                 </div>
             </div>
+
+        </div>
+        <h4 class="fw-bold mb-2 ">가게 위치</h4>
+        <div class="col-xl-12 border border-2 rounded-3">
+            <div class="m-2"><span  th:text="|도로명 주소: ${storeDto.roadAddress} ${storeDto.extraAddress}|"></span></div>
+            <div class="m-2"><span th:text="|지번 주소: ${storeDto.jibunAddress} ${storeDto.extraAddress}|"></span></div>
+            <div class="m-2"><span th:text="|추가 주소: ${storeDto.jibunAddress} ${storeDto.detailAddress}|"></span></div>
+            <a class="btn btn-secondary mt-1 w-100" th:id="kakaoMap-search" href="#" > 카카오 지도로 보기 </a>
         </div>
 
-        <div class="vesitable">
-            <div class="owl-carousel vegetable-carousel justify-content-center owl-loaded owl-drag">
-          <div class="owl-nav"></div><div class="owl-dots"><div class="owl-dot"><span></span></div><div class="owl-dot active"><span></span></div><div class="owl-dot"><span></span></div></div></div>
-        </div>
     </div>
 </div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9a7155defa4dfb6f3c0bf95b30c6640&libraries=services,clusterer,drawing"></script>
 <script th:inline="javascript">
     const count = [[${productDetailFormDto.count}]]
     $(document).ready(function(){
@@ -97,8 +101,67 @@
         });
     });
 
+    $(document).ready(function() {
+        // Kakao Developers에서 발급한 REST API 키
+        var apiKey = '25c06674f338a8386dada4854fb99842';
+        const roadAddress = [[${storeDto.roadAddress}]];
+        const jibunAddress = [[${storeDto.jibunAddress}]];
+        console.log(roadAddress);
+        // 요청할 주소
+        // Kakao API 엔드포인트
+        var apiUrl = 'https://dapi.kakao.com/v2/local/search/address.json?query=' + encodeURIComponent(roadAddress);
+
+        // AJAX 요청
+        $.ajax({
+            url: apiUrl,
+            type: 'GET',
+            beforeSend: function(xhr) {
+                // 요청 헤더에 API 키 포함
+                xhr.setRequestHeader('Authorization', 'KakaoAK ' + apiKey);
+            },
+            success: function(data) {
+                // 성공적으로 데이터를 받았을 때 실행되는 함수
+                console.log('요청 성공:');
+                const x = data.documents[0].x
+                const y = data.documents[0].y
+
+                console.log(x);
+                console.log(y);
+
+                const location = jibunAddress;
+                $('#kakaoMap-search').attr('href','https://map.kakao.com/link/to/'+ location  + ',' + y +',' + x)
+
+                // 이미지 지도에서 마커가 표시될 위치입니다
+                var markerPosition  = new kakao.maps.LatLng(y, x);
+
+                // 이미지 지도에 표시할 마커입니다
+                // 이미지 지도에 표시할 마커는 Object 형태입니다
+                var marker = {
+                    position: markerPosition
+                };
+
+                var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div
+                    staticMapOption = {
+                        center: new kakao.maps.LatLng(y, x), // 이미지 지도의 중심좌표
+                        level: 3, // 이미지 지도의 확대 레벨
+                        marker: marker // 이미지 지도에 표시할 마커
+                    };
+
+                // 이미지 지도를 생성합니다
+                var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+                // 여기에 받은 데이터를 처리하는 코드 추가
+            },
+            error: function(xhr, status, error) {
+                // 요청이 실패했을 때 실행되는 함수
+                console.error('요청 실패:');
+                console.error(xhr.responseText);
+            }
+        });
+
+    });
 
 </script>
+
     </body>
 
 </html>
