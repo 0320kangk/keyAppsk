@@ -82,7 +82,7 @@
             </table>
             <div class="pagination d-flex justify-content-center mt-5">
                 <a href="#" th:if="${pageDto.startPage} != 1" th:href="@{/store/myStores(page = ${pageDto.startPage} - 2)}" class="rounded">«</a>
-                <th:block th:each="pageNumber : ${#numbers.sequence(pageDto.startPage, pageDto.endPage)}">
+                <th:block th:if="${pageDto.endPage > 0}" th:each="pageNumber : ${#numbers.sequence(pageDto.startPage, pageDto.endPage)}">
                     <a href="#" class="rounded"
                        th:href="@{/store/myStores(page = ${pageNumber} - 1)}"
                        th:text="${pageNumber}"

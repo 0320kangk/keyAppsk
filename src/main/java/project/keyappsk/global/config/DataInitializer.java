@@ -16,6 +16,7 @@ import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.member.entity.enumerate.Role;
 import project.keyappsk.domain.member.entity.enumerate.SignType;
 import project.keyappsk.domain.member.repository.MemberRepository;
+import project.keyappsk.domain.orders.dto.ProductCartCountDto;
 import project.keyappsk.domain.orders.service.OrderService;
 import project.keyappsk.domain.product.entity.Product;
 import project.keyappsk.domain.product.entity.ProductImage;
@@ -49,7 +50,7 @@ public class DataInitializer  {
     private final ProductRepository productRepository;
     private final ProductImageRepository productImageRepository;
     private final CartRepository cartRepository;
-    private final OrderService orderService;
+    private final  OrderService orderService;
     private final String password = "1234";
 
     @Value("${storeImgFile.dir}")
@@ -58,15 +59,15 @@ public class DataInitializer  {
     @Value("${productImgFile.dir}")
     private String productImgFileDir;
 
-    @EventListener(ApplicationReadyEvent.class)
+//    @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void dataInit() throws IOException {
-/*        memberInit();
+        memberInit();
         storeInit();
         categoryInit();
         productInit();
-        cartInit();*/
-//        orderInit();
+        cartInit();
+        orderInit();
     }
     @Transactional
     public void memberInit(){
@@ -138,7 +139,7 @@ public class DataInitializer  {
                     .productImage(productImage)
                     .name("새우깡_" + i)
                     .category(category)
-                    .count(3)
+                    .count(100000)
                     .price(1000)
                     .description("새우 깡 입니다.")
                     .productStatus(ProductStatus.SALE)
@@ -190,13 +191,14 @@ public class DataInitializer  {
     }
     @Transactional
     public void cartInit(){
-        Member member = memberRepository.findByEmail("testUser1@test").orElseThrow(() -> new IllegalArgumentException());
-        List<Store> stores = storeRepository.findStoreByMemberId(member.getId());
+        Member member1 = memberRepository.findByEmail("testUser1@test").orElseThrow(() -> new IllegalArgumentException());
+        Member member2 = memberRepository.findByEmail("testUser2@test").orElseThrow(() -> new IllegalArgumentException());
+        List<Store> stores = storeRepository.findStoreByMemberId(member1.getId());
         Product product = productRepository.findByName("새우깡_0").orElseThrow(() -> new IllegalArgumentException());
         for (Store store : stores) {
             Cart cart = Cart
                     .builder()
-                    .member(member)
+                    .member(member2)
                     .store(store)
                     .product(product)
                     .productCount(3)
@@ -208,7 +210,9 @@ public class DataInitializer  {
     public void orderInit(){
         Member buyer = memberRepository.findByEmail("testUser2@test").orElseThrow(() -> new IllegalArgumentException());
         Member seller = memberRepository.findByEmail("testUser1@test").orElseThrow(() -> new IllegalArgumentException());
-        List<Store> stores = storeRepository.findStoreByMemberId(seller.getId());
+  /*      List<ProductCartCountDto> productCartCountDtos = cartRepository.findProductInCart(buyer.getId(), seller.getId());
+        System.out.println("size test: " + productCartCountDtos.size());*/
+         List<Store> stores = storeRepository.findStoreByMemberId(seller.getId());
         for (Store store : stores) {
             log.info("orderInit test");
 
