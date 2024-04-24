@@ -2,13 +2,20 @@ version: '3' #docker-compose 지원버전
 services:
   application:
     container_name: container-test
-    image: kangjunho/keyappsk:v3
+    image: kangjunho/keyappsk:v6
+    volumes:
+      - storeImage:/var/keyAppsk/storeImage
+      - productImage:/var/keyAppsk/productImage
+    env_file:
+      - .env
 #    build:
 #      context: .
 #      dockerfile: Dockerfile
     ports:
       - "8080:8080" # host: docker
-    environment:
-      SPRING_DATASOURCE_URL: ${RDS_KEYAPPSK_URL}
-      SPRING_DATASOURCE_USERNAME: ${RDS_KEYAPPSK_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${RDS_KEYAPPSK_PASSWORD}
+
+volumes:
+  storeImage:
+    external: true
+  productImage:
+    external: true

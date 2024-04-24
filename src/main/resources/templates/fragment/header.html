@@ -12,49 +12,54 @@
         <div class="container topbar bg-primary d-none d-lg-block">
             <div class="d-flex justify-content-between">
                 <div class="top-info ps-2">
-                    <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
-                    <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
+                    <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="/" class="text-white">keyAppsk</a></small>
+                    <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white" th:if="${session.sessionMember != null}"  th:text="${session.sessionMember.email}">Email@Example.com</a></small>
                 </div>
                 <div class="top-link pe-2">
-                    <a th:if="${session.sessionMember != null}"  th:text="${session.sessionMember.getName()}"  th:href="@{/member/info}" class="text-white"><strong class="text-white mx-2">name</strong></a>
-                    <a th:if="${session.sessionMember != null}" href="/member/logout" class="text-white"><strong class="text-white mx-2">logout</strong></a>
-                    <a th:if="${session.sessionMember == null}" id="sign-in"  href="/member/login" class="text-white"><strong class="text-white mx-2">Sign in</strong>/</a>
-                    <a th:if="${session.sessionMember == null}" href="/member/add" class="text-white"><strong class="text-white mx-2">Sign up</strong></a>
+                    <a th:if="${session.sessionMember != null}"  th:text="${session.sessionMember.name}"  th:href="@{/member/info}" class="text-white"><strong class="text-white mx-2">name</strong></a>
+                    <a th:if="${session.sessionMember != null}" href="/member/logout" class="text-white"><strong class="text-white mx-2">로그아웃</strong></a>
+                    <a th:if="${session.sessionMember == null}" id="sign-in"  href="/member/login" class="text-white"><strong class="text-white mx-2">로그인</strong>/</a>
+                    <a th:if="${session.sessionMember == null}" href="/member/add" class="text-white"><strong class="text-white mx-2">회원가입</strong></a>
                 </div>
             </div>
         </div>
         <div class="container px-2">
             <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                <a href="../index.html" th:href="@{/}" class="navbar-brand"><h1 class="text-primary display-6">Fruitables</h1></a>
+                <a href="../index.html" th:href="@{/}" class="navbar-brand"><h1 class="text-primary display-6">KeyAppsk</h1></a>
                 <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="fa fa-bars text-primary"></span>
                 </button>
                 <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                     <div class="navbar-nav mx-auto">
                         <a th:href="@{/}" class="nav-item nav-link"
-                           th:classappend="${paramActive == 'home'} ? active" >Home</a>
-                        <a th:href="@{/store/add}" class="nav-item nav-link"
-                           th:classappend="${paramActive == 'storeAddForm'} ? active" >가게 등록</a>
-                        <a href="../content/product/productDetail.html" class="nav-item nav-link"
-                           th:classappend="${paramActive == '?'} ? active">Shop Detail</a>
+                           th:classappend="${paramActive == '홈'} ? active" >Home</a>
+
+                        <a href="/member/info"   class="nav-item nav-link"
+                           th:classappend="${paramActive == '내 정보'} ? active">내 정보</a>
+                     <!--   <a href="../content/product/productDetail.html" class="nav-item nav-link"
+                           th:classappend="${paramActive == '?'} ? active">Shop Detail</a>-->
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">My Page</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">내 가게</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                <a href="/member/info" class="dropdown-item"
-                                   th:classappend="${paramActive == 'myInfo'} ? active">내 정보</a>
+                                <a th:href="@{/store/add}" class="dropdown-item"
+                                   th:classappend="${paramActive == '가게 등록'} ? active" >가게 등록</a>
                                 <a href="/store/myStores" class="dropdown-item"
-                                   th:classappend="${paramActive == 'myStores'} ? active">내 가게</a>
-                                <a th:href="@{/order}" class="dropdown-item">내 주문</a>
-                                <a th:href="@{/order/store}" class="dropdown-item">내 가게 주문</a>
+                                   th:classappend="${paramActive == '가게 리스트'} ? active">가게 리스트</a>
                             </div>
                         </div>
-                        <a href="../contact.html" class="nav-item nav-link">Contact</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">내 주문</a>
+                            <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                <a th:href="@{/order}" th:classappend="${paramActive == '내 주문'} ? active" class="dropdown-item">내 주문</a>
+                                <a th:href="@{/order/store}" th:classappend="${paramActive == '내 가게 주문'} ? active" class="dropdown-item">내 가게 주문</a>
+                            </div>
+                        </div>
+<!--                        <a href="../contact.html" class="nav-item nav-link">내 정보</a>-->
                     </div>
                     <div class="d-flex m-3 me-0">
 
                         <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
-
-                        <a href="/cart" class="position-relative me-4 my-auto">
+                        <a href="/"  class="position-relative me-4 my-auto">
                             <i class="fa bi bi-cart fs-2"></i>
                             <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                         </a>
@@ -75,23 +80,34 @@
     </div>
     <!-- Navbar End -->
     <!-- Modal Search Start -->
-    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content rounded-0">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body d-flex align-items-center">
-                    <div class="input-group w-75 mx-auto d-flex">
-                        <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                        <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+    <form action="/store/search" method="get">
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex align-items-center">
+
+                        <div class="input-group w-75 mx-auto d-flex">
+                                <input type="search" class="form-control p-3" name="query" placeholder="도로명이나 지번주소를 입력하세요" aria-describedby="search-icon-1">
+                            <button type="submit" id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
     <!-- Modal Search End -->
+
+<!--    <form action="/store/search" method="get">
+        <div class="position-relative mx-auto">
+            <input class="form-control border-2 border-secondary w-100 py-3 px-4 rounded-pill" type="text" name="query" placeholder="도로명이나 지번주소를 입력하세요">
+            <button type="submit" class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white h-100" style="top: 0; right: 0;">가게 검색</button>
+        </div>
+    </form>
+    -->
 
 </header>
 </html>

@@ -46,7 +46,6 @@ public class StoreController {
     String postStoreAdd(@AuthenticationPrincipal CustomUserDetails customUserDetails,
             @Validated @ModelAttribute("storeAddFormDto") StoreAddFormDto StoreAddFormDto,
                         BindingResult bindingResult) throws IOException {
-
         if(bindingResult.hasErrors()){
             return "content/store/storeAddForm";
         }
@@ -62,8 +61,6 @@ public class StoreController {
         log.info("stores size: {}", stores.size());
         log.info("presentPage {}", storesPage.getNumber());
         log.info("totalPages {}", storesPage.getTotalPages());
-
-
         PageDto pageDto = pageService.get10unitPageInit(storesPage.getNumber(), storesPage.getTotalPages());
         model.addAttribute("pageDto", pageDto);
         model.addAttribute ("stores", stores);

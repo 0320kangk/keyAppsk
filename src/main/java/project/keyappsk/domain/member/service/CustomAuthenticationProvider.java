@@ -35,10 +35,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         httpSession.setAttribute(SessionConst.SessionMember, new SessionMember(user.getMember()));
         return new UsernamePasswordAuthenticationToken(user, password, user.getAuthorities());
     }
-
     @Override
     public boolean supports(Class<?> authentication) {
         return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
-
     }
 }

@@ -14,8 +14,8 @@ spring:
 #    url: jdbc:mysql://localhost:3306/keyAppsk?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
 #    docker 환경
 #    url: jdbc:mysql://mysql-container:3306/keyAppsk?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    #    username: root #local, docker
-    #    password: 1234 #local. docker
+#    username: root #local, docker
+#    password: 1234 #local. docker
     # rds 환경
     url: ${RDS_KEYAPPSK_URL}
     username: ${RDS_KEYAPPSK_USERNAME} # rds
@@ -34,7 +34,7 @@ server:
     session:
       tracking-modes : cookie
 storeImgFile:
-  dir : C:/Users/82103/IdeaProjects/Spring/myProject/keyAppsk/storeImages/
+  dir : ${STORE_IMAGE_PATH}
 
 productImgFile:
-  dir: C:/Users/82103/IdeaProjects/Spring/myProject/keyAppsk/productImages/
+  dir: ${PRODUCT_IMAGE_PATH}
