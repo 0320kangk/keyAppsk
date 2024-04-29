@@ -3,9 +3,11 @@ package project.keyappsk.domain.orders.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import project.keyappsk.domain.alarm.dto.AlarmMessageRequestDto;
 import project.keyappsk.domain.cart.repository.CartRepository;
 import project.keyappsk.domain.member.entity.Member;
 import project.keyappsk.domain.orders.dto.OrderStoreDto;
@@ -35,28 +37,45 @@ public class OrderService {
     private final CartRepository cartRepository;
     private final OrdersProductRepository ordersProductRepository;
     private final StoreRepository storeRepository;
+    private final ApplicationEventPublisher applicationEventPublisher;
+
 
     @Transactional
-    public void completeOrder(Integer orderId){
+    public void completeOrder(Integer orderId, String sender){
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException());
         order.setOrdersStatus(OrdersStatus.COMPLETE);
         orderRepository.save(order);
+        AlarmMessageRequestDto alarmMessageRequestDto = AlarmMessageRequestDto.create(order.getMemberBuyer(), sender, order.getStore().getName(), OrdersStatus.COMPLETE);
+        applicationEventPublisher.publishEvent(alarmMessageRequestDto );
+
     }
 
     @Transactional
-    public void prepareOrder(Integer orderId){
+    public void prepareOrder(Integer orderId, String sender){
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException());
+        AlarmMessageRequestDto alarmMessageRequestDto = AlarmMessageRequestDto.create(order.getMemberBuyer(), sender, order.getStore().getName(), OrdersStatus.PREPARATION);
         order.setOrdersStatus(OrdersStatus.PREPARATION);
         orderRepository.save(order);
+        applicationEventPublisher.publishEvent(alarmMessageRequestDto );
+
     }
 
 
 
     @Transactional
-    public void cancelOrder(Integer orderId){
+    public void cancelOrder(Integer orderId, Member sender){
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException());
+        AlarmMessageRequestDto alarmMessageRequestDto = null;
+        if(order.getMemberBuyer().getId() == (sender.getId())) {
+            alarmMessageRequestDto = AlarmMessageRequestDto.create(order.getStore().getMember(), sender.getName(), order.getStore().getName(), OrdersStatus.CANCEL);
+        }else {
+            alarmMessageRequestDto = AlarmMessageRequestDto.create(order.getMemberBuyer(), sender.getName(), order.getStore().getName(), OrdersStatus.CANCEL);
+        }
+
         order.setOrdersStatus(OrdersStatus.CANCEL);
         orderRepository.save(order);
+        applicationEventPublisher.publishEvent(alarmMessageRequestDto );
+
     }
     @Transactional
     public void createOrder(Member member, Integer storeId) {
@@ -86,6 +105,8 @@ public class OrderService {
                         .build();
                 ordersProductRepository.save(ordersProduct);
         }
+        AlarmMessageRequestDto alarmMessageRequestDto = AlarmMessageRequestDto.create(order.getMemberBuyer(), member.getName(), order.getStore().getName(), OrdersStatus.WAITING);
+        applicationEventPublisher.publishEvent(alarmMessageRequestDto );
         orderRepository.save(order);
     }
     @Transactional

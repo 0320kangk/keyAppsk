@@ -69,9 +69,10 @@ public class OrderController {
 
     @PostMapping("/order/cancel/{orderId}")
     public String postOrderCancel(@PathVariable("orderId") Integer orderId,
-                                  @RequestParam("role") String role){
+                                  @RequestParam("role") String role,
+                                  @AuthenticationPrincipal CustomUserDetails customUserDetails){
         log.info("role: {}", role);
-//        orderService.cancelOrder(orderId);
+        orderService.cancelOrder(orderId, customUserDetails.getMember());
         if(role.equals("buyer")){
             return "redirect:/order";
         }else {
@@ -79,18 +80,20 @@ public class OrderController {
         }
     }
     @PostMapping("/order/preparation/{orderId}")
-    public String postOrderPreparation(@PathVariable("orderId") Integer orderId){
-        orderService.prepareOrder(orderId);
+    public String postOrderPreparation(@PathVariable("orderId") Integer orderId,
+                                       @AuthenticationPrincipal CustomUserDetails customUserDetails){
+        orderService.prepareOrder(orderId, customUserDetails.getName() );
         return "redirect:/order/store";
     }
 
     @PostMapping("/order/complete/{orderId}")
-    public String postOrderComplete(@PathVariable("orderId") Integer orderId){
-        orderService.completeOrder(orderId);
+    public String postOrderComplete(@PathVariable("orderId") Integer orderId,
+                                    @AuthenticationPrincipal CustomUserDetails customUserDetails){
+        orderService.completeOrder(orderId, customUserDetails.getName());
         return "redirect:/order/store";
     }
     @PostMapping("/order")
-    public String postOrder(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+    public String postOrderCreate(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                             @RequestParam("storeId") Integer storeId) {
         log.info("storeId: {}",storeId);
         orderService.createOrder(customUserDetails.getMember(), storeId);

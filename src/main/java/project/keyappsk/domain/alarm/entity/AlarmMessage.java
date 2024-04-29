@@ -1,9 +1,7 @@
 package project.keyappsk.domain.alarm.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import project.keyappsk.domain.alarm.entity.enumerate.ReadStatus;
+import lombok.*;
 import project.keyappsk.domain.member.entity.Member;
 
 import java.time.LocalDateTime;
@@ -11,6 +9,10 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@ToString
 public class AlarmMessage {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -18,20 +20,24 @@ public class AlarmMessage {
 
     @ManyToOne
     @JoinColumn(name = "Member_id" ,nullable = false)
-    private Member member;
+    @ToString.Exclude
+    private Member receiver;
 
     @Column(nullable = false)
     private String message;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    ReadStatus readStatus;
+    private String url;
+
+
+    @Column(nullable = false)
+    private Boolean isRead;
 
     @Column(nullable = false)
     private LocalDateTime createdDate;
 
     public void changeMembers(Member member){
-        this.member = member;
+        this.receiver = member;
         member.getAlarmMessages().add(this);
     }
 

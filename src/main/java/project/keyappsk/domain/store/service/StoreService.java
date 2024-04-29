@@ -139,7 +139,6 @@ public class StoreService {
     }
     @Transactional
     public Page<MemberStoreDto> getStores(Member member, Pageable pageable) {
-
         return  memberRepository.getMemberStoreDto(member.getId(), pageable) ;
     }
 

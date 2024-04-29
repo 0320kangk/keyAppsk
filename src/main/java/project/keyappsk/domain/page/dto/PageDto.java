@@ -10,7 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class PageDto {
-
     int startPage;
     int endPage;
     int presentPage;

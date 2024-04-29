@@ -60,7 +60,7 @@ public class Member {
     @ToString.Exclude
     private List<Order> orders;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "receiver")
     @ToString.Exclude
     private List<AlarmMessage> alarmMessages;
 

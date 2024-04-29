@@ -11,15 +11,15 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     #local환경
-#    url: jdbc:mysql://localhost:3306/keyAppsk?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/keyAppsk?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
 #    docker 환경
 #    url: jdbc:mysql://mysql-container:3306/keyAppsk?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-#    username: root #local, docker
-#    password: 1234 #local. docker
+    username: root #local, docker
+    password: 1234 #local. docker
     # rds 환경
-    url: ${RDS_KEYAPPSK_URL}
-    username: ${RDS_KEYAPPSK_USERNAME} # rds
-    password: ${RDS_KEYAPPSK_PASSWORD} # rds
+#    url: ${RDS_KEYAPPSK_URL}
+#    username: ${RDS_KEYAPPSK_USERNAME} # rds
+#    password: ${RDS_KEYAPPSK_PASSWORD} # rds
   jpa:
     hibernate:
       ddl-auto: update
@@ -31,7 +31,7 @@ spring:
 
 server:
   servlet:
-    session:
+    session :
       tracking-modes : cookie
 storeImgFile:
   dir : ${STORE_IMAGE_PATH}

@@ -44,7 +44,9 @@ public class WebSecurityConfig {
             "/category/add/*",
             "/product/add/*","/product/update/*",
             "/cart","/cart/add",
-            "/order"
+            "/order",
+            "/alarm/subscribe",
+            "/alarm/read","/alarm/read/*"
     };
     //가게 주인 페이지
     @Bean

@@ -33,6 +33,13 @@
 
     <!--additional css -->
     <link href="/css/additional.css" rel="stylesheet">
+
+<!-- toastr 모달 창 꾸미기   -->
+    <link
+            rel="stylesheet"
+            type="text/css"
+            href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
+    />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
 
@@ -176,7 +183,57 @@
 <script src="/lib/lightbox/js/lightbox.min.js"></script>
 <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
 <script src="/js/header.js"></script>
+<!--toaster, alert창 꾸미기 -->
+<script
+        type="text/javascript"
+        src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+></script>
 <!-- Template Javascript -->
 <script src="/js/main.js"></script>
 
+<script th:inline="javascript">
+
+    $(document).ready((function () {
+
+        const memberSession = [[${session.sessionMember}]];
+
+        console.log(memberSession);
+
+        if (memberSession !== null) {
+            const eventSource = new EventSource(`/alarm/subscribe`);
+
+            console.log("eventSource")
+            console.log(eventSource)
+            eventSource.onopen = (e) => {
+                console.log(e);
+            };
+            eventSource.onerror = (e) => {
+                eventSource.close();
+                console.log(e);
+            };
+            /**
+             * @param e.data : message, createdDateTime, url
+             */
+
+            eventSource.onmessage = (e) => {
+                console.log("test: e");
+                console.log(e.data);
+                if(!e.data.includes("[userId=")){
+                    const alarmMessageResponseDto = JSON.parse(e.data);
+                    console.log(alarmMessageResponseDto);
+                    toastr.options.escapeHtml = true;
+                    toastr.options.closeButton = true;
+                    toastr.options.newestOnTop = false;
+                    toastr.options.progressBar = true;
+                    console.log(alarmMessageResponseDto.id);
+                    toastr.options.onclick = function (){
+                        fetch("/alarm/read/" + alarmMessageResponseDto.id);
+                    }
+                    toastr.info(alarmMessageResponseDto.message, "알림" , { timeOut: 5000 });
+                }
+            };
+        }
+    }))
+
+</script>
 </html>

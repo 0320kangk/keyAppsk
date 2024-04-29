@@ -26,11 +26,13 @@ public class QAlarmMessage extends EntityPathBase<AlarmMessage> {
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
-    public final project.keyappsk.domain.member.entity.QMember member;
+    public final BooleanPath isRead = createBoolean("isRead");
 
     public final StringPath message = createString("message");
 
-    public final EnumPath<project.keyappsk.domain.alarm.entity.enumerate.ReadStatus> readStatus = createEnum("readStatus", project.keyappsk.domain.alarm.entity.enumerate.ReadStatus.class);
+    public final project.keyappsk.domain.member.entity.QMember receiver;
+
+    public final StringPath url = createString("url");
 
     public QAlarmMessage(String variable) {
         this(AlarmMessage.class, forVariable(variable), INITS);
@@ -50,7 +52,7 @@ public class QAlarmMessage extends EntityPathBase<AlarmMessage> {
 
     public QAlarmMessage(Class<? extends AlarmMessage> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.member = inits.isInitialized("member") ? new project.keyappsk.domain.member.entity.QMember(forProperty("member")) : null;
+        this.receiver = inits.isInitialized("receiver") ? new project.keyappsk.domain.member.entity.QMember(forProperty("receiver")) : null;
     }
 
 }
