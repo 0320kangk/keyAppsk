@@ -230,6 +230,11 @@
                         fetch("/alarm/read/" + alarmMessageResponseDto.id);
                     }
                     toastr.info(alarmMessageResponseDto.message, "알림" , { timeOut: 5000 });
+                    toastr.info("민호님이 abc마트에서 후라이팬을 주문합니다.", "알림" , { timeOut: 5000 });
+                    toastr.info("지수님이 슈퍼 마트 주문을 취소합니다.", "알림" , { timeOut: 5000 });
+                    toastr.info("준호님의 우리마트 거래가 완료되었습니다.", "알림" , { timeOut: 5000 });
+                    toastr.info("준호님의 바로마트 거래가 대기중입니다.", "알림" , { timeOut: 5000 });
+
                 }
             };
         }

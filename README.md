@@ -21,13 +21,25 @@ git, docker
 # ⚙️ 기술 스택
 
 ### Environment
-Windows, intellij, postman, ec2
+![Windows](http://img.shields.io/badge/WINDOW-blue?style=for-the-badge&logo=Windows&logoColor=white)
+![Postman](http://img.shields.io/badge/POSTMAN-orange?style=for-the-badge&logo=Postman&logoColor=white)
+![AWS EC2](http://img.shields.io/badge/AMAZON_AWS-black?style=for-the-badge&logo=Amazon-AWS&logoColor=white)
+![IntelliJ IDEA](http://img.shields.io/badge/Intellij-black?style=for-the-badge&logo=IntelliJ-IDEA&logoColor=white)
 
 ### Front-End
-html5, css3, javascript, thymeleaf
+![THYMELEAF](http://img.shields.io/badge/THTMLEAF-005F0F?style=for-the-badge&logo=Thymeleaf&logoColor=white)
+![HTML5](https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white)
+![Javascript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white)
 
 ### Back-End
-java 17, spring boot, spring jpa, aws rds, aws ec2, spring security
+![JAVA 17](https://img.shields.io/badge/JAVA-blue?style=for-the-badge)
+![Spring boot](https://img.shields.io/badge/spring_boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
+![Spring DATA JPA](https://img.shields.io/badge/spring_data_jpa-6DB33F?style=for-the-badge)
+![Spring Security](https://img.shields.io/badge/spring_Security-6DB33F?style=for-the-badge&logo=Spring-Security&logoColor=white)
+![AWS EC2](https://img.shields.io/badge/AWS_EC2-orange?style=for-the-badge&logo=Amazon-EC2&logoColor=white)
+![AWS EC2](https://img.shields.io/badge/AWS_RDS-527FFF?style=for-the-badge&logo=Amazon-RDS&logoColor=white)
+
 
 # 📖 기능 소개
 
