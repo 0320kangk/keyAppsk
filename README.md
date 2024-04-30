@@ -15,8 +15,8 @@
 
 # 🤝유지보수 툴
 ___
-git, docker
-
+![git](http://img.shields.io/badge/Git-red?style=for-the-badge&logo=Git&logoColor=white)
+![docker](http://img.shields.io/badge/docker-blue?style=for-the-badge&logo=Docker&logoColor=white)
 
 # ⚙️ 기술 스택
 
@@ -38,7 +38,7 @@ git, docker
 ![Spring DATA JPA](https://img.shields.io/badge/spring_data_jpa-6DB33F?style=for-the-badge)
 ![Spring Security](https://img.shields.io/badge/spring_Security-6DB33F?style=for-the-badge&logo=Spring-Security&logoColor=white)
 ![AWS EC2](https://img.shields.io/badge/AWS_EC2-orange?style=for-the-badge&logo=Amazon-EC2&logoColor=white)
-![AWS EC2](https://img.shields.io/badge/AWS_RDS-527FFF?style=for-the-badge&logo=Amazon-RDS&logoColor=white)
+![AWS RDS](https://img.shields.io/badge/AWS_RDS-527FFF?style=for-the-badge&logo=Amazon-RDS&logoColor=white)
 
 
 # 📖 기능 소개
