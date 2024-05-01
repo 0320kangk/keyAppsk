@@ -27,7 +27,7 @@ public class AlarmController {
         return sseEmitter;
     }
     @GetMapping(value = "/read")
-    public void read(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    public void readAll(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         Member member = customUserDetails.getMember();
         alarmService.readCheckAll( String.valueOf(member.getId()));
     }

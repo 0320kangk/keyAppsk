@@ -24,6 +24,5 @@ public class AlarmMessageEventHandler {
                 alarmMessageRequestDto.getSender(),
                 alarmMessageRequestDto.getStoreName(),
                 alarmMessageRequestDto.getOrdersStatus());
-
     }
 }

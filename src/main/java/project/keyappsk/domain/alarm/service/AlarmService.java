@@ -69,16 +69,15 @@ public class AlarmService {
 
         //505 에러를 방지하기 위한 더미 이벤트 전송
         //등록 후 SseEmitter 유효시간동안 어느 데이터도 전송되지 않는 다면 503 에러를 발생시키므로 이것에 대한 방지로 더이 이벤트 발생
-        String eventId = makeTimeIncludeId(memberId);
-        sendAlarmMessage(emitter, eventId, emitterId, "EventStream Created. [userId=" + memberId + "]");
+        sendAlarmMessage(emitter,  emitterId, "EventStream Created. [userId=" + memberId + "]");
 
         if (hasLostData(lastEventId)) {
-            sendLostData(lastEventId, memberId, emitterId, emitter);
+            sendLostData(lastEventId, memberId, emitter);
         }else {
             PageRequest pageable = PageRequest.of(0, 15, Sort.by("createdDate").descending());
             List<AlarmMessage> content = alarmMessageRepository.findByReceiver_Id(memberId, pageable).getContent();
             content.forEach( (alarmMessage -> {
-                if(!alarmMessage.getIsRead()) sendAlarmMessage(emitter, eventId, emitterId, AlarmMessageResponseDto.create(alarmMessage));
+                if(!alarmMessage.getIsRead()) sendAlarmMessage(emitter,  emitterId, AlarmMessageResponseDto.create(alarmMessage));
             }) );
         }
         return emitter;
@@ -88,10 +87,10 @@ public class AlarmService {
         return memberId + "_" + System.currentTimeMillis();
     }
 
-    private void sendAlarmMessage(SseEmitter emitter, String eventId, String emitterId, Object data) {
+    private void sendAlarmMessage(SseEmitter emitter,  String emitterId, Object data) {
         try {
             emitter.send(SseEmitter.event()
-                    .id(eventId)
+                    .id(emitterId)
                     .data(data, MediaType.APPLICATION_JSON));
 
         } catch (IOException exception) {
@@ -104,12 +103,12 @@ public class AlarmService {
 
         return !lastEventId.isEmpty();
     }
-    private void sendLostData(String lastEventId,Integer memberId, String emitterId, SseEmitter emitter) {
+    private void sendLostData(String lastEventId,Integer memberId, SseEmitter emitter) {
 
         Map<String, Object> eventCaches = emitterRepository.findAllEventCacheStartWithByMemberId(String.valueOf(memberId));
         eventCaches.entrySet().stream()
                 .filter(entry -> lastEventId.compareTo(entry.getKey()) < 0 )
-                .forEach(entry -> sendAlarmMessage(emitter, entry.getKey(), emitterId, entry.getValue()));
+                .forEach(entry -> sendAlarmMessage(emitter, entry.getKey(), entry.getValue()));
     }
 
     @Transactional
@@ -126,12 +125,11 @@ public class AlarmService {
         AlarmMessage sanedAlarmMessage = alarmMessageRepository.save(alarmMessage);
         log.info("message: {}", sanedAlarmMessage.toString());
         String receiverId = String.valueOf(receiver.getId());
-        String eventId = receiverId + "_" + System.currentTimeMillis();
         Map<String, SseEmitter> emitters = emitterRepository.findAllEmitterStartWithByMemberId(receiverId);
         emitters.forEach(
                 (key, emitter) -> {
                     emitterRepository.saveEventCache(key, sanedAlarmMessage);
-                    sendAlarmMessage(emitter, eventId, key, AlarmMessageResponseDto.create(sanedAlarmMessage)  );
+                    sendAlarmMessage(emitter, key, AlarmMessageResponseDto.create(sanedAlarmMessage)  );
                 }
         );
     }
